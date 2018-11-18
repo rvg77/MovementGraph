@@ -28,6 +28,7 @@ class MovementGraph : public AL::ALModule {
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
     void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
 
+    void PrintState();
     void AddEdge(Edge* new_edge);
    private:
     static const size_t PARAM_NUM_;

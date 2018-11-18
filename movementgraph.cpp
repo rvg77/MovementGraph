@@ -12,13 +12,25 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
     ALModule(broker, name) {
 
   setModuleDescription("Module for robot movements.");
-  
+
   #include "automaticInitGeneration.h"
+
 }
 
 MovementGraph::~MovementGraph() {}
 
-void MovementGraph::init() {}
+void MovementGraph::init() {
+
+  std::vector <float> params = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  Vertex curr(params);
+  while (true) {
+    std::cout << "Enter to continue..." << std::endl;
+    char a;
+    std::cin >> a;
+    curr.GetCurrentState(getParentBroker());
+    curr.PrintState();
+  }
+}
 
 bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
                                                int finish, 
