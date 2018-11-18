@@ -89,3 +89,15 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
   assert(!way.empty());
   return true;
 }
+
+void MovementGraph::runWay(std::vector<Edge*> edges) {
+    if (edges.empty()) {
+        return;
+    }
+    Vertex* vertex = edges[0]->begin_;
+    vertex->Run();
+    for (int i = 0; i < edges.size(); i++) {
+        vertex = edges[i]->end_;
+        vertex->Run();
+    }
+}
