@@ -59,6 +59,7 @@ class MovementGraph : public AL::ALModule {
 
  void RunWay(std::vector <Edge *> edges);
 
+
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
