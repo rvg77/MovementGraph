@@ -2,8 +2,8 @@ import argparse
 import json
 
 class_vertex = 'Vertex'
-vector_vertexes = 'vertexes'
-vector_edges = 'edges'
+vector_vertexes = 'vertexes_'
+vector_edges = 'edges_'
 emplace_back = 'emplace_back'
 
 
@@ -33,7 +33,7 @@ def generator(vertex_file, edge_file, output):
                 for name in default_list_order:
                     s = s + str(cur_vertex_dict[name]) + ', '
                 s = s[:-2]
-                out.write(vector_vertexes + '.' + emplace_back + '(' + s + ');\n')
+                out.write(vector_vertexes + '.' + emplace_back + '(std::vector<float>({' + s + '}));\n')
                 cur_vertex_name = None
                 cur_vertex_dict = default_dict_motors
 
