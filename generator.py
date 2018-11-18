@@ -1,3 +1,4 @@
+import argparse
 import json
 
 class_vertex = 'Vertex'
@@ -6,7 +7,9 @@ vector_edges = 'edges'
 emplace_back = 'emplace_back'
 
 
-def generator(vertex_file="vertex.txt", edge_file="edge.txt", output="automaticinitGeneration.h"):
+def generator(vertex_file, edge_file, output):
+    if output is None:
+        output = "automaticInitGeneration.h"
     with open('sources/defaultPosition.json') as f:
         default_dict_motors = json.load(f)
     with open('sources/defaultOrder.json') as f:
@@ -26,7 +29,7 @@ def generator(vertex_file="vertex.txt", edge_file="edge.txt", output="automatici
             elif line[0] != '}':
                 cur_vertex_dict[line[0]] = line[2]
             else:
-                s =''
+                s = ''
                 for name in default_list_order:
                     s = s + str(cur_vertex_dict[name]) + ', '
                 s = s[:-2]
@@ -43,5 +46,10 @@ def generator(vertex_file="vertex.txt", edge_file="edge.txt", output="automatici
             out.write(vector_edges + '.' + emplace_back + '(' + vertex_from + ', ' + vertex_to + ', ' + line[2] + ');\n')
 
 
-generator()
-
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--vertex', action='store', type=str, help='file with vertexes', required=True)
+    parser.add_argument('--edges', action='store', type=str, help='file with edges', required=True)
+    parser.add_argument('--out', action='store', type=str, help='first word')
+    args = parser.parse_args()
+    generator(args.vertex, args.edges, args.out)
