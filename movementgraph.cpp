@@ -94,9 +94,9 @@ void MovementGraph::RunWay(std::vector<Edge*> edges) {
     if (edges.empty()) {
         return;
     }
-    edges[0]->begin_->Run(0.0,getParentBroker());
+    edges[0]->GetBegin()->Run(0.0,getParentBroker());
 
     for (int i = 0; i < edges.size(); i++) {
-        edges[i]->end_->Run(0.0, getParentBroker());
+        edges[i]->GetEnd()->Run(0.0, getParentBroker());
     }
 }
