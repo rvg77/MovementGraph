@@ -1,6 +1,8 @@
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
 
+const float PI = 3.14159265;
+
 namespace AL
 {
   class ALBroker;
@@ -27,13 +29,14 @@ class MovementGraph : public AL::ALModule {
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
     void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_) const;
 
+    float GetMetrics(Vertex& vertex);
 
+		std::vector<float>  const & GetParamValues();
 
-    float GetMetrics(const Vertex& vertex);
-
-		std::vector<float> GetParamValues();
+		std::vector<float>  const & GetDegreesValues();
 
     void AddEdge(const Edge* new_edge);
+
    private:
     static const size_t PARAM_NUM_;
     static const std::vector <std::string> param_names_;
@@ -60,7 +63,8 @@ class MovementGraph : public AL::ALModule {
   bool FindWayToVertexFromVertexViaBFS(int start, 
                                        int finish, 
                                        std::vector <int> & way) const;
-	int GetNearestVertex(boost::shared_ptr<ALBroker> broker_);
+
+	int GetNearestVertex(boost::shared_ptr<AL::ALBroker> broker_);
 
  void RunWay(std::vector <Edge *> edges);
 
