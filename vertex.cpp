@@ -56,7 +56,7 @@ void MovementGraph::Vertex::GetCurrentState(boost::shared_ptr<ALBroker> broker_ 
   return;
 }
 
-void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) {
+void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) const {
   ALMotionProxy motion(broker_);
   ALValue names = param_names_;
   float maxSpeedFraction = velocity_;
@@ -65,7 +65,7 @@ void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> bro
   return;
 }
 
-void MovementGraph::Vertex::AddEdge(Edge* new_edge) {
+void MovementGraph::Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
 
