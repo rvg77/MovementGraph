@@ -26,7 +26,7 @@ class MovementGraph : public AL::ALModule {
     Vertex(const Vertex & vertex);
 
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
-    void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
+    void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_) const;
 
     void AddEdge(const Edge* new_edge);
    private:
@@ -55,6 +55,9 @@ class MovementGraph : public AL::ALModule {
   bool FindWayToVertexFromVertexViaBFS(int start, 
                                        int finish, 
                                        std::vector <int> & way) const;
+
+
+ void RunWay(std::vector <Edge *> edges);
 
 
  private:
