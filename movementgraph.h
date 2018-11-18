@@ -23,6 +23,8 @@ class MovementGraph : public AL::ALModule {
     Vertex() = delete;
     Vertex(std::vector <float> new_param_values_);
 
+    Vertex(const Vertex & vertex);
+
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
     void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
 
@@ -40,6 +42,7 @@ class MovementGraph : public AL::ALModule {
    public:
     Edge() = delete;
     Edge(Vertex* from, Vertex* to, float velocity);
+    Edge(const Edge & edge);
 
    private:
     const Vertex* begin_;

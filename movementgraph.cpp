@@ -13,7 +13,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 
   setModuleDescription("Module for robot movements.");
   
-  #include "automaticinitGeneration.h"
+  #include "automaticInitGeneration.h"
 }
 
 MovementGraph::~MovementGraph() {}
