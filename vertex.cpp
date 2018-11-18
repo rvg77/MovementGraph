@@ -9,6 +9,7 @@ using namespace AL;
 
 const size_t MovementGraph::Vertex::PARAM_NUM_ = 25;
 
+
 const std::vector <std::string> MovementGraph::Vertex::param_names_ = {
     "HeadPitch",
     "LShoulderPitch",
@@ -68,9 +69,9 @@ void MovementGraph::Vertex::AddEdge(Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
 
-float MovementGraph::Vertex::GetMetrics(const Vertex& vertex) {
+float MovementGraph::Vertex::GetMetrics(Vertex& vertex) {
 	float result = 0;
-	std::vector<float> cords = vertex.GetParamValues();
+	const std::vector<float> & cords = vertex.GetParamValues();
 	for (int i=0; i < PARAM_NUM_ ; i++) {
 		result += (param_values_[i] - cords[i])*(param_values_[i] - cords[i]);
 	}
@@ -79,6 +80,14 @@ float MovementGraph::Vertex::GetMetrics(const Vertex& vertex) {
 }
 
 
-const std::vector<float> & GetParamValues() {
+std::vector<float> const & MovementGraph::Vertex::GetParamValues() {
 	return param_values_;
+}
+
+std::vector<float>  const & MovementGraph::Vertex::GetDegreesValues() {
+	std::vector<float> cords;
+	for (auto el : param_values_) {
+		cords.push_back(el * 180.0/PI);
+	}
+	return cords;
 }
