@@ -8,4 +8,7 @@ using namespace AL;
 
 
 MovementGraph::Edge::Edge(Vertex* from, Vertex* to, float velocity)
-    : begin_(from), end_(to), velocity_(velocity) {}
+  : begin_(from), end_(to), velocity_(velocity) {}
+
+MovementGraph::Edge::Edge(const Edge & edge)
+  : begin_(edge.begin_), end_(edge.end_), velocity_(edge.velocity_) {}

@@ -13,7 +13,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 
   setModuleDescription("Module for robot movements.");
   
-#include automaticinitGeneration.h
+  #include "automaticInitGeneration.h"
 }
 
 MovementGraph::~MovementGraph() {}
@@ -53,7 +53,7 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
       if (flags[v] == 0) {
         flags[v] = 1;
         parent[v] = u;
-        edgeToNext[v] = i; // this is not bag))) I wont renember edge to next for u into v))) sorry
+        edgeToNext[v] = i; // this is not bag))) I want remember edge to next for u into v))) sorry
         bfs.push(v);
       }
     }

@@ -41,6 +41,10 @@ const std::vector <std::string> MovementGraph::Vertex::param_names_ = {
 MovementGraph::Vertex::Vertex(std::vector <float> new_param_values_)
     : param_values_(new_param_values_) {}
 
+MovementGraph::Vertex::Vertex(const Vertex & vertex)
+    : param_values_(vertex.param_values_),
+      adjacent_edges_(vertex.adjacent_edges_) {}
+
 void MovementGraph::Vertex::GetCurrentState(boost::shared_ptr<ALBroker> broker_ ) {
   ALMotionProxy motion(broker_);
   ALValue names = param_names_;
