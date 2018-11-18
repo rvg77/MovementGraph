@@ -64,6 +64,6 @@ void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> bro
   return;
 }
 
-void MovementGraph::Vertex::AddEdge(Edge* new_edge) {
+void MovementGraph::Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
