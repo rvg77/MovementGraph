@@ -14,6 +14,20 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   setModuleDescription("Module for robot movements.");
   
   #include "automaticInitGeneration.h"
+
+  adjacency_list_.clear();
+  vertex_to_index_.clear();
+  for (size_t i = 0; i < vertexes_.size(); ++i) {
+    const Vertex * dd = &vertexes_[i];
+    vertex_to_index_[dd] = i;
+    adjacency_list_.push_back(std::vector<int>());
+  }
+
+  for (size_t i = 0; i < edges_.size(); ++i) {
+    int u = vertex_to_index_[edges_[i].GetBegin()];
+    int v = vertex_to_index_[edges_[i].GetEnd()];
+    adjacency_list_[u].push_back(v);
+  }
 }
 
 MovementGraph::~MovementGraph() {}

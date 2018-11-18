@@ -28,21 +28,23 @@ class MovementGraph : public AL::ALModule {
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
     void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
 
-    void AddEdge(Edge* new_edge);
+    void AddEdge(const Edge* new_edge);
    private:
     static const size_t PARAM_NUM_;
     static const std::vector <std::string> param_names_;
 
     std::vector <float> param_values_; // +? const
 
-    std::vector <Edge*> adjacent_edges_;
+    std::vector <const Edge*> adjacent_edges_;
   };
 
   class Edge {
    public:
     Edge() = delete;
-    Edge(Vertex* from, Vertex* to, float velocity);
+    Edge(const Vertex* from, const Vertex* to, float velocity);
     Edge(const Edge & edge);
+    const Vertex* GetBegin() const;
+    const Vertex* GetEnd() const;
 
    private:
     const Vertex* begin_;
@@ -58,7 +60,7 @@ class MovementGraph : public AL::ALModule {
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
-  std::map <Vertex*, int> vertex_to_index_;
+  std::map <const Vertex*, int> vertex_to_index_;
  private:
   std::vector <std::vector <int>> adjacency_list_;
 };
