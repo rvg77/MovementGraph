@@ -67,3 +67,18 @@ void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> bro
 void MovementGraph::Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
+
+float MovementGraph::Vertex::GetMetrics(const Vertex& vertex) {
+	float result = 0;
+	std::vector<float> cords = vertex.GetParamValues();
+	for (int i=0; i < PARAM_NUM_ ; i++) {
+		result += (param_values_[i] - cords[i])*(param_values_[i] - cords[i]);
+	}
+
+	return result;
+}
+
+
+const std::vector<float> & GetParamValues() {
+	return param_values_;
+}

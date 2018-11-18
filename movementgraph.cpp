@@ -91,6 +91,25 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
 }
 
 
+
+//vertex_count >= 1
+int MovementGraph::GetNearestVertex(boost::shared_ptr<ALBroker> broker_) {
+  Vertex dummy = vertexes_[0];
+	dummy.GetCurrentState(broker_);
+
+	int min_index = 0;
+	float min = dummy.GetMetrics(vertexes_[0]);
+
+	for (int i = 1; i < vertexes_.size(); i++) {
+		float metrics = dummy.GetMetrics(vertexes_[i]);
+		if (metrics < min) {
+			min = metrics;
+			min_index = i;
+		}
+	}
+	return min_index;
+}
+
 void MovementGraph::RunWay(std::vector<Edge*> edges) {
     if (edges.empty()) {
         return;
