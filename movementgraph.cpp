@@ -90,14 +90,13 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
   return true;
 }
 
-void MovementGraph::runWay(std::vector<Edge*> edges) {
+void MovementGraph::RunWay(std::vector<Edge*> edges) {
     if (edges.empty()) {
         return;
     }
-    Vertex* vertex = edges[0]->begin_;
-    vertex->Run();
+    edges[0]->begin_->Run(0.0,getParentBroker());
+
     for (int i = 0; i < edges.size(); i++) {
-        vertex = edges[i]->end_;
-        vertex->Run();
+        edges[i]->end_->Run(0.0, getParentBroker());
     }
 }
