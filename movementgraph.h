@@ -31,9 +31,9 @@ class MovementGraph : public AL::ALModule {
 
     float GetMetrics(Vertex& vertex);
 
-		std::vector<float>  const & GetParamValues();
+	std::vector<float>  const & GetParamValues();
 
-		std::vector<float>  const & GetDegreesValues();
+	std::vector<float>  const & GetDegreesValues();
 
     void AddEdge(const Edge* new_edge);
 
@@ -64,9 +64,9 @@ class MovementGraph : public AL::ALModule {
                                        int finish, 
                                        std::vector <int> & way) const;
 
-	int GetNearestVertex(boost::shared_ptr<AL::ALBroker> broker_);
+  int GetNearestVertex(boost::shared_ptr<AL::ALBroker> broker_);
 
- void RunWay(std::vector <Edge *> edges);
+  void RunWay(std::vector <Edge *> edges);
 
 
  private:
