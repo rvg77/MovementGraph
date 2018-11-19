@@ -34,6 +34,26 @@ MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {}
 
+
+bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
+                                              std::vector <const Edge*> way) const { 
+  assert(way.empty());
+  assert(adjacency_list_.size() == vertexes_.size());
+  int begin = vertex_to_index_[start];
+  int end   = vertex_to_index_[finish];
+  std::vector <int> wayInt;
+
+  if (!FindWayToVertexFromVertexViaBFS(begin, end, wayInt)) {
+    return false;
+  }
+
+  for (size_t i = 0; i < wayInt.size(); ++i) {
+    way.push_back(&edges_[wayInt[i]]);
+  }
+
+  return true;
+}
+
 bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
                                                int finish, 
                                                std::vector <int> & way) const {
