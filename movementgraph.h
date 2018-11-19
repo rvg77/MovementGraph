@@ -31,9 +31,9 @@ class MovementGraph : public AL::ALModule {
 
     float GetMetrics(Vertex& vertex);
 
-	std::vector<float>  const & GetParamValues();
+    std::vector<float>  const & GetParamValues();
 
-	std::vector<float>  const & GetDegreesValues();
+    std::vector<float>  const & GetDegreesValues();
 
     void AddEdge(const Edge* new_edge);
 
