@@ -13,46 +13,12 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 
   setModuleDescription("Module for robot movements.");
   
-  #include "automaticInitGeneration.h"
-
-  adjacency_list_.clear();
-  vertex_to_index_.clear();
-  for (size_t i = 0; i < vertexes_.size(); ++i) {
-    const Vertex * dd = &vertexes_[i];
-    vertex_to_index_[dd] = i;
-    adjacency_list_.push_back(std::vector<int>());
-  }
-
-  for (size_t i = 0; i < edges_.size(); ++i) {
-    int u = vertex_to_index_[edges_[i].GetBegin()];
-    int v = vertex_to_index_[edges_[i].GetEnd()];
-    adjacency_list_[u].push_back(v);
-  }
+#include automaticinitGeneration.h
 }
 
 MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {}
-
-
-bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
-                                              std::vector <const Edge*> way) const { 
-  assert(way.empty());
-  assert(adjacency_list_.size() == vertexes_.size());
-  int begin = vertex_to_index_[start];
-  int end   = vertex_to_index_[finish];
-  std::vector <int> wayInt;
-
-  if (!FindWayToVertexFromVertexViaBFS(begin, end, wayInt)) {
-    return false;
-  }
-
-  for (size_t i = 0; i < wayInt.size(); ++i) {
-    way.push_back(&edges_[wayInt[i]]);
-  }
-
-  return true;
-}
 
 bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
                                                int finish, 
@@ -87,7 +53,7 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
       if (flags[v] == 0) {
         flags[v] = 1;
         parent[v] = u;
-        edgeToNext[v] = i; // this is not bag))) I want remember edge to next for u into v))) sorry
+        edgeToNext[v] = i; // this is not bag))) I wont renember edge to next for u into v))) sorry
         bfs.push(v);
       }
     }
@@ -108,35 +74,4 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
     
   assert(!way.empty());
   return true;
-}
-
-
-
-//vertex_count >= 1
-int MovementGraph::GetNearestVertex(boost::shared_ptr<ALBroker> broker_) {
-  Vertex dummy = vertexes_[0];
-	dummy.GetCurrentState(broker_);
-
-	int min_index = 0;
-	float min = dummy.GetMetrics(vertexes_[0]);
-
-	for (int i = 1; i < vertexes_.size(); i++) {
-		float metrics = dummy.GetMetrics(vertexes_[i]);
-		if (metrics < min) {
-			min = metrics;
-			min_index = i;
-		}
-	}
-	return min_index;
-}
-
-void MovementGraph::RunWay(std::vector<Edge*> edges) {
-    if (edges.empty()) {
-        return;
-    }
-    edges[0]->GetBegin()->Run(0.0,getParentBroker());
-
-    for (int i = 0; i < edges.size(); i++) {
-        edges[i]->GetEnd()->Run(0.0, getParentBroker());
-    }
 }
