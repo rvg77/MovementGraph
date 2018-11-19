@@ -1,3 +1,4 @@
+#include <functional>
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
 
@@ -60,6 +61,9 @@ class MovementGraph : public AL::ALModule {
     float velocity_;
   };
 
+  bool FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
+                                 std::vector <const Edge*> way) const;
+
   bool FindWayToVertexFromVertexViaBFS(int start, 
                                        int finish, 
                                        std::vector <int> & way) const;
@@ -72,7 +76,7 @@ class MovementGraph : public AL::ALModule {
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
-  std::map <const Vertex*, int> vertex_to_index_;
+  mutable std::map <const Vertex*, int> vertex_to_index_;
  private:
   std::vector <std::vector <int>> adjacency_list_;
 };
