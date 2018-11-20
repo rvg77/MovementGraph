@@ -15,6 +15,7 @@ def generator(vertex_file, edge_file, output):
     with open('sources/defaultOrder.json') as f:
         default_list_order = json.load(f)
     out = open(output, 'w', encoding='utf-8')
+    out.write('// generated code begins\n\n')
     vertex_numbers = dict()
     with open(vertex_file) as file:
         cur_vertex_name = None
@@ -44,6 +45,7 @@ def generator(vertex_file, edge_file, output):
             vertex_from = '&' + vector_vertexes + '[' + str(vertex_numbers[line[0]]) + ']'
             vertex_to = '&' + vector_vertexes + '[' + str(vertex_numbers[line[1]]) + ']'
             out.write(vector_edges + '.' + emplace_back + '(' + vertex_from + ', ' + vertex_to + ', ' + line[2] + ');\n')
+    out.write('// generated code ends\n\n')
 
 
 if __name__ == '__main__':
