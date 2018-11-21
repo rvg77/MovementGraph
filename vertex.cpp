@@ -56,9 +56,14 @@ void MovementGraph::Vertex::GetCurrentState(boost::shared_ptr<ALBroker> broker_ 
 }
 
 
-void MovementGraph::Vertex::PrintState() {
-  std::cout << param_values_ << std::endl;
+void MovementGraph::Vertex::PrintState(std::ostream &out) {
+  out << '{' << std::endl;
+  for (size_t i = 0; i < PARAM_NUM_; ++i) {
+    out << "    " << param_names_[i] << " : " << param_values_[i] << std::endl;
+  }
+  out << "}" << std::endl;
 }
+
 void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) {
   ALMotionProxy motion(broker_);
   ALValue names = param_names_;

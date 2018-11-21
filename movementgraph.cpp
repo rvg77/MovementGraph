@@ -20,15 +20,27 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {
+  RecordMovement("test/vertex.txt");
+}
 
+void MovementGraph::RecordMovement(const std::string &output_file) {
+  {
+    ALMotionProxy motion(getParentBroker());
+    motion.rest();
+  }
   std::vector <float> params = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
   Vertex curr(params);
+  std::ofstream out("test/vertex.txt");
+
   while (true) {
-    std::cout << "Enter to continue..." << std::endl;
-    char a;
-    std::cin >> a;
+    std::cout << "> PRINT current robot state. > \nENTER Vertex name or\n > EXIT to finish recording: \n> ";
+    std::string vertex_name;
+    std::cin >> vertex_name;
+
+
+    out << vertex_name << ' ';
     curr.GetCurrentState(getParentBroker());
-    curr.PrintState();
+    curr.PrintState(out);
   }
 }
 

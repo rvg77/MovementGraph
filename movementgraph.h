@@ -1,5 +1,6 @@
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
+#include <fstream>
 
 namespace AL
 {
@@ -28,7 +29,7 @@ class MovementGraph : public AL::ALModule {
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
     void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
 
-    void PrintState();
+    void PrintState(std::ostream &out);
     void AddEdge(Edge* new_edge);
    private:
     static const size_t PARAM_NUM_;
@@ -43,13 +44,15 @@ class MovementGraph : public AL::ALModule {
    public:
     Edge() = delete;
     Edge(Vertex* from, Vertex* to, float velocity);
-    Edge(const Edge & edge);
+    Edge(const Edge &edge);
 
    private:
     const Vertex* begin_;
     const Vertex* end_;
     float velocity_;
   };
+
+  void RecordMovement(const std::string &output_file);
 
   bool FindWayToVertexFromVertexViaBFS(int start, 
                                        int finish, 
