@@ -14,6 +14,6 @@ compil: CMakeLists.txt
 	qibuild make      -c $(CONFIG_NAME)
 
 run:
-	./build-$(CONFIG_NAME)/sdk/bin/movementgraph
+	./build-$(CONFIG_NAME)/sdk/bin/movementgraph --pip ${IP}
 clear:
 	rm -r build-$(CONFIG_NAME)

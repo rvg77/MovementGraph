@@ -12,9 +12,9 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
     ALModule(broker, name) {
 
   setModuleDescription("Module for robot movements.");
-  
-  #include "automaticInitGeneration.h"
 
+  #include "automaticInitGeneration.h"
+      
   adjacency_list_.clear();
   vertex_to_index_.clear();
   for (size_t i = 0; i < vertexes_.size(); ++i) {
@@ -32,7 +32,30 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 
 MovementGraph::~MovementGraph() {}
 
-void MovementGraph::init() {}
+void MovementGraph::init() {
+  RecordMovement("test/vertex.txt");
+}
+
+void MovementGraph::RecordMovement(const std::string &output_file) {
+  {
+    ALMotionProxy motion(getParentBroker());
+    motion.rest();
+  }
+  std::vector <float> params = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  Vertex curr(params);
+  std::ofstream out("test/vertex.txt");
+
+  while (true) {
+    std::cout << "> PRINT current robot state. > \nENTER Vertex name or\n > EXIT to finish recording: \n> ";
+    std::string vertex_name;
+    std::cin >> vertex_name;
+
+
+    out << vertex_name << ' ';
+    curr.GetCurrentState(getParentBroker());
+    curr.PrintState(out);
+  }
+}
 
 
 bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
