@@ -68,8 +68,13 @@ class MovementGraph : public AL::ALModule {
   };
   void RecordMovement(const std::string &output_file);
   
-  bool FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
+  bool FindWayToVertexFromVertex(const Vertex* start,
+                                 const Vertex* finish,
                                  std::vector <const Edge*> way) const;
+
+  bool FindWayToVertexFromVertexViaBFS(int start,
+                                       int finish,
+                                       std::vector <int> & way) const;
 
   int GetNearestVertex(boost::shared_ptr<AL::ALBroker> broker_);
 

@@ -1,2 +1,12 @@
-vertexes_.emplace_back(std::vector<float>({-0.093616, 1.65361, 0.0950661, -0.967996, -0.0337059, -0.200996, -0.0873961, 0.0383921, 0.0614018, -0.113558, 0.049046, -0.0873961, -0.0873961, -0.208582, -0.0537319, 0.0844119, -0.0429101, 0.207132, 0.392746, -1.30087, 2.10921, 1.52791, -0.247016, 0.0288, 0.0372}));
+vertexes_.emplace_back(std::vector<float>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.5, 3}));
+vertexes_.emplace_back(std::vector<float>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.55, 2.3}));
+vertexes_.emplace_back(std::vector<float>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.55, 2.3}));
+vertexes_.emplace_back(std::vector<float>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.55, 2.3}));
+vertexes_.emplace_back(std::vector<float>({7.6, 6.7, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.55, 2.3}));
 
+edges_.emplace_back(&vertexes_[0], &vertexes_[1], 0.5);
+edges_.emplace_back(&vertexes_[0], &vertexes_[2], 0.5);
+edges_.emplace_back(&vertexes_[0], &vertexes_[3], 0.5);
+edges_.emplace_back(&vertexes_[2], &vertexes_[3], 0.5);
+edges_.emplace_back(&vertexes_[4], &vertexes_[0], 0.5);
+edges_.emplace_back(&vertexes_[2], &vertexes_[4], 0.5);
