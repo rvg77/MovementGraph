@@ -9,6 +9,7 @@ using namespace AL;
 
 const size_t MovementGraph::Vertex::PARAM_NUM_ = 25;
 
+
 const std::vector <std::string> MovementGraph::Vertex::param_names_ = {
     "HeadPitch",
     "LShoulderPitch",
@@ -55,7 +56,6 @@ void MovementGraph::Vertex::GetCurrentState(boost::shared_ptr<ALBroker> broker_ 
   return;
 }
 
-
 void MovementGraph::Vertex::PrintState(std::ostream &out) {
   out << '{' << std::endl;
   for (size_t i = 0; i < PARAM_NUM_; ++i) {
@@ -64,7 +64,7 @@ void MovementGraph::Vertex::PrintState(std::ostream &out) {
   out << "}" << std::endl;
 }
 
-void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) {
+void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) const {
   ALMotionProxy motion(broker_);
   ALValue names = param_names_;
   float maxSpeedFraction = velocity_;
@@ -73,6 +73,29 @@ void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> bro
   return;
 }
 
-void MovementGraph::Vertex::AddEdge(Edge* new_edge) {
+void MovementGraph::Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
+}
+
+float MovementGraph::Vertex::GetMetrics(Vertex& vertex) {
+	float result = 0;
+	const std::vector<float> & cords = vertex.GetParamValues();
+	for (int i=0; i < PARAM_NUM_ ; i++) {
+		result += (param_values_[i] - cords[i])*(param_values_[i] - cords[i]);
+	}
+
+	return result;
+}
+
+
+std::vector<float> const & MovementGraph::Vertex::GetParamValues() {
+	return param_values_;
+}
+
+std::vector<float>  const & MovementGraph::Vertex::GetDegreesValues() {
+	std::vector<float> cords;
+	for (auto el : param_values_) {
+		cords.push_back(el * 180.0/PI);
+	}
+	return cords;
 }

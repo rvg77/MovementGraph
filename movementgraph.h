@@ -1,6 +1,9 @@
+#include <functional>
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
 #include <fstream>
+
+const float PI = 3.14159265;
 
 namespace AL
 {
@@ -15,7 +18,6 @@ class MovementGraph : public AL::ALModule {
 
   virtual void init();
 
-
  private:
   class Edge;
 
@@ -27,42 +29,57 @@ class MovementGraph : public AL::ALModule {
     Vertex(const Vertex & vertex);
 
     void GetCurrentState(boost::shared_ptr<AL::ALBroker> broker_ );
-    void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_);
+    void Run(float velocity_, boost::shared_ptr<AL::ALBroker> broker_) const;
+
+    float GetMetrics(Vertex& vertex);
+
+    std::vector<float>  const & GetParamValues();
+
+    std::vector<float>  const & GetDegreesValues();
+
+    void AddEdge(const Edge* new_edge);
 
     void PrintState(std::ostream &out);
+    
     void AddEdge(Edge* new_edge);
+    
    private:
     static const size_t PARAM_NUM_;
     static const std::vector <std::string> param_names_;
 
     std::vector <float> param_values_; // +? const
 
-    std::vector <Edge*> adjacent_edges_;
+    std::vector <const Edge*> adjacent_edges_;
   };
 
   class Edge {
    public:
     Edge() = delete;
-    Edge(Vertex* from, Vertex* to, float velocity);
-    Edge(const Edge &edge);
+    Edge(const Vertex* from, const Vertex* to, float velocity);
+    Edge(const Edge& edge);
+    
+    const Vertex* GetBegin() const;
+    const Vertex* GetEnd() const;
 
    private:
     const Vertex* begin_;
     const Vertex* end_;
     float velocity_;
   };
-
   void RecordMovement(const std::string &output_file);
+  
+  bool FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
+                                 std::vector <const Edge*> way) const;
 
-  bool FindWayToVertexFromVertexViaBFS(int start, 
-                                       int finish, 
-                                       std::vector <int> & way) const;
+  int GetNearestVertex(boost::shared_ptr<AL::ALBroker> broker_);
+
+  void RunWay(std::vector <Edge *> edges);
 
 
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
-  std::map <Vertex*, int> vertex_to_index_;
+  mutable std::map <const Vertex*, int> vertex_to_index_;
  private:
   std::vector <std::vector <int>> adjacency_list_;
 };
