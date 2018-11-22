@@ -20,6 +20,8 @@ set(_srcs
         edge.cpp
         vertex.cpp
         movementgraph.h
+        edge.h
+        vertex.h
         main.cpp
 )
 

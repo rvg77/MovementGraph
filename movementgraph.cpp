@@ -1,12 +1,15 @@
+#pragma once
 #include "movementgraph.h"
-#include <iostream>
 #include <alcommon/albroker.h>
 #include <qi/log.hpp>
+#include <alproxies/albasicawarenessproxy.h>
 #include <alproxies/almotionproxy.h>
 #include <assert.h>
 #include <queue>
+#include <fstream>
 
 using namespace AL;
+
 
 MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::string& name):
     ALModule(broker, name) {
@@ -33,7 +36,18 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {
-  RecordMovement("test/vertex.txt");
+  while (true) {
+    std::string command;
+    std::cout << "> ENTER command\n> ";
+    std::cin >> command;
+    if (command == "RECORD") {
+      RecordMovement("test/vertex.txt");
+    } else if (command == "TEST_RUN") {
+      std::vector <const Edge*> vec;
+      FindWayToVertexFromVertex(&vertexes_[0], &vertexes_[3], vec);
+      RunWay(vec);
+    }
+  }
 }
 
 void MovementGraph::RecordMovement(const std::string &output_file) {
@@ -41,25 +55,31 @@ void MovementGraph::RecordMovement(const std::string &output_file) {
     ALMotionProxy motion(getParentBroker());
     motion.rest();
   }
-  std::vector <float> params = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-  Vertex curr(params);
-  std::ofstream out("test/vertex.txt");
+
+  std::ofstream out("test/vertex.txt", std::ios_base::app);
 
   while (true) {
-    std::cout << "> PRINT current robot state. > \nENTER Vertex name or\n > EXIT to finish recording: \n> ";
+    std::cout << "\t> PRINT current robot state.\n\t> ENTER Vertex name or\n\t> EXIT to finish recording: \n\t> ";
     std::string vertex_name;
     std::cin >> vertex_name;
 
-
+    if (vertex_name == "EXIT") {
+      break;
+    }
     out << vertex_name << ' ';
-    curr.GetCurrentState(getParentBroker());
+    Vertex curr(GetCurrentState());
     curr.PrintState(out);
+  }
+
+  {
+    ALMotionProxy motion(getParentBroker());
+    motion.wakeUp();
   }
 }
 
 
 bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
-                                              std::vector <const Edge*> way) const { 
+                                              std::vector <const Edge*> &way) const {
   assert(way.empty());
   assert(adjacency_list_.size() == vertexes_.size());
   int begin = vertex_to_index_[start];
@@ -128,38 +148,65 @@ bool MovementGraph::FindWayToVertexFromVertexViaBFS(int start,
   }
 
   std::reverse(way.begin(), way.end());
-    
+
   assert(!way.empty());
   return true;
 }
 
 
-
-//vertex_count >= 1
-int MovementGraph::GetNearestVertex(boost::shared_ptr<ALBroker> broker_) {
-  Vertex dummy = vertexes_[0];
-  dummy.GetCurrentState(broker_);
+int MovementGraph::GetNearestVertex() {
+  Vertex dummy(GetCurrentState());
 
   int min_index = 0;
   float min = dummy.GetMetrics(vertexes_[0]);
 
   for (int i = 1; i < vertexes_.size(); i++) {
     float metrics = dummy.GetMetrics(vertexes_[i]);
-	if (metrics < min) {
-	  min = metrics;
-	  min_index = i;
-	}
+    if (metrics < min) {
+      min = metrics;
+      min_index = i;
+    }
   }
+
   return min_index;
 }
 
-void MovementGraph::RunWay(std::vector<Edge*> edges) {
-    if (edges.empty()) {
-        return;
-    }
-    edges[0]->GetBegin()->Run(0.0,getParentBroker());
 
-    for (int i = 0; i < edges.size(); i++) {
-        edges[i]->GetEnd()->Run(0.0, getParentBroker());
+void MovementGraph::RunWay(std::vector<const Edge*> edges) {
+  if (edges.empty()) {
+      return;
+  }
+  AL::ALValue angleLists;
+  AL::ALValue timeLists;
+  std::vector <std::vector <float> > params_list;
+  std::vector <float> time_list;
+
+  time_list.push_back(1);
+  params_list.push_back(edges[0]->GetBegin()->GetParamValues());
+  for (int i = 0; i < edges.size(); ++i) {
+    time_list.push_back(time_list[i] + edges[i]->GetTime());
+    params_list.push_back(edges[i]->GetBegin()->GetParamValues());
+  }
+  std::cout << std::endl;
+  for (int i = 0; i < 25; ++i) {
+    std::vector <float> joint_path;
+    for (int j = 0; j < params_list.size(); ++j) {
+      joint_path.push_back(params_list[j][i]);
     }
+    timeLists.arrayPush(time_list);
+    angleLists.arrayPush(joint_path);
+  }
+
+  ALMotionProxy motion(getParentBroker());
+  motion.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
+}
+
+
+Vertex MovementGraph::GetCurrentState() const {
+  ALMotionProxy motion(getParentBroker());
+  ALValue names = PARAM_NAMES;
+  bool useSensors = true;
+
+  std::vector <float> result = motion.getAngles(names, useSensors);
+  return Vertex(result);
 }
