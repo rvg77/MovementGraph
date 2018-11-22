@@ -1,83 +1,31 @@
-#include "movementgraph.h"
-#include <iostream>
-#include <alcommon/albroker.h>
-#include <qi/log.hpp>
-#include <alproxies/almotionproxy.h>
-#include <assert.h>
+#pragma once
+#include "vertex.h"
 
-using namespace AL;
-
-const size_t MovementGraph::Vertex::PARAM_NUM_ = 25;
-
-
-const std::vector <std::string> MovementGraph::Vertex::param_names_ = {
-    "HeadPitch",
-    "LShoulderPitch",
-    "LShoulderRoll",
-    "LElbowYaw",
-    "LElbowRoll",
-    "LWristYaw",
-    "LHipYawPitch",
-    "LHipRoll",
-    "LHipPitch",
-    "LKneePitch",
-    "LAnklePitch",
-    "LAnkleRoll",
-    "RHipYawPitch",
-    "RHipRoll",
-    "RHipPitch",
-    "RKneePitch",
-    "RAnklePitch",
-    "RAnkleRoll",
-    "RShoulderPitch",
-    "RShoulderRoll",
-    "RElbowYaw",
-    "RElbowRoll",
-    "RWristYaw",
-    "LHand",
-    "RHand" };
-
-
-
-MovementGraph::Vertex::Vertex(std::vector <float> new_param_values_)
+Vertex::Vertex(std::vector <float> new_param_values_)
     : param_values_(new_param_values_) {}
 
-MovementGraph::Vertex::Vertex(const Vertex & vertex)
+
+Vertex::Vertex(const Vertex & vertex)
     : param_values_(vertex.param_values_),
       adjacent_edges_(vertex.adjacent_edges_) {}
 
-void MovementGraph::Vertex::GetCurrentState(boost::shared_ptr<ALBroker> broker_ ) {
-  ALMotionProxy motion(broker_);
-  ALValue names = param_names_;
-  bool useSensors = true;
 
-  std::vector <float> result = motion.getAngles(names, useSensors);
-  param_values_ = result;
-  return;
-}
 
-void MovementGraph::Vertex::PrintState(std::ostream &out) {
+void Vertex::PrintState(std::ostream &out) {
   out << '{' << std::endl;
   for (size_t i = 0; i < PARAM_NUM_; ++i) {
-    out << "    " << param_names_[i] << " : " << param_values_[i] << std::endl;
+    out << "    " << PARAM_NAMES[i] << " : " << param_values_[i] << std::endl;
   }
   out << "}" << std::endl;
 }
 
-void MovementGraph::Vertex::Run(float velocity_, boost::shared_ptr<ALBroker> broker_) const {
-  ALMotionProxy motion(broker_);
-  ALValue names = param_names_;
-  float maxSpeedFraction = velocity_;
 
-  motion.angleInterpolationWithSpeed(names, param_values_, maxSpeedFraction);
-  return;
-}
-
-void MovementGraph::Vertex::AddEdge(const Edge* new_edge) {
+void Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
 
-float MovementGraph::Vertex::GetMetrics(Vertex& vertex) {
+
+float Vertex::GetMetrics(Vertex& vertex) {
 	float result = 0;
 	const std::vector<float> & cords = vertex.GetParamValues();
 	for (int i=0; i < PARAM_NUM_ ; i++) {
@@ -88,11 +36,12 @@ float MovementGraph::Vertex::GetMetrics(Vertex& vertex) {
 }
 
 
-std::vector<float> const & MovementGraph::Vertex::GetParamValues() {
+std::vector<float> Vertex::GetParamValues() const {
 	return param_values_;
 }
 
-std::vector<float>  const & MovementGraph::Vertex::GetDegreesValues() {
+
+std::vector<float> Vertex::GetDegreesValues() const {
 	std::vector<float> cords;
 	for (auto el : param_values_) {
 		cords.push_back(el * 180.0/PI);

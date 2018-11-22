@@ -1,21 +1,20 @@
-#include "movementgraph.h"
-#include <iostream>
-#include <alcommon/albroker.h>
-#include <qi/log.hpp>
-#include <alproxies/almotionproxy.h>
-#include <assert.h>
-using namespace AL;
+#pragma once
+#include "edge.h"
 
 
-MovementGraph::Edge::Edge(const Vertex* from, const Vertex* to, float velocity)
-  : begin_(from), end_(to), velocity_(velocity) {}
+Edge::Edge(const Vertex* from, const Vertex* to, float time)
+  : begin_(from), end_(to), time_(time) {}
 
-MovementGraph::Edge::Edge(const Edge & edge)
-  : begin_(edge.begin_), end_(edge.end_), velocity_(edge.velocity_) {}
+Edge::Edge(const Edge & edge)
+  : begin_(edge.begin_), end_(edge.end_), time_(edge.time_) {}
 
-const MovementGraph::Vertex* MovementGraph::Edge::GetBegin() const {
+const Vertex* Edge::GetBegin() const {
   return begin_;
 }
-const MovementGraph::Vertex* MovementGraph::Edge::GetEnd() const {
+const Vertex* Edge::GetEnd() const {
   return end_;
+}
+
+float Edge::GetTime() const {
+  return time_;
 }
