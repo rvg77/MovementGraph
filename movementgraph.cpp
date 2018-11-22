@@ -4,7 +4,6 @@
 #include <qi/log.hpp>
 #include <alproxies/albasicawarenessproxy.h>
 #include <alproxies/almotionproxy.h>
-#include <assert.h>
 #include <queue>
 #include <fstream>
 
@@ -21,8 +20,8 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   adjacency_list_.clear();
   vertex_to_index_.clear();
   for (size_t i = 0; i < vertexes_.size(); ++i) {
-    const Vertex * dd = &vertexes_[i];
-    vertex_to_index_[dd] = i;
+    const Vertex * ind = &vertexes_[i];
+    vertex_to_index_[ind] = i;
     adjacency_list_.push_back(std::vector<int>());
   }
 
@@ -30,6 +29,8 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
     int u = vertex_to_index_[edges_[i].GetBegin()];
     int v = vertex_to_index_[edges_[i].GetEnd()];
     adjacency_list_[u].push_back(v);
+    
+    vertexes_[u].AddEdge(&edges_[i]);
   }
 }
 
@@ -90,10 +91,12 @@ bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex*
     return false;
   }
 
+  const Vertex* ind = start;
   for (size_t i = 0; i < wayInt.size(); ++i) {
-    way.push_back(&edges_[wayInt[i]]);
+    way.push_back(ind->GetEdge(wayInt[i]));
+    ind = ind->GetEdge(wayInt[i])->GetEnd();
   }
-
+  
   return true;
 }
 

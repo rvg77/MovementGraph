@@ -48,3 +48,8 @@ std::vector<float> Vertex::GetDegreesValues() const {
 	}
 	return cords;
 }
+
+const Edge* Vertex::GetEdge(int ind) const {
+	assert(ind < adjacent_edges_.size());
+	return adjacent_edges_[ind];
+}

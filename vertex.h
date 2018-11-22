@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <assert.h>
 
 class Edge;
 
@@ -52,8 +53,7 @@ class Vertex {
 
   void PrintState(std::ostream &out);
 
-  void AddEdge(Edge* new_edge);
-
+  const Edge* GetEdge(int ind) const ;
  private:
   std::vector <float> param_values_;
   std::vector <const Edge*> adjacent_edges_;
