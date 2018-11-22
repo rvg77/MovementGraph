@@ -21,7 +21,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   adjacency_list_.clear();
   vertex_to_index_.clear();
   for (size_t i = 0; i < vertexes_.size(); ++i) {
-    const Vertex * dd = &vertexes_[i];
+    const Vertex* dd = &vertexes_[i];
     vertex_to_index_[dd] = i;
     adjacency_list_.push_back(std::vector<int>());
   }
@@ -43,19 +43,30 @@ void MovementGraph::init() {
     if (command == "RECORD") {
       RecordMovement("test/vertex.txt");
     } else if (command == "TEST_RUN") {
+      char y = 'n';
+      while (y != 'y') {
+        std::cout << "!!!! BE AWARE AND NEAR WITH ROBOT y?\n";
+        y = 'y';
+        std::cin >> y;
+      }
+
       std::vector <const Edge*> vec;
       FindWayToVertexFromVertex(&vertexes_[0], &vertexes_[3], vec);
       RunWay(vec);
+    } else if (command == "REST") {
+      StrongRest();
+    } else if (command == "WAKE") {
+      StrongWake();
+    } else if (command == "SET") {
+      int v_num = 0;
+      std::cout << "\t>  ENTER Vertex Number:\n";
+      std::cin >> v_num;
+      RunPosition(&vertexes_[v_num]);
     }
   }
 }
 
 void MovementGraph::RecordMovement(const std::string &output_file) {
-  {
-    ALMotionProxy motion(getParentBroker());
-    motion.rest();
-  }
-
   std::ofstream out("test/vertex.txt", std::ios_base::app);
 
   while (true) {
@@ -69,11 +80,6 @@ void MovementGraph::RecordMovement(const std::string &output_file) {
     out << vertex_name << ' ';
     Vertex curr(GetCurrentState());
     curr.PrintState(out);
-  }
-
-  {
-    ALMotionProxy motion(getParentBroker());
-    motion.wakeUp();
   }
 }
 
@@ -172,7 +178,7 @@ int MovementGraph::GetNearestVertex() {
 }
 
 
-void MovementGraph::RunWay(std::vector<const Edge*> edges) {
+void MovementGraph::RunWay(std::vector<const Edge*> edges, bool only_start) {
   if (edges.empty()) {
       return;
   }
@@ -183,11 +189,12 @@ void MovementGraph::RunWay(std::vector<const Edge*> edges) {
 
   time_list.push_back(1);
   params_list.push_back(edges[0]->GetBegin()->GetParamValues());
-  for (int i = 0; i < edges.size(); ++i) {
+
+  for (int i = 0; !only_start && i < edges.size(); ++i) {
     time_list.push_back(time_list[i] + edges[i]->GetTime());
     params_list.push_back(edges[i]->GetBegin()->GetParamValues());
   }
-  std::cout << std::endl;
+
   for (int i = 0; i < 25; ++i) {
     std::vector <float> joint_path;
     for (int j = 0; j < params_list.size(); ++j) {
@@ -209,4 +216,33 @@ Vertex MovementGraph::GetCurrentState() const {
 
   std::vector <float> result = motion.getAngles(names, useSensors);
   return Vertex(result);
+}
+
+void MovementGraph::StrongRest() const {
+  ALMotionProxy motion(getParentBroker());
+  ALValue names = PARAM_NAMES;
+
+  std::vector <float> param;
+  for (int i = 0; i < PARAM_NUM_; ++i) {
+    param.push_back(0);
+  }
+  motion.setStiffnesses(names, param);
+}
+
+void MovementGraph::StrongWake() const {
+  ALMotionProxy motion(getParentBroker());
+  ALValue names = PARAM_NAMES;
+
+  std::vector <float> param;
+  for (int i = 0; i < PARAM_NUM_; ++i) {
+    param.push_back(1);
+  }
+  motion.setStiffnesses(names, param);
+}
+
+void MovementGraph::RunPosition(const Vertex* v) {
+  Edge e(v, v, 1);
+  std::vector <const Edge*> vec;
+  vec.push_back(&e);
+  RunWay(vec, 1);
 }

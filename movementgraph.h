@@ -31,9 +31,15 @@ class MovementGraph : public AL::ALModule {
 
   int GetNearestVertex();
 
-  void RunWay(std::vector <const Edge*> edges);
+  void RunWay(std::vector <const Edge*> edges, bool only_start=false);
+
+  void RunPosition(const Vertex* v);
 
   Vertex GetCurrentState() const;
+
+  void StrongRest() const;
+
+  void StrongWake() const;
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;

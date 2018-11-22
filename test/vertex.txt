@@ -106,3 +106,84 @@ HI {
     LHand : 0.0216
     RHand : 0.064
 }
+LMASS {
+    HeadPitch : 0.54913
+    LShoulderPitch : 1.52936
+    LShoulderRoll : 0.427944
+    LElbowYaw : -1.2027
+    LElbowRoll : -0.08126
+    LWristYaw : 1.56464
+    LHipYawPitch : -0.0873961
+    LHipRoll : -0.299088
+    LHipPitch : 0.105888
+    LKneePitch : 0.0475121
+    LAnklePitch : -0.131966
+    LAnkleRoll : 0.108956
+    RHipYawPitch : -0.0873961
+    RHipRoll : -0.489304
+    RHipPitch : -0.184122
+    RKneePitch : 0.713352
+    RAnklePitch : -0.524586
+    RAnkleRoll : 0.320648
+    RShoulderPitch : 1.5816
+    RShoulderRoll : -0.29457
+    RElbowYaw : 1.21489
+    RElbowRoll : 0.16418
+    RWristYaw : 0.18864
+    LHand : 0.2988
+    RHand : 0.308
+}
+RFORWARD {
+    HeadPitch : 0.5568
+    LShoulderPitch : 1.52782
+    LShoulderRoll : 0.467828
+    LElbowYaw : -1.20116
+    LElbowRoll : -0.0199001
+    LWristYaw : 1.626
+    LHipYawPitch : -0.0475121
+    LHipRoll : -0.361982
+    LHipPitch : 0.227074
+    LKneePitch : 0.0475121
+    LAnklePitch : -0.288434
+    LAnkleRoll : 0.176452
+    RHipYawPitch : -0.0475121
+    RHipRoll : -0.404934
+    RHipPitch : -0.503194
+    RKneePitch : 0.0276539
+    RAnklePitch : 0.46331
+    RAnkleRoll : 0.25622
+    RShoulderPitch : 1.59847
+    RShoulderRoll : -0.23321
+    RElbowYaw : 1.21949
+    RElbowRoll : 0.1335
+    RWristYaw : 0.18864
+    LHand : 0.2988
+    RHand : 0.308
+}
+RFORWARD2 {
+    HeadPitch : 0.5568
+    LShoulderPitch : 1.71957
+    LShoulderRoll : 0.0628521
+    LElbowYaw : -1.20116
+    LElbowRoll : -0.0613179
+    LWristYaw : 1.6306
+    LHipYawPitch : -0.0168321
+    LHipRoll : -0.099668
+    LHipPitch : 0.2102
+    LKneePitch : 0.363516
+    LAnklePitch : -0.765508
+    LAnkleRoll : 4.19617e-05
+    RHipYawPitch : -0.0168321
+    RHipRoll : -0.25
+    RHipPitch : -1.11833
+    RKneePitch : 1.00021
+    RAnklePitch : -0.0659201
+    RAnkleRoll : 0.216336
+    RShoulderPitch : 1.65676
+    RShoulderRoll : -0.09515
+    RElbowYaw : 1.21335
+    RElbowRoll : 0.10282
+    RWristYaw : 0.184038
+    LHand : 0.2988
+    RHand : 0.308
+}
