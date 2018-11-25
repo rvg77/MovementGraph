@@ -40,12 +40,12 @@ const std::vector <std::string> PARAM_NAMES = {
 class Vertex {
  public:
   Vertex() = delete;
-  Vertex(std::vector <float> new_param_values_);
+  Vertex(std::vector <float> new_param_values_, bool is_radian = false);
   Vertex(const Vertex& vertex);
 
-  float GetMetrics(Vertex& vertex);
+  float Dist(const Vertex& vertex) const;
 
-  std::vector<float> GetParamValues() const;
+  std::vector<float> GetRadianValues() const;
 
   std::vector<float> GetDegreesValues() const;
 
@@ -55,6 +55,7 @@ class Vertex {
 
   const Edge* GetEdge(int ind) const ;
  private:
-  std::vector <float> param_values_;
+  std::vector <float> degree_values_;
+  std::vector <float> radian_values_;
   std::vector <const Edge*> adjacent_edges_;
 };

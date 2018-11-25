@@ -50,9 +50,12 @@ void MovementGraph::init() {
         y = 'y';
         std::cin >> y;
       }
+      std::cout << "ENTER number FROM and TO:\n";
+      int u, v;
+      std::cin >> u >> v;
 
       std::vector <const Edge*> vec;
-      FindWayToVertexFromVertex(&vertexes_[0], &vertexes_[3], vec);
+      FindWayToVertexFromVertex(&vertexes_[u], &vertexes_[v], vec);
       RunWay(vec);
     } else if (command == "REST") {
       StrongRest();
@@ -68,7 +71,7 @@ void MovementGraph::init() {
 }
 
 void MovementGraph::RecordMovement(const std::string &output_file) {
-  std::ofstream out("test/vertex.txt", std::ios_base::app);
+  std::ofstream out(output_file, std::ios_base::app);
 
   while (true) {
     std::cout << "\t> PRINT current robot state.\n\t> ENTER Vertex name or\n\t> EXIT to finish recording: \n\t> ";
@@ -167,10 +170,10 @@ int MovementGraph::GetNearestVertex() {
   Vertex dummy(GetCurrentState());
 
   int min_index = 0;
-  float min = dummy.GetMetrics(vertexes_[0]);
+  float min = dummy.Dist(vertexes_[0]);
 
   for (int i = 1; i < vertexes_.size(); i++) {
-    float metrics = dummy.GetMetrics(vertexes_[i]);
+    float metrics = dummy.Dist(vertexes_[i]);
     if (metrics < min) {
       min = metrics;
       min_index = i;
@@ -191,11 +194,11 @@ void MovementGraph::RunWay(std::vector<const Edge*> edges, bool only_start) {
   std::vector <float> time_list;
 
   time_list.push_back(1);
-  params_list.push_back(edges[0]->GetBegin()->GetParamValues());
+  params_list.push_back(edges[0]->GetBegin()->GetRadianValues());
 
   for (int i = 0; !only_start && i < edges.size(); ++i) {
     time_list.push_back(time_list[i] + edges[i]->GetTime());
-    params_list.push_back(edges[i]->GetBegin()->GetParamValues());
+    params_list.push_back(edges[i]->GetBegin()->GetRadianValues());
   }
 
   for (int i = 0; i < 25; ++i) {
@@ -218,7 +221,7 @@ Vertex MovementGraph::GetCurrentState() const {
   bool useSensors = true;
 
   std::vector <float> result = motion.getAngles(names, useSensors);
-  return Vertex(result);
+  return Vertex(result, true);
 }
 
 void MovementGraph::StrongRest() const {
@@ -244,7 +247,7 @@ void MovementGraph::StrongWake() const {
 }
 
 void MovementGraph::RunPosition(const Vertex* v) {
-  Edge e(v, v, 1);
+  Edge e(v, v, 2);
   std::vector <const Edge*> vec;
   vec.push_back(&e);
   RunWay(vec, 1);

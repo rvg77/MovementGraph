@@ -1,12 +1,26 @@
 #pragma once
 #include "vertex.h"
 
-Vertex::Vertex(std::vector <float> new_param_values_)
-    : param_values_(new_param_values_) {}
+Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
+		: degree_values_(new_param_values_) {
+	for (int i = 0; i < PARAM_NUM_; ++i) {
+		float val = degree_values_[i];
+		if (is_radian) {
+			val = val * PI / 180;
+		} else {
+			val = val * 180 / PI;
+		}
+		radian_values_.push_back(val);
+	}
+	if (is_radian) {
+		std::swap(degree_values_, radian_values_);
+	}
+}
 
 
-Vertex::Vertex(const Vertex & vertex)
-    : param_values_(vertex.param_values_),
+Vertex::Vertex(const Vertex& vertex)
+    : degree_values_(vertex.degree_values_),
+    	radian_values_(vertex.radian_values_),
       adjacent_edges_(vertex.adjacent_edges_) {}
 
 
@@ -14,7 +28,7 @@ Vertex::Vertex(const Vertex & vertex)
 void Vertex::PrintState(std::ostream &out) {
   out << '{' << std::endl;
   for (size_t i = 0; i < PARAM_NUM_; ++i) {
-    out << "    " << PARAM_NAMES[i] << " : " << param_values_[i] << std::endl;
+    out << "    " << PARAM_NAMES[i] << " : " << degree_values_[i] << std::endl;
   }
   out << "}" << std::endl;
 }
@@ -25,31 +39,28 @@ void Vertex::AddEdge(const Edge* new_edge) {
 }
 
 
-float Vertex::GetMetrics(Vertex& vertex) {
+float Vertex::Dist(const Vertex& vertex) const {
 	float result = 0;
-	const std::vector<float> & cords = vertex.GetParamValues();
-	for (int i=0; i < PARAM_NUM_ ; i++) {
-		result += (param_values_[i] - cords[i])*(param_values_[i] - cords[i]);
+	for (int i = 0; i < PARAM_NUM_; ++i) {
+		float lin_dist = degree_values_[i] - vertex.degree_values_[i];
+		result += lin_dist * lin_dist;
 	}
 
 	return result;
 }
 
 
-std::vector<float> Vertex::GetParamValues() const {
-	return param_values_;
+std::vector<float> Vertex::GetRadianValues() const {
+	return radian_values_;
 }
 
 
 std::vector<float> Vertex::GetDegreesValues() const {
-	std::vector<float> cords;
-	for (auto el : param_values_) {
-		cords.push_back(el * 180.0/PI);
-	}
-	return cords;
+	return degree_values_;
 }
 
 const Edge* Vertex::GetEdge(int ind) const {
 	assert(ind < adjacent_edges_.size());
+
 	return adjacent_edges_[ind];
 }
