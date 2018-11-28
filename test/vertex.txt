@@ -1,0 +1,27 @@
+StartPosition {
+    HeadPitch : -0.159578
+    LShoulderPitch : 1.45572
+    LShoulderRoll : 0.205514
+    LElbowYaw : -1.17815
+    LElbowRoll : -0.401866
+    LWristYaw : 0.113474
+    LHipYawPitch : -0.167164
+    LHipRoll : -0.024502
+    LHipPitch : 0.0782759
+    LKneePitch : -0.092082
+    LAnklePitch : 0.0935321
+    LAnkleRoll : 0.107422
+    RHipYawPitch : -0.167164
+    RHipRoll : 0.07214
+    RHipPitch : 0.13495
+    RKneePitch : -0.0919981
+    RAnklePitch : 0.0874801
+    RAnkleRoll : 0.0368581
+    RShoulderPitch : 1.46041
+    RShoulderRoll : -0.204064
+    RElbowYaw : 1.19034
+    RElbowRoll : 0.420358
+    RWristYaw : 0.0720561
+    LHand : 0.2968
+    RHand : 0.2956
+}
