@@ -6,6 +6,7 @@
 #include <alproxies/almotionproxy.h>
 #include <queue>
 #include <fstream>
+#include <log.h>
 
 using namespace AL;
 
@@ -65,8 +66,24 @@ void MovementGraph::init() {
       int v_num = 0;
       std::cout << "\t>  ENTER Vertex Number:\n";
       std::cin >> v_num;
-      RunPosition(&vertexes_[v_num]);
-    }
+      if (v_num >= vertexes_.size()) {
+        std::cout << 
+      } else {
+        RunPosition(&vertexes_[v_num]);
+      }
+    } else if (command == "TEST_RUN_MOVE") {
+      std::vector <const Edge*> vec;
+      
+      int count;
+
+      std::cout << "PLEASE give my COUNT STEPS\n";
+      std::cin >> count;
+      FindWayToVertexFromVertex(&vertexes_[0], &vertexes_[4], vec);
+        
+      for (int i = 0; i < count; ++i) {
+        RunWay(vec);
+      }
+    } 
   }
 }
 
