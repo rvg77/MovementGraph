@@ -63,9 +63,10 @@ void MovementGraph::init() {
       StrongWake();
     } else if (command == "SET") {
       int v_num = 0;
+      std::string v_name = "";
       std::cout << "\t>  ENTER Vertex Number:\n";
-      std::cin >> v_num;
-      RunPosition(&vertexes_[v_num]);
+      std::cin >> v_name;
+      RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
     }
   }
 }
