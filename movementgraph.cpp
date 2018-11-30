@@ -52,12 +52,12 @@ void MovementGraph::init() {
       int v_num = 0;
       std::string v_name = "";
       std::cout << "\t>  ENTER Vertex Number:\n";
-      std::cin >> v_num;
+      std::cin >> v_name;
       if (v_num >= vertexes_.size()) {
         std::cout << "wrong vertex number)))\n";
         continue;
       } else {
-        RunPosition(&vertexes_[fromStringNameToNumber_[v_num]]);
+        RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
       }
     } else if (command == "TEST") {
       std::vector <const Edge*> vec;
