@@ -43,6 +43,7 @@ class MovementGraph : public AL::ALModule {
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
+  std::map<std::string, int> fromStringNameToNumber_;
 
  private:
   mutable std::map <const Vertex*, int> vertex_to_index_;

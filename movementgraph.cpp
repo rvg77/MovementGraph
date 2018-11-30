@@ -50,13 +50,14 @@ void MovementGraph::init() {
       StrongWake();
     } else if (command == "SET") {
       int v_num = 0;
+      std::string v_name = "";
       std::cout << "\t>  ENTER Vertex Number:\n";
       std::cin >> v_num;
       if (v_num >= vertexes_.size()) {
         std::cout << "wrong vertex number)))\n";
         continue;
       } else {
-        RunPosition(&vertexes_[v_num]);
+        RunPosition(&vertexes_[fromStringNameToNumber_[v_num]]);
       }
     } else if (command == "TEST") {
       std::vector <const Edge*> vec;
@@ -73,7 +74,7 @@ void MovementGraph::init() {
       for (int i = 0; i < count; ++i) {
         RunWay(vec);
       }
-    } 
+    }
   }
 }
 

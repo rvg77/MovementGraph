@@ -5,7 +5,7 @@ class_vertex = 'Vertex'
 vector_vertexes = 'vertexes_'
 vector_edges = 'edges_'
 emplace_back = 'emplace_back'
-
+map_name = 'fromStringNameToNumber_'
 
 def generator(vertex_file, edge_file, output):
     if output is None:
@@ -15,16 +15,20 @@ def generator(vertex_file, edge_file, output):
     with open('sources/defaultOrder.json') as f:
         default_list_order = json.load(f)
     out = open(output, 'w', encoding='utf-8')
+    out.write('// generated code begins\n\n')
     vertex_numbers = dict()
     with open(vertex_file) as file:
         cur_vertex_name = None
         cur_vertex_dict = default_dict_motors
         number = 0
         for line in file:
+            if line == '\n'  or line[0] == '/' and line[1] == '/':
+                continue
             line = line.split()
             if cur_vertex_name is None:
                 cur_vertex_name = line[0]
                 vertex_numbers[cur_vertex_name] = number
+                out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')  
                 number = number + 1
             elif line[0] != '}':
                 cur_vertex_dict[line[0]] = line[2]
@@ -44,6 +48,7 @@ def generator(vertex_file, edge_file, output):
             vertex_from = '&' + vector_vertexes + '[' + str(vertex_numbers[line[0]]) + ']'
             vertex_to = '&' + vector_vertexes + '[' + str(vertex_numbers[line[1]]) + ']'
             out.write(vector_edges + '.' + emplace_back + '(' + vertex_from + ', ' + vertex_to + ', ' + line[2] + ');\n')
+    out.write('// generated code ends\n\n')
 
 
 if __name__ == '__main__':

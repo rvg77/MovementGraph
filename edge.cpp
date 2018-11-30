@@ -14,7 +14,6 @@ const Vertex* Edge::GetBegin() const {
 const Vertex* Edge::GetEnd() const {
   return end_;
 }
-
 float Edge::GetTime() const {
   return time_;
 }
