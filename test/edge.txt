@@ -2,3 +2,10 @@ L STEP 0.5
 STEP STEPCHANGHAND 0.5
 STEPCHANGHAND exit 0.5
 exit exit2 0.5
+LowStay LeftFood 0.5
+LeftFood upRightFood 0.5
+upRightFood upBodyOnRightFood 0.5
+upBodyOnRightFood UpRightKnee 0.5
+UpRightKnee HitRightFoodToFront 0.5
+HitRightFoodToFront FINAL 0.5
+FINAL FINAL1 0.5
