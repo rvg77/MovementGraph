@@ -6,6 +6,7 @@
 #include <alproxies/almotionproxy.h>
 #include <queue>
 #include <fstream>
+//#include "log.h"
 
 using namespace AL;
 
@@ -43,20 +44,6 @@ void MovementGraph::init() {
     std::cin >> command;
     if (command == "RECORD") {
       RecordMovement("test/vertex.txt");
-    } else if (command == "TEST_RUN") {
-      char y = 'n';
-      while (y != 'y') {
-        std::cout << "!!!! BE AWARE AND NEAR WITH ROBOT y?\n";
-        y = 'y';
-        std::cin >> y;
-      }
-      std::cout << "ENTER number FROM and TO:\n";
-      int u, v;
-      std::cin >> u >> v;
-
-      std::vector <const Edge*> vec;
-      FindWayToVertexFromVertex(&vertexes_[u], &vertexes_[v], vec);
-      RunWay(vec);
     } else if (command == "REST") {
       StrongRest();
     } else if (command == "WAKE") {
@@ -65,8 +52,28 @@ void MovementGraph::init() {
       int v_num = 0;
       std::string v_name = "";
       std::cout << "\t>  ENTER Vertex Number:\n";
-      std::cin >> v_name;
-      RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
+      std::cin >> v_num;
+      if (v_num >= vertexes_.size()) {
+        std::cout << "wrong vertex number)))\n";
+        continue;
+      } else {
+        RunPosition(&vertexes_[fromStringNameToNumber_[v_num]]);
+      }
+    } else if (command == "TEST") {
+      std::vector <const Edge*> vec;
+      
+      int count, s, f;
+
+      std::cout << "PLEASE give my INDEX VERTEX (START and FINAL)\n";
+      std::cin >> s >> f;
+
+      std::cout << "PLEASE give my COUNT STEPS\n";
+      std::cin >> count;
+      FindWayToVertexFromVertex(&vertexes_[s], &vertexes_[f], vec);
+        
+      for (int i = 0; i < count; ++i) {
+        RunWay(vec);
+      }
     }
   }
 }
