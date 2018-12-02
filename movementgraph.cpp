@@ -49,17 +49,26 @@ void MovementGraph::init() {
     } else if (command == "WAKE") {
       StrongWake();
     } else if (command == "SET") {
-      int v_num = 0;
       std::string v_name = "";
-      std::cout << "\t>  ENTER Vertex Number:\n";
+      std::cout << "\t>  ENTER Vertex Name:\n";
       std::cin >> v_name;
-      if (v_num >= vertexes_.size()) {
-        std::cout << "wrong vertex number)))\n";
+      if (fromStringNameToNumber_.find(v_name) == fromStringNameToNumber_.end()) {
+        std::cout << "wrong vertex name)))\n";
         continue;
       } else {
         RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
       }
-    } else if (command == "TEST") {
+    } else if (command == "SET_NUMER") {
+      int v_num = 0;
+      std::cout << "\t>  ENTER Vertex Number:\n";
+      std::cin >> v_num;
+      if (v_num >= vertexes_.size()) {
+        std::cout << "wrong vertex number)))\n";
+        continue;
+      } else {
+        RunPosition(&vertexes_[v_num]);
+      }
+    } else if (command == "TEST_NUMBER") {
       std::vector <const Edge*> vec;
       
       int count, s, f;
@@ -74,6 +83,50 @@ void MovementGraph::init() {
       for (int i = 0; i < count; ++i) {
         RunWay(vec);
       }
+    }
+    else if (command == "TEST") {
+      std::vector <const Edge*> vec;
+      
+      int count;
+      std::string s, f;
+
+      std::cout << "PLEASE give my NAME VERTEX (START and FINAL)\n";
+      std::cin >> s >> f;
+
+      std::cout << "PLEASE give my COUNT STEPS\n";
+      std::cin >> count;
+      FindWayToVertexFromVertex(&vertexes_[fromStringNameToNumber_[s]], &vertexes_[fromStringNameToNumber_[f]], vec);
+
+      for (int i = 0; i < count; ++i) {
+        RunWay(vec);
+      }
+    }
+    else if (command == "TT") {
+      std::vector <const Edge*> vec;
+      
+      int count;
+      std::string s, f;
+
+      std::cout << "PLEASE give my COUNT STEPS\n";
+      std::cin >> count;
+
+      std::vector <const Edge*> way;
+
+      //std::vector <std::pair<std::string, int>> tr({{"A", 0}, {"ALL", 0}, {"ALL", 0}, {"A", 1}, {"ARR", 0}, {"ARR", 0}});
+      //std::vector <std::pair<std::string, int>> tr({{"A", 2}, {"B1", 0}, {"B2", 0}});
+      std::vector <std::pair<std::string, int>> tr({{"A", 0}, {"ML", 0}, {"ST1", 0}, {"MR", 0}, {"ST2", 0}, {"ML", 0}, {"A", 1}});
+      
+      for (int i = 0; i < tr.size(); ++i) {
+        vec.push_back(vertexes_[fromStringNameToNumber_[tr[i].first]].GetEdge(tr[i].second));
+      }
+
+      for (int i = 0; i < count; ++i) {
+        for (int j = 0; j < vec.size(); ++j) {
+          way.push_back(vec[j]);
+        }
+      }
+      way.push_back(vec[0]);
+      RunWay(way);
     }
   }
 }
