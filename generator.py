@@ -1,5 +1,6 @@
 import argparse
 import json
+import copy
 
 class_vertex = 'Vertex'
 vector_vertexes = 'vertexes_'
@@ -19,10 +20,10 @@ def generator(vertex_file, edge_file, output):
     vertex_numbers = dict()
     with open(vertex_file) as file:
         cur_vertex_name = None
-        cur_vertex_dict = default_dict_motors
+        cur_vertex_dict = copy.deepcopy(default_dict_motors)
         number = 0
         for line in file:
-            if line == '\n'  or line[0] == '/' and line[1] == '/':
+            if line == '\n' or line.strip()[0] == '/' and line.strip()[1] == '/':
                 continue
             line = line.split()
             if cur_vertex_name is None:
@@ -39,11 +40,13 @@ def generator(vertex_file, edge_file, output):
                 s = s[:-2]
                 out.write(vector_vertexes + '.' + emplace_back + '(std::vector<float>({' + s + '}));\n')
                 cur_vertex_name = None
-                cur_vertex_dict = default_dict_motors
+                cur_vertex_dict = copy.deepcopy(default_dict_motors)
 
     out.write('\n')
     with open(edge_file) as file:
         for line in file:
+            if line == '\n' or line.strip()[0] == '/' and line.strip()[1] == '/':
+                continue
             line = line.split()
             vertex_from = '&' + vector_vertexes + '[' + str(vertex_numbers[line[0]]) + ']'
             vertex_to = '&' + vector_vertexes + '[' + str(vertex_numbers[line[1]]) + ']'
