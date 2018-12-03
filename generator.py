@@ -8,6 +8,7 @@ vector_edges = 'edges_'
 emplace_back = 'emplace_back'
 map_name = 'fromStringNameToNumber_'
 
+
 def generator(vertex_file, edge_file, output):
     if output is None:
         output = "automaticInitGeneration.h"
@@ -23,15 +24,22 @@ def generator(vertex_file, edge_file, output):
         cur_vertex_dict = copy.deepcopy(default_dict_motors)
         number = 0
         for line in file:
+            line_copy = line
             if line == '\n' or line.strip()[0] == '/' and line.strip()[1] == '/':
                 continue
             line = line.split()
             if cur_vertex_name is None:
+                if len(line) != 2 or line[1] != '{':
+                    print('Incorrect line: ' + line_copy + '\n' + 'Should be: \'NAME {\'')
+                    raise KeyError
                 cur_vertex_name = line[0]
                 vertex_numbers[cur_vertex_name] = number
                 out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')  
                 number = number + 1
             elif line[0] != '}':
+                if line[0] not in default_list_order:
+                    print('No such motor: ' + line[0] + '. In vertex ' + cur_vertex_name + '.')
+                    raise KeyError
                 cur_vertex_dict[line[0]] = line[2]
             else:
                 s = ''
@@ -45,12 +53,18 @@ def generator(vertex_file, edge_file, output):
     out.write('\n')
     with open(edge_file) as file:
         for line in file:
+            line_copy = line
             if line == '\n' or line.strip()[0] == '/' and line.strip()[1] == '/':
                 continue
             line = line.split()
-            vertex_from = '&' + vector_vertexes + '[' + str(vertex_numbers[line[0]]) + ']'
-            vertex_to = '&' + vector_vertexes + '[' + str(vertex_numbers[line[1]]) + ']'
-            out.write(vector_edges + '.' + emplace_back + '(' + vertex_from + ', ' + vertex_to + ', ' + line[2] + ');\n')
+            try:
+                vertex_from = '&' + vector_vertexes + '[' + str(vertex_numbers[line[0]]) + ']'
+                vertex_to = '&' + vector_vertexes + '[' + str(vertex_numbers[line[1]]) + ']'
+                out.write(vector_edges + '.' + emplace_back + '(' + vertex_from + ', ' + vertex_to + ', ' + line[2] + ');\n')
+            except KeyError as error:
+                print('Sorry, there is no such vertex ' + error.args[0] + ', like in  line: ' + line_copy)
+                raise error
+
     out.write('// generated code ends\n\n')
 
 
