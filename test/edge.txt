@@ -1,0 +1,5 @@
+LowStay LeftFood 1
+LeftFood upBodyOnRightFood 1
+upBodyOnRightFood UpRightKnee 1
+UpRightKnee HitRightFoodToFront2 1
+HitRightFoodToFront2 FINAL 1

@@ -50,12 +50,12 @@ void MovementGraph::init() {
         y = 'y';
         std::cin >> y;
       }
-      std::cout << "ENTER number FROM and TO:\n";
-      int u, v;
+      std::cout << "ENTER name FROM and TO:\n";
+      std::string u, v;
       std::cin >> u >> v;
 
       std::vector <const Edge*> vec;
-      FindWayToVertexFromVertex(&vertexes_[u], &vertexes_[v], vec);
+      FindWayToVertexFromVertex(&vertexes_[fromStringNameToNumber_[u]], &vertexes_[fromStringNameToNumber_[v]], vec);
       RunWay(vec);
     } else if (command == "REST") {
       StrongRest();
@@ -64,7 +64,7 @@ void MovementGraph::init() {
     } else if (command == "SET") {
       int v_num = 0;
       std::string v_name = "";
-      std::cout << "\t>  ENTER Vertex Number:\n";
+      std::cout << "\t>  ENTER Vertex Name:\n";
       std::cin >> v_name;
       RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
     }
