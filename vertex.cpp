@@ -6,9 +6,9 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 	for (int i = 0; i < PARAM_NUM_; ++i) {
 		float val = degree_values_[i];
 		if (is_radian) {
-			val = val * PI / 180;
+      val = val * 180 / PI;
 		} else {
-			val = val * 180 / PI;
+      val = val * PI / 180;
 		}
 		radian_values_.push_back(val);
 	}

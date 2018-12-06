@@ -259,7 +259,7 @@ void MovementGraph::RunWay(std::vector<const Edge*> edges, bool only_start) {
 
   for (int i = 0; !only_start && i < edges.size(); ++i) {
     time_list.push_back(time_list[i] + edges[i]->GetTime());
-    params_list.push_back(edges[i]->GetBegin()->GetRadianValues());
+    params_list.push_back(edges[i]->GetEnd()->GetRadianValues());
   }
 
   for (int i = 0; i < 25; ++i) {
