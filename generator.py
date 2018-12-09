@@ -37,20 +37,49 @@ def generator(vertex_file, edge_file, output):
                 out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')
                 number = number + 1
             elif line[0] != '}':
-                if line[0] not in default_list_order:
-                    print('No such motor: ' + line[0] + '. In vertex ' + cur_vertex_name + '.')
-                    raise KeyError
-                cur_vertex_dict[line[0]] = line[2]
+                if line_copy[0] == '}':
+                    s = ''
+                    for name in default_list_order:
+                        s = s + str(cur_vertex_dict[name]) + ', '
+                    s = s[:-2]
+                    out.write(vector_vertexes + '.' + emplace_back + '(std::vector<float>({' + s + '}));\n')
+                    out.write(vector_vertexes + '.back().SetName("' + cur_vertex_name + '");\n')
+                    cur_vertex_name = None
+                    cur_vertex_dict = copy.deepcopy(default_dict_motors)
+                    line_after = line_copy[1:].strip()
+                    if len(line_after.split()) != 0:
+                        line = line_after.split()
+                        if len(line) != 2 or line[1] != '{':
+                            print('Incorrect line: ' + line_copy + '\n' + 'Should be: \'NAME {\'')
+                            raise KeyError
+                        cur_vertex_name = line[0]
+                        vertex_numbers[cur_vertex_name] = number
+                        out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')
+                        number = number + 1
+                else:
+                    if line[0] not in default_list_order:
+                        print('No such motor: ' + line[0] + '. In vertex ' + cur_vertex_name + '.')
+                        raise KeyError
+                    cur_vertex_dict[line[0]] = line[2]
             else:
                 s = ''
                 for name in default_list_order:
                     s = s + str(cur_vertex_dict[name]) + ', '
                 s = s[:-2]
                 out.write(vector_vertexes + '.' + emplace_back + '(std::vector<float>({' + s + '}));\n')
-                # МИША) ЗАГЛЯНИ СЮДА
                 out.write(vector_vertexes + '.back().SetName("' + cur_vertex_name + '");\n')
                 cur_vertex_name = None
                 cur_vertex_dict = copy.deepcopy(default_dict_motors)
+                line_after = line_copy[1:].strip()
+                if len(line_after.split()) != 0:
+                    line = line_after.split()
+                    if len(line) != 2 or line[1] != '{':
+                        print('Incorrect line: ' + line_copy + '\n' + 'Should be: \'NAME {\'')
+                        raise KeyError
+                    cur_vertex_name = line[0]
+                    vertex_numbers[cur_vertex_name] = number
+                    out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')
+                    number = number + 1
 
     out.write('\n')
     with open(edge_file) as file:
