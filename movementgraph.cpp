@@ -13,8 +13,8 @@ using namespace AL;
 
 MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::string& name):
     ALModule(broker, name),
-    vertexBuffer_(true),
-    edgeBuffer_(true) {
+    vertex_buffer_(true),
+    edge_buffer_(true) {
 
   setModuleDescription("Module for robot movements.");
 
@@ -44,112 +44,110 @@ void MovementGraph::init() {
     std::string command;
     std::cout << "> ENTER command\n> ";
     std::cin >> command;
-    if (command == "RECORD") {
-      RecordMovement("test/vertex.txt");
-    } else if (command == "REST") {
+
+    if (command == "REST") {
       StrongRest();
-    } else if (command == "WAKE") {
+    }
+    else if (command == "WAKE") {
       StrongWake();
-    } else if (command == "SET") {
-      std::string v_name = "";
+    }
+    else if (command == "ON_BUFF") {
+      SnapBuffer();
+    }
+    else if (command == "CALL_BUFF") {
+      std::string name;
+      std::cout << "\t> ENTER name for buffer vertex:\n\t- ";
+      std::cin >> name;
+      SetNameBuffer(name);
+    }
+    else if (command == "RUN_BUFF") {
+      RunFromBuffer();
+    }
+    else if (command == "REFL_BUFF") {
+      ReflectBuffer();
+    }
+    else if (command == "LIKE_LEFT_BUFF") {
+      RightLikeLeftBuffer();
+    }
+    else if (command == "LIKE_RIGHT_BUFF") {
+      LeftLikeRightBuffer();
+    }
+    else if (command == "SAVE") {
+      RecordFromBuffer("test/vertex.txt");
+    }
+    else if (command == "SET") {
+      std::string v_name;
+
       std::cout << "\t>  ENTER Vertex Name:\n";
       std::cin >> v_name;
-      if (fromStringNameToNumber_.find(v_name) == fromStringNameToNumber_.end()) {
-        std::cout << "wrong vertex name)))\n";
+      if (vertexes_by_name_.find(v_name) == vertexes_by_name_.end()) {
+        std::cout << "\t> Wrong vertex name)))\n";
         continue;
       } else {
-        RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
-      }
-    } else if (command == "SET_NUMER") {
-      int v_num = 0;
-      std::cout << "\t>  ENTER Vertex Number:\n";
-      std::cin >> v_num;
-      if (v_num >= vertexes_.size()) {
-        std::cout << "wrong vertex number)))\n";
-        continue;
-      } else {
-        RunPosition(&vertexes_[v_num]);
-      }
-    } else if (command == "TEST_NUMBER") {
-      std::vector <const Edge*> vec;
-      
-      int count, s, f;
-
-      std::cout << "PLEASE give my INDEX VERTEX (START and FINAL)\n";
-      std::cin >> s >> f;
-
-      std::cout << "PLEASE give my COUNT STEPS\n";
-      std::cin >> count;
-      FindWayToVertexFromVertex(&vertexes_[s], &vertexes_[f], vec);
-        
-      for (int i = 0; i < count; ++i) {
-        RunWay(vec);
+        RunPosition(&vertexes_[vertexes_by_name_[v_name]], 0.1);
       }
     }
     else if (command == "TEST") {
-      std::vector <const Edge*> vec;
-      
-      int count;
-      std::string s, f;
+      int n, cnt;
+      std::vector <const Edge*> way;
+      std::vector <std::string> path;
 
-      std::cout << "PLEASE give my NAME VERTEX (START and FINAL)\n";
-      std::cin >> s >> f;
 
-      std::cout << "PLEASE give my COUNT STEPS\n";
-      std::cin >> count;
-      FindWayToVertexFromVertex(&vertexes_[fromStringNameToNumber_[s]], &vertexes_[fromStringNameToNumber_[f]], vec);
+      std::cout << "> Please enter Len of chain:\n\t- ";
+      std::cin >> n;
 
-      for (int i = 0; i < count; ++i) {
-        RunWay(vec);
+      std::cout << "> ENTER vertexes names:\n\t- ";
+      for (int i = 0; i < n; ++i) {
+        std::string s;
+        std::cin >> s;
+        path.push_back(s);
       }
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+      RunChain(path, cnt);
     }
     else if (command == "TT") {
-      std::vector <const Edge*> vec;
-      
-      int count;
-      std::string s, f;
+      int cnt;
+      std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
 
-      std::cout << "PLEASE give my COUNT STEPS\n";
-      std::cin >> count;
-
-      std::vector <const Edge*> way;
-
-      //std::vector <std::pair<std::string, int>> tr({{"A", 0}, {"ALL", 0}, {"ALL", 0}, {"A", 1}, {"ARR", 0}, {"ARR", 0}});
-      //std::vector <std::pair<std::string, int>> tr({{"A", 2}, {"B1", 0}, {"B2", 0}});
-      std::vector <std::pair<std::string, int>> tr({{"LUP", 0}, {"START", 1}, {"RUP", 0}, {"START", 0}});
-      
-      for (int i = 0; i < tr.size(); ++i) {
-        vec.push_back(vertexes_[fromStringNameToNumber_[tr[i].first]].GetEdge(tr[i].second));
-      }
-
-      for (int i = 0; i < count; ++i) {
-        for (int j = 0; j < vec.size(); ++j) {
-          way.push_back(vec[j]);
-        }
-      }
-      way.push_back(vec[0]);
-      RunWay(way);
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+      RunChain(path, cnt);
     }
   }
 }
 
-void MovementGraph::RecordMovement(const std::string &output_file) {
+void MovementGraph::SnapBuffer() {
+  Vertex curr(GetCurrentState());
+  vertex_buffer_ = curr;
+}
+
+void MovementGraph::SetNameBuffer(std::string name) {
+  vertex_buffer_.SetName(name);
+}
+
+void MovementGraph::LeftLikeRightBuffer() {
+  vertex_buffer_.CopyFromSide(RIGHT);
+}
+
+void MovementGraph::RightLikeLeftBuffer() {
+  vertex_buffer_.CopyFromSide(LEFT);
+}
+
+void MovementGraph::ReflectBuffer() {
+  vertex_buffer_.Reflect();
+}
+
+void MovementGraph::RecordFromBuffer(const std::string &output_file) {
   std::ofstream out(output_file, std::ios_base::app);
 
-  while (true) {
-    std::cout << "\t> PRINT current robot state.\n\t> ENTER Vertex name or\n\t> EXIT to finish recording: \n\t> ";
-    std::string vertex_name;
-    std::cin >> vertex_name;
+  vertex_buffer_.PrintState(out);
 
-    if (vertex_name == "EXIT") {
-      break;
-    }
-    out << vertex_name << ' ';
-    Vertex curr(GetCurrentState());
-    curr.PrintState(out);
-  }
 }
 
+void MovementGraph::RunFromBuffer() {
+  RunPosition(&vertex_buffer_, 0.2);
+}
 
 bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
                                               std::vector <const Edge*> &way) const {
@@ -246,25 +244,50 @@ int MovementGraph::GetNearestVertex() {
   return min_index;
 }
 
+void MovementGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
+  int n = chain.size();
+  std::vector <const Edge*> way, full_way;
 
-void MovementGraph::RunWay(std::vector<const Edge*> edges, bool only_start) {
+  for (int i = 1; i < n; ++i) {
+    std::vector <const Edge*> vec;
+    Vertex* s = &vertexes_[vertexes_by_name_[chain[i - 1]]];
+    Vertex* f = &vertexes_[vertexes_by_name_[chain[i]]];
+
+    FindWayToVertexFromVertex(s, f, vec);
+    for (int j = 0; j < vec.size(); ++j) {
+      way.push_back(vec[j]);
+    }
+  }
+
+  for (int i = 0; i < cnt; ++i) {
+    for (int j = 0; j < n; ++j) {
+      full_way.push_back(way[j]);
+    }
+  }
+
+  RunPosition(full_way[0]->GetBegin());
+  RunWay(full_way);
+}
+
+void MovementGraph::RunWay(std::vector<const Edge*> edges) {
   if (edges.empty()) {
       return;
   }
+  std::cout << "!!! " << edges.size() << std::endl;
   AL::ALValue angleLists;
   AL::ALValue timeLists;
   std::vector <std::vector <float> > params_list;
   std::vector <float> time_list;
+  float curr_time = 0;
 
-  time_list.push_back(1);
-  params_list.push_back(edges[0]->GetBegin()->GetRadianValues());
-
-  for (int i = 0; !only_start && i < edges.size(); ++i) {
-    time_list.push_back(time_list[i] + edges[i]->GetTime());
+  for (int i = 0; i < edges.size(); ++i) {
+    curr_time += edges[i]->GetTime();
+    time_list.push_back(curr_time);
     params_list.push_back(edges[i]->GetEnd()->GetRadianValues());
   }
 
-  for (int i = 0; i < 25; ++i) {
+
+  for (int i = 0; i < PARAM_NUM_; ++i) {
     std::vector <float> joint_path;
     for (int j = 0; j < params_list.size(); ++j) {
       joint_path.push_back(params_list[j][i]);
@@ -309,9 +332,7 @@ void MovementGraph::StrongWake() const {
   motion.setStiffnesses(names, param);
 }
 
-void MovementGraph::RunPosition(const Vertex* v) {
-  Edge e(v, v, 2);
-  std::vector <const Edge*> vec;
-  vec.push_back(&e);
-  RunWay(vec, 1);
+void MovementGraph::RunPosition(const Vertex* v, float velocity) {
+  ALMotionProxy motion(getParentBroker());
+  motion.setAngles(PARAM_NAMES, v->GetRadianValues(), velocity);
 }

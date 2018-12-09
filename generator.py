@@ -6,7 +6,7 @@ class_vertex = 'Vertex'
 vector_vertexes = 'vertexes_'
 vector_edges = 'edges_'
 emplace_back = 'emplace_back'
-map_name = 'fromStringNameToNumber_'
+map_name = 'vertexes_by_name_'
 
 
 def generator(vertex_file, edge_file, output):
@@ -34,7 +34,7 @@ def generator(vertex_file, edge_file, output):
                     raise KeyError
                 cur_vertex_name = line[0]
                 vertex_numbers[cur_vertex_name] = number
-                out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')  
+                out.write(map_name + '["' + cur_vertex_name + '"] = ' + str(number) + ';\n')
                 number = number + 1
             elif line[0] != '}':
                 if line[0] not in default_list_order:
@@ -47,6 +47,8 @@ def generator(vertex_file, edge_file, output):
                     s = s + str(cur_vertex_dict[name]) + ', '
                 s = s[:-2]
                 out.write(vector_vertexes + '.' + emplace_back + '(std::vector<float>({' + s + '}));\n')
+                # МИША) ЗАГЛЯНИ СЮДА
+                out.write(vector_vertexes + '.back().SetName("' + cur_vertex_name + '");\n')
                 cur_vertex_name = None
                 cur_vertex_dict = copy.deepcopy(default_dict_motors)
 
