@@ -19,8 +19,21 @@ class MovementGraph : public AL::ALModule {
   virtual void init();
 
  private:
-  void RecordMovement(const std::string &output_file);
-  
+
+  void SnapBuffer();
+
+  void SetNameBuffer(std::string name);
+
+  void LeftLikeRightBuffer();
+
+  void RightLikeLeftBuffer();
+
+  void ReflectBuffer();
+
+  void RunFromBuffer();
+
+  void RecordFromBuffer(const std::string &output_file);
+
   bool FindWayToVertexFromVertex(const Vertex* start,
                                  const Vertex* finish,
                                  std::vector <const Edge*> &way) const;
@@ -31,9 +44,11 @@ class MovementGraph : public AL::ALModule {
 
   int GetNearestVertex();
 
-  void RunWay(std::vector <const Edge*> edges, bool only_start=false);
+  void RunChain(const std::vector <std::string>& chain, int cnt);
 
-  void RunPosition(const Vertex* v);
+  void RunWay(std::vector <const Edge*> edges);
+
+  void RunPosition(const Vertex* v, float velocity = 0.3);
 
   Vertex GetCurrentState() const;
 
@@ -43,9 +58,9 @@ class MovementGraph : public AL::ALModule {
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;
-  std::map<std::string, int> fromStringNameToNumber_;
-  Vertex vertexBuffer_;
-  Edge edgeBuffer_;
+  std::map<std::string, int> vertexes_by_name_;
+  Vertex vertex_buffer_;
+  Edge edge_buffer_;
 
  private:
   mutable std::map <const Vertex*, int> vertex_to_index_;
