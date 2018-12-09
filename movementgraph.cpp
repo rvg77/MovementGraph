@@ -12,7 +12,7 @@ using namespace AL;
 
 
 MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::string& name):
-    ALModule(broker, name) {
+    ALModule(broker, name), life_proxy(getParentBroker()) {
 
   setModuleDescription("Module for robot movements.");
 
@@ -38,6 +38,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {
+  life_proxy.setState("disabled");
   while (true) {
     std::string command;
     std::cout << "> ENTER command\n> ";
@@ -58,7 +59,7 @@ void MovementGraph::init() {
       } else {
         RunPosition(&vertexes_[fromStringNameToNumber_[v_name]]);
       }
-    } else if (command == "SET_NUMER") {
+    } else if (command == "SET_NUMBER") {
       int v_num = 0;
       std::cout << "\t>  ENTER Vertex Number:\n";
       std::cin >> v_num;

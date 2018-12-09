@@ -2,6 +2,7 @@
 #include <functional>
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
+#include <alproxies/alautonomouslifeproxy.h>
 #include "edge.h"
 
 
@@ -48,4 +49,5 @@ class MovementGraph : public AL::ALModule {
  private:
   mutable std::map <const Vertex*, int> vertex_to_index_;
   std::vector <std::vector <int>> adjacency_list_;
+  AL::ALAutonomousLifeProxy life_proxy;
 };
