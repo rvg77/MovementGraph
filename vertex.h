@@ -40,6 +40,7 @@ const std::vector <std::string> PARAM_NAMES = {
 class Vertex {
  public:
   Vertex() = delete;
+  Vertex(bool flag);
   Vertex(std::vector <float> new_param_values_, bool is_radian = false);
   Vertex(const Vertex& vertex);
 

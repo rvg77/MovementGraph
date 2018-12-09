@@ -1,5 +1,10 @@
 #pragma once
+#include <assert.h>
 #include "vertex.h"
+
+Vertex::Vertex(bool flag) {
+	assert(flag == true);
+}
 
 Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 		: degree_values_(new_param_values_) {

@@ -12,7 +12,9 @@ using namespace AL;
 
 
 MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::string& name):
-    ALModule(broker, name) {
+    ALModule(broker, name),
+    vertexBuffer_(true),
+    edgeBuffer_(true) {
 
   setModuleDescription("Module for robot movements.");
 
@@ -114,7 +116,7 @@ void MovementGraph::init() {
 
       //std::vector <std::pair<std::string, int>> tr({{"A", 0}, {"ALL", 0}, {"ALL", 0}, {"A", 1}, {"ARR", 0}, {"ARR", 0}});
       //std::vector <std::pair<std::string, int>> tr({{"A", 2}, {"B1", 0}, {"B2", 0}});
-      std::vector <std::pair<std::string, int>> tr({{"A", 0}, {"ML", 0}, {"ST1", 0}, {"MR", 0}, {"ST2", 0}, {"ML", 0}, {"A", 1}});
+      std::vector <std::pair<std::string, int>> tr({{"LUP", 0}, {"START", 1}, {"RUP", 0}, {"START", 0}});
       
       for (int i = 0; i < tr.size(); ++i) {
         vec.push_back(vertexes_[fromStringNameToNumber_[tr[i].first]].GetEdge(tr[i].second));
