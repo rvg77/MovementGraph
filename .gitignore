@@ -5,3 +5,5 @@ automaticInitGeneration.h
 .vscode
 test
 Makefile
+.gitignore
+CMakeLists.txt
