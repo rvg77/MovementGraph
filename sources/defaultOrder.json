@@ -1,10 +1,16 @@
 [
+    "HeadYaw",
     "HeadPitch",
     "LShoulderPitch",
     "LShoulderRoll",
     "LElbowYaw",
     "LElbowRoll",
     "LWristYaw",
+    "RShoulderPitch",
+    "RShoulderRoll",
+    "RElbowYaw",
+    "RElbowRoll",
+    "RWristYaw",
     "LHipYawPitch",
     "LHipRoll",
     "LHipPitch",
@@ -16,12 +22,5 @@
     "RHipPitch",
     "RKneePitch",
     "RAnklePitch",
-    "RAnkleRoll",
-    "RShoulderPitch",
-    "RShoulderRoll",
-    "RElbowYaw",
-    "RElbowRoll",
-    "RWristYaw",
-    "LHand",
-    "RHand"
+    "RAnkleRoll"
 ]

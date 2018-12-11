@@ -1,55 +1,30 @@
+START {
+    HeadYaw : -0.00240423
+    HeadPitch : -11.0768
 
-SIT {
-    HeadPitch : 4.56796
-    LShoulderPitch : 80.6822
-    LShoulderRoll : 12.3024
-    LElbowYaw : -47.2882
-    LElbowRoll : -57.4788
-    LWristYaw : 8.25942
-    LHipYawPitch : -14.7634
-    LHipRoll : -4.30429
-    LHipPitch : -40.6915
-    LKneePitch : 121.991
-    LAnklePitch : -68.9974
-    LAnkleRoll : 4.39699
-    RHipYawPitch : -14.7634
-    RHipRoll : 4.13332
-    RHipPitch : -40.6084
-    RKneePitch : 122.611
-    RAnklePitch : -69.3442
-    RAnkleRoll : -4.30429
-    RShoulderPitch : 86.3121
-    RShoulderRoll : -0.178186
-    RElbowYaw : 64.5101
-    RElbowRoll : 57.5715
-    RWristYaw : -32.4345
-    LHand : 0.870897
-    RHand : 0.962572
-}
-STAND {
-    HeadPitch : -8.26423
-    LShoulderPitch : 84.3737
-    LShoulderRoll : 11.2477
-    LElbowYaw : -68.6458
-    LElbowRoll : -24.9588
-    LWristYaw : 7.29261
-    LHipYawPitch : -9.40201
-    LHipRoll : 6.06693
-    LHipPitch : 7.91266
-    LKneePitch : -5.3638
-    LAnklePitch : 4.65585
-    LAnkleRoll : -6.06212
-    RHipYawPitch : -9.40201
-    RHipRoll : -6.50159
-    RHipPitch : 7.55628
-    RKneePitch : -4.83163
-    RAnklePitch : 4.57277
-    RAnkleRoll : 6.15482
-    RShoulderPitch : 84.3785
-    RShoulderRoll : -11.4283
-    RElbowYaw : 69.6078
-    RElbowRoll : 24.0847
-    RWristYaw : -31.995
-    LHand : 17.0283
-    RHand : 18.1055
+    LShoulderPitch : 117.069
+    LShoulderRoll : 19.158
+    LElbowYaw : 18.0154
+    LElbowRoll : -60.6429
+    LWristYaw : 4.30429
+
+    RShoulderPitch : 117.069
+    RShoulderRoll : -19.158
+    RElbowYaw : 18.0154
+    RElbowRoll : 60.6429
+    RWristYaw : 4.30429
+
+    LHipYawPitch : 0.441859
+    LHipRoll : -0.173378
+    LHipPitch : -7.90786
+    LKneePitch : 39.7247
+    LAnklePitch : -31.204
+    LAnkleRoll : 0.0902951
+
+    RHipYawPitch : 0.441859
+    RHipRoll : 0.173378
+    RHipPitch : -7.90786
+    RKneePitch : 39.7247
+    RAnklePitch : -31.204
+    RAnkleRoll : -0.0902951
 }

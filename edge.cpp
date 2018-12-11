@@ -1,6 +1,9 @@
 #pragma once
 #include "edge.h"
 
+Edge::Edge(bool flag) {
+  assert(flag == true);
+}
 
 Edge::Edge(const Vertex* from, const Vertex* to, float time)
   : begin_(from), end_(to), time_(time) {}

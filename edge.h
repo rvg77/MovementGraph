@@ -3,6 +3,7 @@
 class Edge {
  public:
   Edge() = delete;
+  Edge(bool flag);
   Edge(const Vertex* from, const Vertex* to, float time);
   Edge(const Edge& edge);
 
