@@ -56,6 +56,14 @@ class MovementGraph : public AL::ALModule {
   void StrongRest() const;
 
   void StrongWake() const;
+
+  void Test();
+
+  void TT();
+
+  bool Set();
+
+  void CallBuffer();
  private:
   std::vector <Vertex> vertexes_;
   std::vector <Edge> edges_;

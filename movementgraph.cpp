@@ -57,10 +57,7 @@ void MovementGraph::init() {
       SnapBuffer();
     }
     else if (command == "CALL_BUFF") {
-      std::string name;
-      std::cout << "\t> ENTER name for buffer vertex:\n\t- ";
-      std::cin >> name;
-      SetNameBuffer(name);
+      CallBuffer();
     }
     else if (command == "RUN_BUFF") {
       RunFromBuffer();
@@ -78,43 +75,15 @@ void MovementGraph::init() {
       RecordFromBuffer("test/vertex.txt");
     }
     else if (command == "SET") {
-      std::string v_name;
-
-      std::cout << "\t>  ENTER Vertex Name:\n";
-      std::cin >> v_name;
-      if (vertexes_by_name_.find(v_name) == vertexes_by_name_.end()) {
-        std::cout << "\t> Wrong vertex name)))\n";
-        continue;
-      } else {
-        RunPosition(&vertexes_[vertexes_by_name_[v_name]], 0.1);
+      if(!Set()) {
+          continue;
       }
     }
     else if (command == "TEST") {
-      int n, cnt;
-      std::vector <const Edge*> way;
-      std::vector <std::string> path;
-
-
-      std::cout << "> Please enter Len of chain:\n\t- ";
-      std::cin >> n;
-
-      std::cout << "> ENTER vertexes names:\n\t- ";
-      for (int i = 0; i < n; ++i) {
-        std::string s;
-        std::cin >> s;
-        path.push_back(s);
-      }
-      std::cout << "> ENTER repeat number:\n\t- ";
-      std::cin >> cnt;
-      RunChain(path, cnt);
+      Test();
     }
     else if (command == "TT") {
-      int cnt;
-      std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
-
-      std::cout << "> ENTER repeat number:\n\t- ";
-      std::cin >> cnt;
-      RunChain(path, cnt);
+      TT();
     }
   }
 }
@@ -337,4 +306,54 @@ void MovementGraph::StrongWake() const {
 void MovementGraph::RunPosition(const Vertex* v, float velocity) {
   ALMotionProxy motion(getParentBroker());
   motion.setAngles(PARAM_NAMES, v->GetRadianValues(), velocity);
+}
+
+void MovementGraph::Test() {
+    int n, cnt;
+    std::vector <const Edge*> way;
+    std::vector <std::string> path;
+
+
+    std::cout << "> Please enter Len of chain:\n\t- ";
+    std::cin >> n;
+
+    std::cout << "> ENTER vertexes names:\n\t- ";
+    for (int i = 0; i < n; ++i) {
+        std::string s;
+        std::cin >> s;
+        path.push_back(s);
+    }
+    std::cout << "> ENTER repeat number:\n\t- ";
+    std::cin >> cnt;
+    RunChain(path, cnt);
+}
+
+void MovementGraph::TT() {
+    int cnt;
+    std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
+
+    std::cout << "> ENTER repeat number:\n\t- ";
+    std::cin >> cnt;
+    RunChain(path, cnt);
+}
+
+bool MovementGraph::Set() {
+  std::string v_name;
+
+  std::cout << "\t>  ENTER Vertex Name:\n";
+  std::cin >> v_name;
+  if (vertexes_by_name_.find(v_name) == vertexes_by_name_.end()) {
+    std::cout << "\t> Wrong vertex name)))\n";
+    return false;
+  } else {
+    RunPosition(&vertexes_[vertexes_by_name_[v_name]], 0.1);
+    return true;
+  }
+}
+
+void MovementGraph::CallBuffer() {
+  std::string name;
+  std::cout << "\t> ENTER name for buffer vertex:\n\t- ";
+  std::cin >> name;
+  SetNameBuffer(name);
 }
