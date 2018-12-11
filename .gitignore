@@ -1,9 +1,0 @@
-cmake-build-debug
-.idea
-build-*
-automaticInitGeneration.h
-.vscode
-test
-Makefile
-.gitignore
-CMakeLists.txt
