@@ -80,6 +80,8 @@ private:
     mutable std::map <const Vertex*, int> vertex_to_index_;
     std::vector <std::vector <int>> adjacency_list_;
     boost::shared_ptr<AL::ALBroker> broker;
+    mutable AL::ALMotionProxy motion;
+    AL::ALValue alvalue_names;
 };
 
 

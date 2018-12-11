@@ -6,7 +6,9 @@
 Graph::Graph(boost::shared_ptr <AL::ALBroker> broker_) :
     broker(broker_),
     vertex_buffer_(true),
-    edge_buffer_(true) {
+    edge_buffer_(true),
+    motion(broker_),
+    alvalue_names(PARAM_NAMES) {
 }
 
 boost::shared_ptr<AL::ALBroker> Graph::getParentBroker() const {
@@ -212,22 +214,18 @@ void Graph::RunWay(std::vector<const Edge*> edges) {
         angleLists.arrayPush(joint_path);
     }
 
-    AL::ALMotionProxy motion(getParentBroker());
     motion.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
 }
 
 
 Vertex Graph::GetCurrentState() const {
-    AL::ALMotionProxy motion(getParentBroker());
-    AL::ALValue names = PARAM_NAMES;
     bool useSensors = true;
 
-    std::vector <float> result = motion.getAngles(names, useSensors);
+    std::vector <float> result = motion.getAngles(alvalue_names, useSensors);
     return Vertex(result, true);
 }
 
 void Graph::RunPosition(const Vertex* v, float velocity) {
-    AL::ALMotionProxy motion(getParentBroker());
     motion.setAngles(PARAM_NAMES, v->GetRadianValues(), velocity);
 }
 
@@ -282,23 +280,17 @@ void Graph::CallBuffer() {
 }
 
 void Graph::StrongRest() const {
-    AL::ALMotionProxy motion(getParentBroker());
-    AL::ALValue names = PARAM_NAMES;
-
     std::vector <float> param;
     for (int i = 0; i < PARAM_NUM_; ++i) {
         param.push_back(0);
     }
-    motion.setStiffnesses(names, param);
+    motion.setStiffnesses(alvalue_names, param);
 }
 
 void Graph::StrongWake() const {
-    AL::ALMotionProxy motion(getParentBroker());
-    AL::ALValue names = PARAM_NAMES;
-
     std::vector <float> param;
     for (int i = 0; i < PARAM_NUM_; ++i) {
         param.push_back(1);
     }
-    motion.setStiffnesses(names, param);
+    motion.setStiffnesses(alvalue_names, param);
 }
