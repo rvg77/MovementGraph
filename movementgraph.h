@@ -2,6 +2,7 @@
 #include <functional>
 #include <boost/shared_ptr.hpp>
 #include <alcommon/almodule.h>
+#include <alproxies/alautonomouslifeproxy.h>
 #include "edge.h"
 
 

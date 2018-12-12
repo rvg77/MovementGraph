@@ -22,7 +22,6 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 	}
 }
 
-
 Vertex::Vertex(const Vertex& vertex)
     : degree_values_(vertex.degree_values_),
     	radian_values_(vertex.radian_values_),
@@ -55,7 +54,6 @@ void Vertex::AddEdge(const Edge* new_edge) {
   adjacent_edges_.push_back(new_edge);
 }
 
-
 float Vertex::Dist(const Vertex& vertex) const {
 	float result = 0;
 	for (int i = 0; i < PARAM_NUM_; ++i) {
@@ -66,11 +64,9 @@ float Vertex::Dist(const Vertex& vertex) const {
 	return result;
 }
 
-
 std::vector<float> Vertex::GetRadianValues() const {
 	return radian_values_;
 }
-
 
 std::vector<float> Vertex::GetDegreesValues() const {
 	return degree_values_;
@@ -84,8 +80,13 @@ const Edge* Vertex::GetEdge(int ind) const {
 
 void Vertex::Reflect() {
 	for (int i = 0; i < PARAM_NUM_; ++i) {
+    int k = PAIR_JOINT[i] < 0 ? -1 : 1;
+    radian_values_[i] *= k;
+    degree_values_[i] *= k;
 		std::swap(radian_values_[i], radian_values_[PAIR_JOINT[i]]);
 		std::swap(degree_values_[i], degree_values_[PAIR_JOINT[i]]);
+    radian_values_[i] *= k;
+    degree_values_[i] *= k;
 	}
 }
 
@@ -94,6 +95,8 @@ void Vertex::CopyFromSide(JOINT_TYPE side_name) {
   	if (JOINT_TYPES[i] == side_name) {
   		int k = PAIR_JOINT[i] < 0 ? -1 : 1;
   		int j = abs(PAIR_JOINT[i]);
+  		assert(j < PARAM_NUM_);
+
   		radian_values_[j] = k * radian_values_[i];
 			degree_values_[j] = k * degree_values_[i];
   	}

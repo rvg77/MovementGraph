@@ -45,7 +45,14 @@ void MovementGraph::init() {
     std::cout << "> ENTER command\n> ";
     std::cin >> command;
 
-    if (command == "REST") {
+    if (command == "ACT_OFF") {
+      AL::ALAutonomousLifeProxy life_proxy(getParentBroker());
+      life_proxy.setState("disabled");
+    }
+    else if (command == "ACT_ON") {
+
+    }
+    else if (command == "REST") {
       StrongRest();
     }
     else if (command == "WAKE") {
@@ -58,6 +65,7 @@ void MovementGraph::init() {
       std::string name;
       std::cout << "\t> ENTER name for buffer vertex:\n\t- ";
       std::cin >> name;
+
       SetNameBuffer(name);
     }
     else if (command == "RUN_BUFF") {
@@ -92,7 +100,6 @@ void MovementGraph::init() {
       std::vector <const Edge*> way;
       std::vector <std::string> path;
 
-
       std::cout << "> Please enter Len of chain:\n\t- ";
       std::cin >> n;
 
@@ -104,6 +111,7 @@ void MovementGraph::init() {
       }
       std::cout << "> ENTER repeat number:\n\t- ";
       std::cin >> cnt;
+
       RunChain(path, cnt);
     }
     else if (command == "TT") {
@@ -112,6 +120,7 @@ void MovementGraph::init() {
 
       std::cout << "> ENTER repeat number:\n\t- ";
       std::cin >> cnt;
+
       RunChain(path, cnt);
     }
   }
