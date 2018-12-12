@@ -80,11 +80,15 @@ const Edge* Vertex::GetEdge(int ind) const {
 
 void Vertex::Reflect() {
 	for (int i = 0; i < PARAM_NUM_; ++i) {
+		if (JOINT_TYPES[i] == RIGHT) {
+			continue;
+		}
     int k = PAIR_JOINT[i] < 0 ? -1 : 1;
+		int j = abs(PAIR_JOINT[i]);
     radian_values_[i] *= k;
     degree_values_[i] *= k;
-		std::swap(radian_values_[i], radian_values_[PAIR_JOINT[i]]);
-		std::swap(degree_values_[i], degree_values_[PAIR_JOINT[i]]);
+		std::swap(radian_values_[i], radian_values_[j]);
+		std::swap(degree_values_[i], degree_values_[j]);
     radian_values_[i] *= k;
     degree_values_[i] *= k;
 	}

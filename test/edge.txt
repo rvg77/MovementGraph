@@ -1,0 +1,4 @@
+START   LUP     0.3
+LUP     START   0.3
+START   RUP     0.3
+RUP     START   0.3
