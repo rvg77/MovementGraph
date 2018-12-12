@@ -341,7 +341,7 @@ void MovementGraph::StrongWake() const {
   motion.setStiffnesses(names, param);
 }
 
-void MovementGraph::RunPosition(const Vertex* v, float velocity) {
+void MovementGraph::RunPosition(const Vertex* v, float time) {
   ALMotionProxy motion(getParentBroker());
-  motion.setAngles(PARAM_NAMES, v->GetRadianValues(), velocity);
+  motion.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
 }
