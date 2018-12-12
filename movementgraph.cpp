@@ -92,7 +92,7 @@ void MovementGraph::init() {
         std::cout << "\t> Wrong vertex name)))\n";
         continue;
       } else {
-        RunPosition(&vertexes_[vertexes_by_name_[v_name]], 0.1);
+        RunPosition(&vertexes_[vertexes_by_name_[v_name]], 1.5);
       }
     }
     else if (command == "TEST") {
@@ -155,7 +155,7 @@ void MovementGraph::RecordFromBuffer(const std::string &output_file) {
 }
 
 void MovementGraph::RunFromBuffer() {
-  RunPosition(&vertex_buffer_, 0.2);
+  RunPosition(&vertex_buffer_, 1.5);
 }
 
 bool MovementGraph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,

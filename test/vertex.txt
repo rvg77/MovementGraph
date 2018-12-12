@@ -24,3 +24,81 @@ START {
     RAnklePitch : -31.2919
     RAnkleRoll : -0.0902951
 }
+SIT {
+    HeadYaw : 0.700723
+    HeadPitch : 5.35899
+    LShoulderPitch : 81.1217
+    LShoulderRoll : 5.00743
+    LElbowYaw : -46.7608
+    LElbowRoll : -58.5335
+    LWristYaw : 7.29261
+    RShoulderPitch : 81.1217
+    RShoulderRoll : -5.00743
+    RElbowYaw : 46.7608
+    RElbowRoll : 58.5335
+    RWristYaw : 7.29261
+    LHipYawPitch : -14.5876
+    LHipRoll : -3.42537
+    LHipPitch : -44.5587
+    LKneePitch : 123.485
+    LAnklePitch : -70.0521
+    LAnkleRoll : 4.22121
+    RHipYawPitch : -14.5876
+    RHipRoll : 3.42537
+    RHipPitch : -44.5587
+    RKneePitch : 123.485
+    RAnklePitch : -70.0521
+    RAnkleRoll : -4.22121
+}
+RUP {
+    HeadYaw : -0.353968
+    HeadPitch : -13.0983
+    LShoulderPitch : 116.63
+    LShoulderRoll : 20.4764
+    LElbowYaw : 18.0154
+    LElbowRoll : -57.303
+    LWristYaw : 4.91954
+    RShoulderPitch : 116.811
+    RShoulderRoll : -20.5691
+    RElbowYaw : -18.1081
+    RElbowRoll : 57.4836
+    RWristYaw : 5.35899
+    LHipYawPitch : 0.705531
+    LHipRoll : -0.261268
+    LHipPitch : -7.99575
+    LKneePitch : 39.9004
+    LAnklePitch : -31.3797
+    LAnkleRoll : 0.0902951
+    RHipYawPitch : 0.705531
+    RHipRoll : 1.40867
+    RHipPitch : -14.6803
+    RKneePitch : 61.8782
+    RAnklePitch : -47.6349
+    RAnkleRoll : -1.40386
+}
+LUP {
+    HeadYaw : -0.353968
+    HeadPitch : -12.8346
+    LShoulderPitch : 116.986
+    LShoulderRoll : 20.9206
+    LElbowYaw : 18.196
+    LElbowRoll : -56.341
+    LWristYaw : 5.44688
+    RShoulderPitch : 116.63
+    RShoulderRoll : -20.8279
+    RElbowYaw : -18.1033
+    RElbowRoll : 56.0725
+    RWristYaw : 4.91954
+    LHipYawPitch : 0.529749
+    LHipRoll : -1.40867
+    LHipPitch : -14.8561
+    LKneePitch : 61.9661
+    LAnklePitch : -47.7228
+    LAnkleRoll : 1.40386
+    RHipYawPitch : 0.529749
+    RHipRoll : 0.0854866
+    RHipPitch : -8.17153
+    RKneePitch : 39.6368
+    RAnklePitch : -31.2919
+    RAnkleRoll : 0.0854866
+}
