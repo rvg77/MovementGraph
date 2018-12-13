@@ -68,7 +68,7 @@ private:
 
     void RunWay(std::vector <const Edge*> edges);
 
-    void RunPosition(const Vertex* v, float velocity = 0.3);
+    void RunPosition(const Vertex* v, float time = 0.3);
 
     Vertex GetCurrentState() const;
 private:

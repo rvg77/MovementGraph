@@ -60,11 +60,10 @@ void Graph::RecordFromBuffer(const std::string &output_file) {
     std::ofstream out(output_file, std::ios_base::app);
 
     vertex_buffer_.PrintState(out);
-
 }
 
 void Graph::RunFromBuffer() {
-    RunPosition(&vertex_buffer_, 0.2);
+    RunPosition(&vertex_buffer_, 1.5);
 }
 
 bool Graph::FindWayToVertexFromVertex(const Vertex* start, const Vertex* finish,
@@ -178,7 +177,7 @@ void Graph::RunChain(const std::vector <std::string>& chain, int cnt) {
     }
 
     for (int i = 0; i < cnt; ++i) {
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < way.size(); ++j) {
             full_way.push_back(way[j]);
         }
     }
@@ -191,7 +190,7 @@ void Graph::RunWay(std::vector<const Edge*> edges) {
     if (edges.empty()) {
         return;
     }
-    std::cout << "!!! " << edges.size() << std::endl;
+
     AL::ALValue angleLists;
     AL::ALValue timeLists;
     std::vector <std::vector <float> > params_list;
@@ -213,9 +212,10 @@ void Graph::RunWay(std::vector<const Edge*> edges) {
         timeLists.arrayPush(time_list);
         angleLists.arrayPush(joint_path);
     }
-
+    
     motion.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
 }
+
 
 
 Vertex Graph::GetCurrentState() const {
@@ -225,8 +225,8 @@ Vertex Graph::GetCurrentState() const {
     return Vertex(result, true);
 }
 
-void Graph::RunPosition(const Vertex* v, float velocity) {
-    motion.setAngles(PARAM_NAMES, v->GetRadianValues(), velocity);
+void Graph::RunPosition(const Vertex* v, float time) {
+    motion.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
 }
 
 void Graph::Test() {

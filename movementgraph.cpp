@@ -16,6 +16,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
 MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {
+
     // инициализируем граф
     graph.initialize();
     // отключаем ненужные процессы

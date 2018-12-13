@@ -51,13 +51,13 @@ const std::vector <int> PAIR_JOINT = {
 
     7,
     -8,
-    9,
+    -9,
     -10,
     11,
 
     2,
     -3,
-    4,
+    -4,
     -5,
     6,
 
