@@ -269,7 +269,7 @@ void MovementGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
   }
 
   for (int i = 0; i < cnt; ++i) {
-    for (int j = 0; j < n; ++j) {
+    for (int j = 0; j < way.size(); ++j) {
       full_way.push_back(way[j]);
     }
   }
