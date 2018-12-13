@@ -3,7 +3,7 @@ GEN_NAME    = generator.py
 IP          = 192.168.1.2
 
 
-all: gen compil run 
+all: gen compil run
 
 gen: $(GEN_NAME)
 	python3 $(GEN_NAME) --vertex ./test/vertex.txt --edges ./test/edge.txt --out automaticInitGeneration.h
