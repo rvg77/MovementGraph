@@ -1,13 +1,6 @@
 #pragma once
 
-#include <alproxies/alautonomouslifeproxy.h>
-#include "graph.h"
-
-
-namespace AL
-{
-  class ALBroker;
-}
+#include "kernelgraph.h"
 
 
 class MovementGraph : public AL::ALModule {
@@ -18,6 +11,5 @@ class MovementGraph : public AL::ALModule {
   virtual void init();
 
  private:
-    AL::ALAutonomousLifeProxy life_proxy;
-    Graph graph;
+    KernelGraph graph_;
 };

@@ -2,113 +2,14 @@
 #include <string>
 #include <iostream>
 #include <assert.h>
+#include "config.h"
 
 class Edge;
-
-enum JOINT_TYPE {
-  LEFT,
-  MID,
-  RIGHT
-};
-
-const float PI = 3.14159265;
-
-const size_t PARAM_NUM_ = 24;
-
-const std::vector <std::string> PARAM_NAMES = {
-    "HeadYaw",
-    "HeadPitch",
-
-    "LShoulderPitch",
-    "LShoulderRoll",
-    "LElbowYaw",
-    "LElbowRoll",
-    "LWristYaw",
-
-    "RShoulderPitch",
-    "RShoulderRoll",
-    "RElbowYaw",
-    "RElbowRoll",
-    "RWristYaw",
-
-    "LHipYawPitch",
-    "LHipRoll",
-    "LHipPitch",
-    "LKneePitch",
-    "LAnklePitch",
-    "LAnkleRoll",
-
-    "RHipYawPitch",
-    "RHipRoll",
-    "RHipPitch",
-    "RKneePitch",
-    "RAnklePitch",
-    "RAnkleRoll" };
-
-const std::vector <int> PAIR_JOINT = {
-    0,
-    1,
-
-    7,
-    -8,
-    -9,
-    -10,
-    11,
-
-    2,
-    -3,
-    -4,
-    -5,
-    6,
-
-    18,
-    -19,
-    20,
-    21,
-    22,
-    -23,
-
-    12,
-    -13,
-    14,
-    15,
-    16,
-    -17 };
-
-const std::vector <JOINT_TYPE> JOINT_TYPES = {
-    MID,
-    MID,
-
-    LEFT,
-    LEFT,
-    LEFT,
-    LEFT,
-    LEFT,
-
-    RIGHT,
-    RIGHT,
-    RIGHT,
-    RIGHT,
-    RIGHT,
-
-    LEFT,
-    LEFT,
-    LEFT,
-    LEFT,
-    LEFT,
-    LEFT,
-
-    RIGHT,
-    RIGHT,
-    RIGHT,
-    RIGHT,
-    RIGHT,
-    RIGHT };
 
 class Vertex {
  public:
   Vertex() = delete;
-  Vertex(bool flag);
+  Vertex();
   Vertex(std::vector <float> new_param_values_, bool is_radian = false);
   Vertex(const Vertex& vertex);
 
@@ -120,10 +21,10 @@ class Vertex {
 
   std::string GetName() const;
 
+  int GetAdjacentCount() const;
   std::vector<float> GetRadianValues() const;
 
   std::vector<float> GetDegreesValues() const;
-
 
   void AddEdge(const Edge* new_edge);
 
@@ -134,6 +35,7 @@ class Vertex {
   void Reflect();
 
   void CopyFromSide(JOINT_TYPE side_name);
+
  private:
   std::string name_;
   std::vector <float> degree_values_;
