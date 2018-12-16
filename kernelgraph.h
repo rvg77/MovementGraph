@@ -22,9 +22,9 @@ class KernelGraph : public PrimalGraph {
 
   bool RunChain(const std::vector <std::string>& chain, int cnt);
 
-  bool RunName(const std::string& v_name, float time = 1.3);
+  bool Run(const std::string& v_name, float time = DEFAULT_TIME);
 
-  void RunPosition(const Vertex* v, float time = 1.3);
+  void Run(const Vertex* v, float time = DEFAULT_TIME);
 
   void StrongRest() const;
 

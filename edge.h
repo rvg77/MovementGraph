@@ -6,7 +6,7 @@ class Edge {
   Edge(const Vertex* from, const Vertex* to, float time);
   Edge(const Edge& edge);
 
-  bool operator ==(const Edge& other);
+  bool operator ==(const Edge& other) const;
 
   const Vertex* GetBegin() const;
   const Vertex* GetEnd() const;

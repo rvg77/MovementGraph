@@ -8,6 +8,7 @@ const std::string VERTEXES_FILE = "test/vertex.txt";
 
 const float PI = 3.14159265;
 
+const float DEFAULT_TIME = 1.3;
 const size_t PARAM_NUM_ = 24;
 
 const std::vector <std::string> PARAM_NAMES = {

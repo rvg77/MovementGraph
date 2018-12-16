@@ -1,3 +1,3 @@
-<project name="movementgraph">
+<project name="graphcreator">
   <depends buildtime="true" runtime="true" names="libnaoqi" />
 </project>

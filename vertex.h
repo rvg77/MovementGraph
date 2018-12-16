@@ -9,7 +9,6 @@ class Edge;
 class Vertex {
  public:
   Vertex() = delete;
-  Vertex();
   Vertex(std::vector <float> new_param_values_, bool is_radian = false);
   Vertex(const Vertex& vertex);
 
@@ -22,6 +21,7 @@ class Vertex {
   std::string GetName() const;
 
   int GetAdjacentCount() const;
+
   std::vector<float> GetRadianValues() const;
 
   std::vector<float> GetDegreesValues() const;

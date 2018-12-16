@@ -1,25 +1,27 @@
 #include "graphcreator.h"
 
 GraphCreator::GraphCreator(boost::shared_ptr<AL::ALBroker> pBroker, const std::string& pName) :
-  ALModule(broker, name),
+  ALModule(pBroker, pName),
   graph_(pBroker),
   vertex_buffer_(nullptr) {}
 
-virtual void GraphCreator::init() {
+GraphCreator::~GraphCreator() {
+  ClearBuffer();
+}
+
+void GraphCreator::init() {
   // инициализируем граф
-  graph_.initialize();
+  graph_.Initialize();
 
 
   while (true) {
-    std::string command;
-    std::cout << "--> ENTER command\n> ";
-    std::cin >> command;
+    std::string command(SmallLog("ENTER command", 1, true));
 
     if (command == "REST") {
-      Rest()
+      Rest();
     }
     else if (command == "WAKE") {
-      Wake()()
+      Wake();
     }
     else if (command == "SNAP") {
       Snap();
@@ -52,93 +54,179 @@ virtual void GraphCreator::init() {
       TT();
     }
     else {
-      std::cout << "----> UNKNOWN COMMAND\n" ;
+      SmallLog("UNKNOWN COMMAND", 2);
     }
   }
 }
 
 void GraphCreator::Rest() {
-  std::cout << "----> Going to the rest Position\n";
+  SmallLog("Going to the rest Position", 2);
 
   graph_.StrongRest();
 }
 
 void GraphCreator::Wake() {
-  std::cout << "----> Waking up!\n";
+  SmallLog("Waking up", 2);
 
   graph_.StrongWake();
 }
 
 void GraphCreator::Snap() {
-  std::cout << "----> Copy current State to the buffer\n";
+  SmallLog("Copy current State to the buffer", 2);
 
-  Vertex curr(GetCurrentState());
-  vertex_buffer_ = curr;
+  SetBuffer(graph_.GetCurrentState());
 }
 
 void GraphCreator::SetName() {
-  std::cout << "----> ENTER name for buffer vertex:\n";
+  if (CheckBuffer()) {
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
 
-  std::string name;
-  std::cout << "----| "
+  std::string name(SmallLog("ENTER name for buffer vertex:", 2, true));
 
-  std::cin >> name;
-
-  vertex_buffer_.SetName(name);
+  vertex_buffer_->SetName(name);
 }
 
 void GraphCreator::RunBuffer() {
-  std::cout << "---->  Going to the buffer position!\n"
+  if (CheckBuffer()) {
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
 
-  graph_.RunPosition(&vertex_buffer_);
+  SmallLog("Going to the buffer position", 2);
+
+  graph_.Run(vertex_buffer_);
 }
 
 void GraphCreator::Reflect() {
-  std::cout << "----> Change Left and Right sides!\n"
-  vertex_buffer_.Reflect();
+  if (CheckBuffer()) {
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
+
+  SmallLog("Change Left and Right sides", 2);
+
+  vertex_buffer_->Reflect();
 }
 
 void GraphCreator::CopyToRight() {
-  std::cout << "----> Copy Left state  to Right side!\n"
+  if (CheckBuffer()) {
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
 
-  vertex_buffer_.CopyFromSide(LEFT);
+  SmallLog("Copy Left state  to Right side", 2);
+
+  vertex_buffer_->CopyFromSide(LEFT);
 }
 
 void GraphCreator::CopyToLeft() {
-  std::cout << "----> Copy Right state to Left side!\n"
+  if (CheckBuffer()) {
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
 
-  vertex_buffer_.CopyFromSide(RIGHT);
+  SmallLog("Copy Right state to Left side", 2);
+
+  vertex_buffer_->CopyFromSide(RIGHT);
 }
 
-void GraphCreator::Save() const {
+void GraphCreator::Save() {
+  if (CheckBuffer()) {
+    return;
+  }
+  if (vertex_buffer_->GetName() == "") {
+    SmallLog("ERROR Buffer doesn't have a name!", 2);
+    return;
+  }
+  assert(vertex_buffer_ != nullptr);
+
+  SmallLog("Saving to file " + VERTEXES_FILE, 2);
   std::ofstream out(VERTEXES_FILE, std::ios_base::app);
 
-  vertex_buffer_.PrintState(out);
+  vertex_buffer_->PrintState(out);
+  graph_.AddVertex(*vertex_buffer_);
 }
 
 void GraphCreator::Run() {
-  std::string v_name;
-  std::cout << "---->  ENTER Vertex Name:\n";
-  std::cout << "----| ";
-  std::cin >> v_name;
+  std::string v_name(SmallLog("ENTER Vertex Name:", 2, 1));
 
-  if (vertexes_by_name_.find(v_name) == vertexes_by_name_.end()) {
-    std::cout << "\t> Wrong vertex name)))\n";
-    return false;
-  } else {
-    RunPosition(&vertexes_[vertexes_by_name_[v_name]], 0.1);
-    return true;
+
+  if (!graph_.Run(v_name)) {
+    SmallLog("ERROR Cont run vertex " + v_name, 2);
+    return;
   }
 }
 
+void GraphCreator::Test() {
+  int n, cnt;
+  std::vector <const Edge*> way;
+  std::vector <std::string> path;
+
+  std::cout << "> Please enter Len of chain:\n\t- ";
+  std::cin >> n;
+
+  std::cout << "> ENTER vertexes names:\n\t- ";
+  for (int i = 0; i < n; ++i) {
+    std::string s;
+    std::cin >> s;
+    path.push_back(s);
+  }
+  std::cout << "> ENTER repeat number:\n\t- ";
+  std::cin >> cnt;
+
+  graph_.RunChain(path, cnt);
+}
+
+void GraphCreator::TT() {
+  int cnt;
+  std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
+
+  std::cout << "> ENTER repeat number:\n\t- ";
+  std::cin >> cnt;
+
+  graph_.RunChain(path, cnt);
+
+}
 
 /*------- PRIVAT SPACE ---------*/
 
 
-bool GraphCreator::IsBufferEmpty() const {
-  return vertex_buffer_ =
+bool GraphCreator::CheckBuffer() const {
+  if (!IsBufferEmpty()) {
+    return false;
+  }
+  SmallLog("ERROR buffer is not defined!", 2);
+  return true;
 }
 
-void GraphCreator::SetBuffer(const Vertex& v);
+bool GraphCreator::IsBufferEmpty() const {
+  return vertex_buffer_ == nullptr;
+}
 
-void GraphCreator::ClearBuffer();
+void GraphCreator::SetBuffer(const Vertex& v) {
+  vertex_buffer_ = new Vertex(v);
+}
+
+void GraphCreator::ClearBuffer() {
+  delete vertex_buffer_;
+}
+
+std::string GraphCreator::SmallLog(const std::string text, size_t deep_level, bool is_reply) const {
+  std::string request = "";
+  for (size_t i = 0; i < deep_level; ++i) {
+    request += "--";
+  }
+
+  std::cout << request + "> " + text << std::endl;
+  if (is_reply) {
+    std::string ans = "";
+    std::cout << request + "| ";
+    std::cin >> ans;
+    return ans;
+  }
+  else {
+    return "";
+  }
+}

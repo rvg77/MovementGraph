@@ -2,8 +2,6 @@
 #include <assert.h>
 #include "vertex.h"
 
-Vertex::Vertex() {
-}
 
 Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 		: degree_values_(new_param_values_) {
@@ -49,7 +47,7 @@ std::string Vertex::GetName() const {
 	return name_;
 }
 
-int GetAdjacentCount() const {
+int Vertex::GetAdjacentCount() const {
 	return adjacent_edges_.size();
 }
 

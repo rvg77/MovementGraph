@@ -11,13 +11,13 @@ KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
 Vertex KernelGraph::GetCurrentState() const {
   bool useSensors = true;
 
-  std::vector <float> result = motion.getAngles(alvalue_names, useSensors);
+  std::vector <float> result = motion_.getAngles(PARAM_NAMES, useSensors);
   return Vertex(result, true);
 }
 
 bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
   assert(cnt > 0);
-  assert(chain.size() > 1)
+  assert(chain.size() > 1);
 
   std::vector <const Edge*> way, full_way;
   if (!FindWayThroughVertexes(chain, way)) {
@@ -30,16 +30,22 @@ bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
     }
   }
 
-  RunPosition(full_way[0]->GetBegin());
+  Run(full_way[0]->GetBegin());
   RunWay(full_way);
 }
 
-bool KernelGraph::Run(const std::string& v_name, float time = 0.3) {
+bool KernelGraph::Run(const std::string& v_name, float time) {
   if (!IsVertexContains(v_name)) {
     return false;
   }
 
-  RunWay(GetVertex(v_name), time);
+  Run(GetVertex(v_name), time);
+}
+
+void KernelGraph::Run(const Vertex* v, float time) {
+  assert(v != nullptr);
+
+  motion_.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
 }
 
 void KernelGraph::StrongRest() const {
@@ -47,7 +53,7 @@ void KernelGraph::StrongRest() const {
   for (int i = 0; i < PARAM_NUM_; ++i) {
     param.push_back(0);
   }
-  motion.setStiffnesses(alvalue_names, param);
+  motion_.setStiffnesses(PARAM_NAMES, param);
 }
 
 void KernelGraph::StrongWake() const {
@@ -55,7 +61,7 @@ void KernelGraph::StrongWake() const {
   for (int i = 0; i < PARAM_NUM_; ++i) {
     param.push_back(1);
   }
-  motion.setStiffnesses(alvalue_names, param);
+  motion_.setStiffnesses(PARAM_NAMES, param);
 }
 
 
@@ -89,9 +95,6 @@ void KernelGraph::RunWay(std::vector <const Edge*> edges) {
     angleLists.arrayPush(joint_path);
   }
 
-  motion.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
+  motion_.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
 }
 
-void KernelGraph::RunPosition(const Vertex* v, float time = 0.3) {
-  motion.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
-}

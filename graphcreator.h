@@ -4,6 +4,7 @@ class GraphCreator : public AL::ALModule {
  public:
   GraphCreator(boost::shared_ptr<AL::ALBroker> pBroker, const std::string& pName);
 
+  ~GraphCreator();
   virtual void init();
 
   void Rest();
@@ -22,7 +23,7 @@ class GraphCreator : public AL::ALModule {
 
   void CopyToLeft();
 
-  void Save() const;
+  void Save();
 
   void Run();
 
@@ -31,15 +32,17 @@ class GraphCreator : public AL::ALModule {
   void TT();
 
  private:
+
+  bool CheckBuffer() const;
+
   bool IsBufferEmpty() const;
 
   void SetBuffer(const Vertex& v);
 
   void ClearBuffer();
 
-  std::string SmallLog(const std::string ) {
+  std::string SmallLog(const std::string text, size_t deep_level, bool is_reply=false) const;
 
-  }
  private:
   KernelGraph graph_;
   Vertex* vertex_buffer_;
