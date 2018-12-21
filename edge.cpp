@@ -7,7 +7,7 @@ Edge::Edge(const Vertex* from, const Vertex* to, float time)
   assert(to != nullptr);
 }
 
-Edge::Edge(const Edge & edge)
+Edge::Edge(const Edge& edge)
   : begin_(edge.begin_), end_(edge.end_), time_(edge.time_) {}
 
 

@@ -7,8 +7,9 @@ void PrimalGraph::Initialize() {
 
   adjacency_list_.clear();
   vertex_to_index_.clear();
+
   for (size_t i = 0; i < vertexes_.size(); ++i) {
-    const Vertex * ind = &vertexes_[i];
+    const Vertex* ind = &vertexes_[i];
     vertex_to_index_[ind] = i;
     adjacency_list_.push_back(std::vector<int>());
   }
@@ -88,10 +89,16 @@ bool PrimalGraph::FindWayToVertexFromVertex(const std::string& start,
   int end   = vertexes_by_name_.at(finish);
   std::vector <int> wayInt;
 
+
   if (!FindWayToVertexFromVertexViaBFS(begin, end, wayInt)) {
     return false;
   }
 
+  std::cout << "DEBUG: ";
+  for (int i = 0; i < wayInt.size(); ++i) {
+    std::cout << wayInt[i] << ' ';
+  }
+  std::cout << std::endl;
   const Vertex* ind = GetVertex(start);
   for (size_t i = 0; i < wayInt.size(); ++i) {
     way.push_back(ind->GetEdge(wayInt[i]));

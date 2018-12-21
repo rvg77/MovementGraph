@@ -26,6 +26,9 @@ void GraphCreator::init() {
     else if (command == "SNAP") {
       Snap();
     }
+    else if (command == "B_OFF") {
+      BehaviorOff();
+    }
     else if (command == "SET_NAME") {
       SetName();
     }
@@ -69,6 +72,11 @@ void GraphCreator::Wake() {
   SmallLog("Waking up", 2);
 
   graph_.StrongWake();
+}
+
+void GraphCreator::BehaviorOff() {
+  SmallLog("Off standard behavior", 2);
+  graph_.BehaviorOff();
 }
 
 void GraphCreator::Snap() {
@@ -154,7 +162,7 @@ void GraphCreator::Run() {
 
 
   if (!graph_.Run(v_name)) {
-    SmallLog("ERROR Cont run vertex " + v_name, 2);
+    SmallLog("ERROR Cant run vertex " + v_name, 2);
     return;
   }
 }
@@ -176,7 +184,10 @@ void GraphCreator::Test() {
   std::cout << "> ENTER repeat number:\n\t- ";
   std::cin >> cnt;
 
-  graph_.RunChain(path, cnt);
+  if (!graph_.RunChain(path, cnt)) {
+    SmallLog("ERROR Cant run chain", 2);
+    return;
+  }
 }
 
 void GraphCreator::TT() {
@@ -186,8 +197,10 @@ void GraphCreator::TT() {
   std::cout << "> ENTER repeat number:\n\t- ";
   std::cin >> cnt;
 
-  graph_.RunChain(path, cnt);
-
+  if (!graph_.RunChain(path, cnt)) {
+    SmallLog("ERROR Cant run chain ", 2);
+    return;
+  }
 }
 
 /*------- PRIVAT SPACE ---------*/

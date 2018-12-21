@@ -5,7 +5,6 @@ KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
     motion_(broker),
     life_proxy(broker) {
   Initialize();
-  life_proxy.setState("disabled");
 }
 
 Vertex KernelGraph::GetCurrentState() const {
@@ -20,9 +19,11 @@ bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
   assert(chain.size() > 1);
 
   std::vector <const Edge*> way, full_way;
+
   if (!FindWayThroughVertexes(chain, way)) {
     return false;
   }
+
 
   for (int i = 0; i < cnt; ++i) {
     for (int j = 0; j < way.size(); ++j) {
@@ -30,8 +31,15 @@ bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
     }
   }
 
+  //full_way[0]->GetBegin()->PrintState(std::cout);
+  std::cout << "DEBUG" << std::endl;
+  assert(full_way[0]->GetBegin() == GetVertex(chain[0]));
+  std::cout << full_way[0]->GetBegin()->GetName() << std::endl;
+  std::cout << "DEBUG" << std::endl;
   Run(full_way[0]->GetBegin());
+  std::cout << "DEBUG" << std::endl;
   RunWay(full_way);
+  return true;
 }
 
 bool KernelGraph::Run(const std::string& v_name, float time) {
@@ -40,10 +48,12 @@ bool KernelGraph::Run(const std::string& v_name, float time) {
   }
 
   Run(GetVertex(v_name), time);
+  return true;
 }
 
 void KernelGraph::Run(const Vertex* v, float time) {
   assert(v != nullptr);
+  assert(time > 0);
 
   motion_.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
 }
@@ -62,6 +72,10 @@ void KernelGraph::StrongWake() const {
     param.push_back(1);
   }
   motion_.setStiffnesses(PARAM_NAMES, param);
+}
+
+void KernelGraph::BehaviorOff() const {
+  life_proxy.setState("disabled");
 }
 
 

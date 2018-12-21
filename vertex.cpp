@@ -31,7 +31,7 @@ Vertex& Vertex::operator =(const Vertex& vertex) {
 	adjacent_edges_ = vertex.adjacent_edges_;
 }
 
-void Vertex::PrintState(std::ostream &out) {
+void Vertex::PrintState(std::ostream &out) const {
   out << name_ << " {" << std::endl;
   for (size_t i = 0; i < PARAM_NUM_; ++i) {
     out << "    " << PARAM_NAMES[i] << " : " << degree_values_[i] << std::endl;

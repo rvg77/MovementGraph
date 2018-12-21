@@ -11,6 +11,8 @@ class GraphCreator : public AL::ALModule {
 
   void Wake();
 
+  void BehaviorOff();
+
   void Snap();
 
   void SetName();

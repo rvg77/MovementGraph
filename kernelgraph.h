@@ -30,6 +30,7 @@ class KernelGraph : public PrimalGraph {
 
   void StrongWake() const;
 
+  void BehaviorOff() const;
  private:
   void RunWay(std::vector <const Edge*> edges);
 

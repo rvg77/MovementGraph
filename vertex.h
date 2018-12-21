@@ -28,7 +28,7 @@ class Vertex {
 
   void AddEdge(const Edge* new_edge);
 
-  void PrintState(std::ostream &out);
+  void PrintState(std::ostream &out) const;
 
   const Edge* GetEdge(int ind) const;
 
