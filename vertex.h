@@ -16,7 +16,7 @@ class Vertex {
 
   float Dist(const Vertex& vertex) const;
 
-  void SetName(std::string name);
+  void SetName(const std::string& name);
 
   std::string GetName() const;
 

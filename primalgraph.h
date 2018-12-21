@@ -26,7 +26,10 @@ class PrimalGraph {
 
   bool IsVertexContains(const std::string& name) const;
 
+  void Debug() const;
+
  private:
+
 
   bool IsEdgeContains(const Edge& e) const;
 

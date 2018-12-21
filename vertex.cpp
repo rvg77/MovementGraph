@@ -22,13 +22,15 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 Vertex::Vertex(const Vertex& vertex)
     : degree_values_(vertex.degree_values_),
     	radian_values_(vertex.radian_values_),
-      adjacent_edges_(vertex.adjacent_edges_) {}
+      adjacent_edges_(vertex.adjacent_edges_),
+      name_(vertex.name_){}
 
 
 Vertex& Vertex::operator =(const Vertex& vertex) {
 	degree_values_ = vertex.degree_values_;
 	radian_values_ = vertex.radian_values_;
 	adjacent_edges_ = vertex.adjacent_edges_;
+	name_ = vertex.name_;
 }
 
 void Vertex::PrintState(std::ostream &out) const {
@@ -39,7 +41,7 @@ void Vertex::PrintState(std::ostream &out) const {
   out << "}" << std::endl;
 }
 
-void Vertex::SetName(std::string name) {
+void Vertex::SetName(const std::string& name) {
 	name_ = name;
 }
 

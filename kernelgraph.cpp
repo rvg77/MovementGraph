@@ -4,7 +4,6 @@ KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
     broker_(broker),
     motion_(broker),
     life_proxy(broker) {
-  Initialize();
 }
 
 Vertex KernelGraph::GetCurrentState() const {
@@ -31,10 +30,6 @@ bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
     }
   }
 
-  //full_way[0]->GetBegin()->PrintState(std::cout);
-  std::cout << "DEBUG" << std::endl;
-  assert(full_way[0]->GetBegin() == GetVertex(chain[0]));
-  std::cout << full_way[0]->GetBegin()->GetName() << std::endl;
   std::cout << "DEBUG" << std::endl;
   Run(full_way[0]->GetBegin());
   std::cout << "DEBUG" << std::endl;

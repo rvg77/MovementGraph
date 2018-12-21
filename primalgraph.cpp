@@ -94,11 +94,6 @@ bool PrimalGraph::FindWayToVertexFromVertex(const std::string& start,
     return false;
   }
 
-  std::cout << "DEBUG: ";
-  for (int i = 0; i < wayInt.size(); ++i) {
-    std::cout << wayInt[i] << ' ';
-  }
-  std::cout << std::endl;
   const Vertex* ind = GetVertex(start);
   for (size_t i = 0; i < wayInt.size(); ++i) {
     way.push_back(ind->GetEdge(wayInt[i]));
@@ -128,6 +123,32 @@ bool PrimalGraph::FindWayThroughVertexes(const std::vector <std::string>& names,
 
 bool PrimalGraph::IsVertexContains(const std::string& name) const {
   return vertexes_by_name_.find(name) != vertexes_by_name_.end();
+}
+
+void PrimalGraph::Debug() const {
+  std::cout << "----- GRAPH DEBUG -------" << std::endl;
+
+  std::cout << "VERTEX LIST:" << std::endl;
+  for (int i = 0; i < vertexes_.size(); ++i) {
+    std::cout << vertexes_[i].GetName() << '(' << i << ") ";
+  }
+  std::cout << std::endl;
+
+  std::cout << "ADJACENCY LIST:" << std::endl;
+  for (int i = 0; i < adjacency_list_.size(); ++i) {
+    std::cout << vertexes_[i].GetName() << "(" << i << "):" << std::endl;
+    for (int j = 0; j < adjacency_list_[i].size(); ++j) {
+      int to = adjacency_list_[i][j];
+      std::cout << vertexes_[to].GetName() << "(" << to << ") ";
+    }
+    std::cout << std::endl;
+  }
+
+  std::cout << "Vertex NAME to INDEX:" << std::endl;
+
+  for (auto it = vertexes_by_name_.begin(); it != vertexes_by_name_.end(); ++it) {
+    std::cout << it->first << '\t' << it->second << std::endl;
+  }
 }
 
 
