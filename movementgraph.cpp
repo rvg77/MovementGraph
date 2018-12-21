@@ -117,7 +117,97 @@ void MovementGraph::init() {
     else if (command == "TT") {
       int cnt;
       std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
 
+      RunChain(path, cnt);
+    }
+    else if (command == "TTLOW") {
+      int cnt;
+      std::vector <std::string> path({"START", "LLOWUP", "START", "RLOWUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTSIT") {
+      int cnt;
+      std::vector <std::string> path({"START", "LSITUP", "START", "RSITUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTM") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMUP", "START", "RMUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTMLOW") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMLOWUP", "START", "RMLOWUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTMLOWM") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMLOWMUP", "START", "RMLOWMUP", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTMLOWF") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMLOWUPF", "RMLOWUPF", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTF") {
+      int cnt;
+      std::vector <std::string> path({"START", "LUPF", "START", "RUPF", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTFT") {
+      int cnt;
+      std::vector <std::string> path({"START", "LUPF", "LUPF1", "START", "RUPF", "RUPF1", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTMF") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMUPF", "LMUPF1", "START", "RMUPF", "RMUPF1", "START"});
+      
+      std::cout << "> ENTER repeat number:\n\t- ";
+      std::cin >> cnt;
+
+      RunChain(path, cnt);
+    }
+    else if (command == "TTMMF") {
+      int cnt;
+      std::vector <std::string> path({"START", "LMMUPF", "LMMUPF1", "START", "RMMUPF", "RMMUPF1", "START"});
+      
       std::cout << "> ENTER repeat number:\n\t- ";
       std::cin >> cnt;
 
