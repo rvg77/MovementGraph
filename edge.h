@@ -3,9 +3,10 @@
 class Edge {
  public:
   Edge() = delete;
-  Edge(bool flag);
   Edge(const Vertex* from, const Vertex* to, float time);
   Edge(const Edge& edge);
+
+  bool operator ==(const Edge& other) const;
 
   const Vertex* GetBegin() const;
   const Vertex* GetEnd() const;
