@@ -1,4 +1,58 @@
-START   LUP     0.12
-LUP     START   0.15
-START   RUP     0.12
-RUP     START   0.15
+START       LUP         0.12
+LUP         START       0.15
+START       RUP         0.12
+RUP         START       0.15
+
+START       LLOWUP      0.15
+LLOWUP      START       0.15
+START       RLOWUP      0.15
+RLOWUP      START       0.15
+
+START       LSITUP      0.125
+LSITUP      START       0.125
+START       RSITUP      0.125
+RSITUP      START       0.125
+
+START       LMUP        0.2
+LMUP        START       0.2
+START       RMUP        0.2
+RMUP        START       0.2
+
+START       LMLOWUP     0.15
+LMLOWUP     START       0.15
+START       RMLOWUP     0.15
+RMLOWUP     START       0.15
+
+START       LMLOWMUP    0.1
+LMLOWMUP    START       0.1
+START       RMLOWMUP    0.1
+RMLOWMUP    START       0.1
+
+START       LMLOWUPF    0.1
+LMLOWUPF    RMLOWUPF    0.1
+RMLOWUPF    START       0.1
+
+START       LUPF        0.2
+LUPF        START       0.2
+START       RUPF        0.2
+RUPF        START       0.2
+LUPF        LUPF1       1
+LUPF1       START       0.2
+RUPF        RUPF1       1
+RUPF1       START       0.2
+
+
+START       LMUPF       0.2
+LMUPF       LMUPF1      1
+LMUPF1      START       0.2
+START       RMUPF       0.2
+RMUPF       RMUPF1      1
+RMUPF1      START       0.2
+
+
+START       LMMUPF      0.2
+LMMUPF      LMMUPF1     1
+LMMUPF1     START       0.2
+START       RMMUPF      0.2
+RMMUPF      RMMUPF1     1
+RMMUPF1     START       0.2
