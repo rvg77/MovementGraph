@@ -1,5 +1,10 @@
 pathToTranslate="./translate/"
 pathToPosition="./positions/"
+pathToTranslateIndividualPosition="./translate/individualPoses/"
+
+mkdir $pathToTranslate
+mkdir $pathToTranslateIndividualPosition
+
 cd $pathToPosition
 for file in `find -type f -name "*.pos"`
 do
