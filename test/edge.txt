@@ -1,6 +1,0 @@
-START   LUP     0.12
-LUP     START   0.15
-START   RUP     0.12
-RUP     START   0.15
-START   SIT     1.3
-SIT     START   1.3

@@ -55,6 +55,9 @@ void GraphCreator::init() {
     }
     else if (command == "TT") {
       TT();
+    } 
+    else if (command == "EXIT") {
+      break;
     }
     else {
       SmallLog("UNKNOWN COMMAND", 2);
