@@ -5,32 +5,34 @@ import re
 
 PATH_TO_DEFAULT_ORDER = "../sources/defaultOrder.json"
 
-mapForTranslate = {
-    "HeadYaw" :         0,
-    "HeadPitch" :       1,
-    "LShoulderPitch" :  2,
-    "LShoulderRoll" :   3,
-    "LElbowYaw" :       4,
-    "LElbowRoll" :      5,
-    "LWristYaw" :       6,
-    "LHipYawPitch" :    8,
-    "LHipRoll" :        9,
-    "LHipPitch" :       10,
-    "LKneePitch" :      11,
-    "LAnklePitch" :     12,
-    "LAnkleRoll" :      13,
-    "RHipYawPitch" :    8,
-    "RHipRoll" :        14,
-    "RHipPitch" :       15,
-    "RKneePitch" :      16,
-    "RAnklePitch" :     17,
-    "RAnkleRoll" :      18,
-    "RShoulderPitch" :  19,
-    "RShoulderRoll" :   20,
-    "RElbowYaw" :       21,
-    "RElbowRoll" :      22,
-    "RWristYaw" :       23
+mapForTranslateToString = {
+    "HeadYaw" :         "HY",
+    "HeadPitch" :       "HP",
+    "LShoulderPitch" :  "LSP",
+    "LShoulderRoll" :   "LSR",
+    "LElbowYaw" :       "LEY",
+    "LElbowRoll" :      "LER",
+    "LWristYaw" :       "LWY",
+    "LHipYawPitch" :    "LHYP",
+    "LHipRoll" :        "LHR",
+    "LHipPitch" :       "LHP",
+    "LKneePitch" :      "LKP",
+    "LAnklePitch" :     "LAP",
+    "LAnkleRoll" :      "LAR",
+    "RHipYawPitch" :    "LHYP",
+    "RHipRoll" :        "RHR",
+    "RHipPitch" :       "RHP",
+    "RKneePitch" :      "RKP",
+    "RAnklePitch" :     "RAP",
+    "RAnkleRoll" :      "RAR",
+    "RShoulderPitch" :  "RSP",
+    "RShoulderRoll" :   "RSR",
+    "RElbowYaw" :       "REY",
+    "RElbowRoll" :      "RER",
+    "RWristYaw" :       "RWY"
 }
+
+mapForTranslateToInt = {}
 
 def printJson(json, output, name) :
     out   = "%s {\n%s\n}\n"
@@ -52,13 +54,24 @@ def toVertex(position, output, name) :
     writeJson = {}
 
     for i in default_list_order :
-        writeJson[i] = position[mapForTranslate[i]]
+        if mapForTranslateToString[i] == None :
+            print("WARNING: can not find %s in mapForTranslateToString (probably, usless param)\n" % (i))
+            writeJson[i] = 0
+            continue
+
+        if mapForTranslateToInt.get(mapForTranslateToString[i]) == None :
+            print("WARNING: can not find %s in mapForTranslateToSting (probably, other comant did not fockus on this param)\n" % (mapForTranslateToString[i]))
+            writeJson[i] = 0
+            continue
+
+        writeJson[i] = position[mapForTranslateToInt[mapForTranslateToString[i]]]
 
     printJson(writeJson, output, name)
 
 def translate(input, output):
     with open(input) as file:
         positions = []
+        numString = 0
         for line in file :
             position  = []
             line = re.sub('\n', '', line)
@@ -68,9 +81,15 @@ def translate(input, output):
                 if (i != '') :
                     position.append(i)
             
-            
+            if numString == 0 :
+                numPosition = -1
+                for i in position :
+                    mapForTranslateToInt[i] = numPosition
+                    numPosition += 1
+
             if len(position) > 0 and not('#' in position[0]) and not ('$' in position[0]) :
                 positions.append(position)
+            numString += 1
 
 
         with open(output, 'w', encoding='utf-8') as fileOutput:
