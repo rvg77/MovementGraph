@@ -1,0 +1,12 @@
+S kick::STAND 1
+
+kick::STAND kick::RL_M 1
+kick::RL_M kick::RADY 0.5
+kick::RADY kick::STADY 0.5
+kick::STADY kick::GOAAAL 0.5
+kick::GOAAAL kick::RETURN 0.5
+kick::RETURN kick::FINISH 0.5
+
+kick::GOAAAL kick::FINISH 0.5
+
+kick::FINISH F 1
