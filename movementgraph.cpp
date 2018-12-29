@@ -10,7 +10,7 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
     ALModule(broker, name),
     graph(getParentBroker()) {
 
-   setModuleDescription("Module for robot movements.");
+  setModuleDescription("Module for robot movements.");
 }
 
 MovementGraph::~MovementGraph() {}
