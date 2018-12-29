@@ -1,8 +1,4 @@
-#include <vector>
-#include <string>
-#include <iostream>
-#include <assert.h>
-#include "config.h"
+#include "moveparams.h"
 
 class Edge;
 

@@ -59,6 +59,9 @@ void GraphCreator::init() {
     else if (command == "EXIT") {
       break;
     }
+    else if (command == "MOVE") {
+      Move();
+    }
     else {
       SmallLog("UNKNOWN COMMAND", 2);
     }
@@ -68,13 +71,13 @@ void GraphCreator::init() {
 void GraphCreator::Rest() {
   SmallLog("Going to the rest Position", 2);
 
-  graph_.StrongRest();
+  graph_.Rest();
 }
 
 void GraphCreator::Wake() {
   SmallLog("Waking up", 2);
 
-  graph_.StrongWake();
+  graph_.Wake();
 }
 
 void GraphCreator::BehaviorOff() {
@@ -161,7 +164,7 @@ void GraphCreator::Save() {
 }
 
 void GraphCreator::Run() {
-  std::string v_name(SmallLog("ENTER Vertex Name:", 2, 1));
+  std::string v_name(SmallLog("ENTER Vertex Name:", 2, true));
 
 
   if (!graph_.Run(v_name)) {
@@ -206,6 +209,17 @@ void GraphCreator::TT() {
   }
 }
 
+void GraphCreator::Move() {
+  float x, y, theta;
+
+  SmallLog("Its a Move section insert x, y and Theta:", 2);
+  x     = SmallLog<float>("ENTER x in meters:", 2, true);
+  y     = SmallLog<float>("ENTER y in meters:", 2, true);
+  theta = SmallLog<float>("ENTER Theta in Degree:", 2, true);
+  graph_.Move(x, y, theta * TO_RAD);
+}
+
+
 /*------- PRIVAT SPACE ---------*/
 
 
@@ -229,7 +243,8 @@ void GraphCreator::ClearBuffer() {
   delete vertex_buffer_;
 }
 
-std::string GraphCreator::SmallLog(const std::string text, size_t deep_level, bool is_reply) const {
+template <typename T>
+T GraphCreator::SmallLog(const std::string text, size_t deep_level, bool is_reply) const {
   std::string request = "";
   for (size_t i = 0; i < deep_level; ++i) {
     request += "--";
@@ -237,12 +252,10 @@ std::string GraphCreator::SmallLog(const std::string text, size_t deep_level, bo
 
   std::cout << request + "> " + text << std::endl;
   if (is_reply) {
-    std::string ans = "";
+    T ans;
     std::cout << request + "| ";
     std::cin >> ans;
     return ans;
   }
-  else {
-    return "";
-  }
+  return T();
 }

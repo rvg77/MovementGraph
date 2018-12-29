@@ -33,6 +33,8 @@ class GraphCreator : public AL::ALModule {
 
   void TT();
 
+  void Move();
+
  private:
 
   bool CheckBuffer() const;
@@ -43,7 +45,8 @@ class GraphCreator : public AL::ALModule {
 
   void ClearBuffer();
 
-  std::string SmallLog(const std::string text, size_t deep_level, bool is_reply=false) const;
+  template <typename T=std::string>
+  T SmallLog(const std::string text, size_t deep_level, bool is_reply=false) const;
 
  private:
   KernelGraph graph_;

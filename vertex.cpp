@@ -1,5 +1,4 @@
 #pragma once
-#include <assert.h>
 #include "vertex.h"
 
 
@@ -8,9 +7,9 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 	for (int i = 0; i < PARAM_NUM_; ++i) {
 		float val = degree_values_[i];
 		if (is_radian) {
-      val = val * 180 / PI;
+      val = val * TO_DEG;
 		} else {
-      val = val * PI / 180;
+      val = val * TO_RAD;
 		}
 		radian_values_.push_back(val);
 	}

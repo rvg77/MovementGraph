@@ -3,8 +3,8 @@
 KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
     broker_(broker),
     motion_(broker),
-    life_proxy(broker) {
-}
+    life_proxy(broker),
+    posture_(broker) {}
 
 Vertex KernelGraph::GetCurrentState() const {
   bool useSensors = true;
@@ -53,6 +53,14 @@ void KernelGraph::Run(const Vertex* v, float time) {
   motion_.angleInterpolation(PARAM_NAMES, v->GetRadianValues(), time, true);
 }
 
+void KernelGraph::Rest() const {
+  motion_.rest();
+}
+
+void KernelGraph::Wake() const {
+  motion_.wakeUp();
+}
+
 void KernelGraph::StrongRest() const {
   std::vector <float> param;
   for (int i = 0; i < PARAM_NUM_; ++i) {
@@ -71,6 +79,24 @@ void KernelGraph::StrongWake() const {
 
 void KernelGraph::BehaviorOff() const {
   life_proxy.setState("disabled");
+}
+
+void KernelGraph::Move(float x, float y, float theta) {
+  motion_.wakeUp();
+
+
+  float first_rotate = atan2(y, x) - PI / 2;
+  float len = sqrt(x * x + y * y);
+  float second_rotate = theta - first_rotate;
+
+  if (len > EPS) {
+    Rotate(first_rotate);
+    GoForward(len);
+    Rotate(second_rotate);
+  } else {
+    Rotate(theta);
+  }
+  posture_.goToPosture("StandInit", 0.5);
 }
 
 
@@ -105,5 +131,65 @@ void KernelGraph::RunWay(std::vector <const Edge*> edges) {
   }
 
   motion_.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
+}
+
+void KernelGraph::Rotate(float theta) {
+  assert(fabs(theta) <= PI);
+
+  posture_.goToPosture("StandInit", 0.5);
+
+  theta = GetRealAngle(theta);
+  float x_speed, y_speed, t_speed, time_rotate;
+  time_rotate = fabs(theta / theta_velocity);
+  x_speed     = 0;
+  y_speed     = 0;
+  t_speed     = theta / time_rotate;
+
+  MoveParams params;
+  params.SetParam("MaxStepFrequency", 1.0);
+  params.SetParam("MaxStepX", 0.02);
+  params.SetParam("MaxStepY", 0.10);
+  params.SetParam("StepHeight", 0.02);
+
+  motion_.move(x_speed, y_speed, t_speed, params.GetParams());
+  sleep(time_rotate);
+  motion_.stopMove();
+}
+
+void KernelGraph::GoForward(float len) {
+  assert(len >= 0);
+
+  posture_.goToPosture("StandInit", 0.5);
+
+  float x_speed, y_speed, t_speed, time_walk;
+  time_walk = len / x_velocity;
+  x_speed   = x_velocity;
+  y_speed   = 0;
+  t_speed   = 0;
+
+  MoveParams params;
+
+  params.SetParam("MaxStepX", 0.06);
+  params.SetParam("StepHeight", 0.027);
+  params.SetParam("TorsoWy", 0.01);
+  /*
+  params.SetParam("MaxStepFrequency", 0.0);
+
+  params.SetParam("TorsoWy", 0.12);
+
+
+  */
+
+  motion_.setMoveArmsEnabled(true, true);
+  motion_.move(x_speed, y_speed, t_speed, params.GetParams());
+  sleep(time_walk);
+  motion_.stopMove();
+  motion_.setMoveArmsEnabled(false, false);
+}
+
+float KernelGraph::GetRealAngle(float theta) const {
+  float sign = (theta < 0) ? -1 : 1;
+  float new_theta = (fabs(theta) + 30 * TO_RAD) * 9 / 10;
+  return sign * new_theta;
 }
 

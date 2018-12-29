@@ -16,16 +16,12 @@ option(MOVEMENTGRAPH_IS_REMOTE
 
 # Create a list of source files
 set(_srcs
+        moveparams.cpp
         vertex.cpp
         edge.cpp
         primalgraph.cpp
         kernelgraph.cpp
         graphcreator.cpp
-        vertex.h
-        edge.h
-        primalgraph.h
-        kernelgraph.h
-        graphcreator.h
         main.cpp
         )
 
