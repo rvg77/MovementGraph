@@ -5,7 +5,7 @@
 #include <alcommon/albroker.h>
 #include <alcommon/albrokermanager.h>
 #include <alcommon/altoolsmain.h>
-#include "movementgraph.h"
+#include "graphcreator.h"
 
 #ifdef MOVEMENTGRAPH_IS_REMOTE
 # define ALCALL
@@ -27,7 +27,7 @@ extern "C"
     AL::ALBrokerManager::setInstance(pBroker->fBrokerManager.lock());
     AL::ALBrokerManager::getInstance()->addBroker(pBroker);
     // create module instances
-    AL::ALModule::createModule<MovementGraph>(pBroker, "MovementGraph");
+    AL::ALModule::createModule<GraphCreator>(pBroker, "GraphCreator");
     return 0;
   }
 
@@ -45,6 +45,6 @@ extern "C"
     TMainType sig;
     sig = &_createModule;
     // call main
-    return ALTools::mainFunction("MovementGraph", argc, argv, sig);
+    return ALTools::mainFunction("GraphCreator", argc, argv, sig);
   }
 #endif
