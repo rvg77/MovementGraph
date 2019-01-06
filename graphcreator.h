@@ -31,7 +31,9 @@ class GraphCreator : public AL::ALModule {
 
   void Test();
 
-  void Kick();
+  void RKick();
+
+  void LKick();
 
   void Move();
 

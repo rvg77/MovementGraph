@@ -53,9 +53,12 @@ void GraphCreator::init() {
     else if (command == "TEST") {
       Test();
     }
-    else if (command == "KICK") {
-      Kick();
-    } 
+    else if (command == "RKICK") {
+      RKick();
+    }
+    else if (command == "LKICK") {
+      LKick();
+    }
     else if (command == "EXIT") {
       break;
     }
@@ -197,23 +200,14 @@ void GraphCreator::Test() {
   }
 }
 
-void GraphCreator::Kick() {
-
-  graph_.LeftKick();
-  /*
-   * int cnt;
-  float acc;
-  std::vector <std::string> path({"kick::STAND", "kick::FINISH"});
-
-  cnt = SmallLog<int>("ENTER repeat number:", 2, true);
-  acc = SmallLog<float>("ENTER acceleration:", 2, true);
-  if (!graph_.RunChain(path, cnt, acc)) {
-    SmallLog("ERROR Cant run chain ", 2);
-    return;
-  }
-   */
+void GraphCreator::RKick() {
+  graph_.RightKick();
 }
 
+void GraphCreator::LKick() {
+
+  graph_.LeftKick();
+}
 void GraphCreator::Move() {
   float x, y, theta;
 
