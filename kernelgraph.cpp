@@ -13,7 +13,9 @@ Vertex KernelGraph::GetCurrentState() const {
   return Vertex(result, true);
 }
 
-bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
+bool KernelGraph::RunChain(const std::vector <std::string>& chain,
+              int cnt,
+              float acceleration) {
   assert(cnt > 0);
   assert(chain.size() > 1);
 
@@ -30,10 +32,8 @@ bool KernelGraph::RunChain(const std::vector <std::string>& chain, int cnt) {
     }
   }
 
-  std::cout << "DEBUG" << std::endl;
   Run(full_way[0]->GetBegin());
-  std::cout << "DEBUG" << std::endl;
-  RunWay(full_way);
+  RunWay(full_way, acceleration);
   return true;
 }
 
@@ -103,10 +103,12 @@ void KernelGraph::Move(float x, float y, float theta) {
 /*------- PRIVAT SPACE ---------*/
 
 
-void KernelGraph::RunWay(std::vector <const Edge*> edges) {
+void KernelGraph::RunWay(std::vector <const Edge*> edges, float acceleration) {
+  assert(acceleration > 0);
   if (edges.empty()) {
     return;
   }
+
 
   AL::ALValue angleLists;
   AL::ALValue timeLists;
@@ -115,7 +117,7 @@ void KernelGraph::RunWay(std::vector <const Edge*> edges) {
   float curr_time = 0;
 
   for (int i = 0; i < edges.size(); ++i) {
-    curr_time += edges[i]->GetTime();
+    curr_time += edges[i]->GetTime() * acceleration;
     time_list.push_back(curr_time);
     params_list.push_back(edges[i]->GetEnd()->GetRadianValues());
   }

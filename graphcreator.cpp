@@ -174,23 +174,24 @@ void GraphCreator::Run() {
 }
 
 void GraphCreator::Test() {
-  int n, cnt;
+  int n, cnt, acc;
   std::vector <const Edge*> way;
   std::vector <std::string> path;
 
-  std::cout << "> Please enter Len of chain:\n\t- ";
-  std::cin >> n;
+  n = SmallLog<int>("ENTER Len of chain:", 2);
 
-  std::cout << "> ENTER vertexes names:\n\t- ";
+  SmallLog("ENTER vertexes names", 2);
+  std::cout << "\t\t-";
+
   for (int i = 0; i < n; ++i) {
     std::string s;
     std::cin >> s;
     path.push_back(s);
   }
-  std::cout << "> ENTER repeat number:\n\t- ";
-  std::cin >> cnt;
+  cnt = SmallLog<int>("ENTER repeat number:", 2);
+  acc = SmallLog<float>("ENTER acceleration:", 2);
 
-  if (!graph_.RunChain(path, cnt)) {
+  if (!graph_.RunChain(path, cnt, acc)) {
     SmallLog("ERROR Cant run chain", 2);
     return;
   }

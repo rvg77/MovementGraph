@@ -20,7 +20,9 @@ class KernelGraph : public PrimalGraph {
 
   Vertex GetCurrentState() const;
 
-  bool RunChain(const std::vector <std::string>& chain, int cnt);
+  bool RunChain(const std::vector <std::string>& chain,
+                int cnt,
+                float acceleration = DEFAULT_ACCELERATION);
 
   bool Run(const std::string& v_name, float time = DEFAULT_TIME);
 
@@ -39,13 +41,14 @@ class KernelGraph : public PrimalGraph {
   void Move(float x, float y, float theta);
 
  private:
-  void RunWay(std::vector <const Edge*> edges);
+  void RunWay(std::vector <const Edge*> edges, float acceleration);
 
   void Rotate(float theta);
 
   void GoForward(float len);
 
   float GetRealAngle(float theta) const;
+
  private:
   boost::shared_ptr<AL::ALBroker> broker_;
   mutable AL::ALMotionProxy motion_;
