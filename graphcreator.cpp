@@ -53,8 +53,8 @@ void GraphCreator::init() {
     else if (command == "TEST") {
       Test();
     }
-    else if (command == "TT") {
-      TT();
+    else if (command == "KICK") {
+      Kick();
     } 
     else if (command == "EXIT") {
       break;
@@ -178,7 +178,7 @@ void GraphCreator::Test() {
   std::vector <const Edge*> way;
   std::vector <std::string> path;
 
-  n = SmallLog<int>("ENTER Len of chain:", 2);
+  n = SmallLog<int>("ENTER Len of chain:", 2, true);
 
   SmallLog("ENTER vertexes names", 2);
   std::cout << "\t\t-";
@@ -188,8 +188,8 @@ void GraphCreator::Test() {
     std::cin >> s;
     path.push_back(s);
   }
-  cnt = SmallLog<int>("ENTER repeat number:", 2);
-  acc = SmallLog<float>("ENTER acceleration:", 2);
+  cnt = SmallLog<int>("ENTER repeat number:", 2, true);
+  acc = SmallLog<float>("ENTER acceleration:", 2, true);
 
   if (!graph_.RunChain(path, cnt, acc)) {
     SmallLog("ERROR Cant run chain", 2);
@@ -197,17 +197,21 @@ void GraphCreator::Test() {
   }
 }
 
-void GraphCreator::TT() {
-  int cnt;
-  std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
+void GraphCreator::Kick() {
 
-  std::cout << "> ENTER repeat number:\n\t- ";
-  std::cin >> cnt;
+  graph_.LeftKick();
+  /*
+   * int cnt;
+  float acc;
+  std::vector <std::string> path({"kick::STAND", "kick::FINISH"});
 
-  if (!graph_.RunChain(path, cnt)) {
+  cnt = SmallLog<int>("ENTER repeat number:", 2, true);
+  acc = SmallLog<float>("ENTER acceleration:", 2, true);
+  if (!graph_.RunChain(path, cnt, acc)) {
     SmallLog("ERROR Cant run chain ", 2);
     return;
   }
+   */
 }
 
 void GraphCreator::Move() {

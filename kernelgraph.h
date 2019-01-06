@@ -40,6 +40,10 @@ class KernelGraph : public PrimalGraph {
 
   void Move(float x, float y, float theta);
 
+  void RightKick();
+
+  void LeftKick();
+
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
 

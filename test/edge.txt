@@ -1,10 +1,6 @@
-S kick::RL_M 0.5
-kick::STAND kick::RL_M 0.5
-
-kick::RL_M kick::RADY 0.5
-kick::RADY kick::STADY 0.5
-kick::STADY kick::GOAAAL 0.5
-kick::GOAAAL kick::RETURN 2
-
-kick::RETURN kick::FINISH 2
-kick::RETURN F 2
+kick::STAND kick::RL_M 0.25
+kick::RL_M kick::RADY 0.25
+kick::RADY kick::STADY 0.25
+kick::STADY kick::GOAAAL 0.25
+kick::GOAAAL kick::RETURN 0.5
+kick::RETURN kick::FINISH 1
