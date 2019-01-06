@@ -11,5 +11,5 @@ class MovementGraph : public AL::ALModule {
   virtual void init();
 
  private:
-    KernelGraph graph_;
+  KernelGraph graph_;
 };

@@ -1,4 +1,4 @@
-#HY  HP    LSP   LSR    LEY    LER   LWY  LH  LHYP   LHR   LHP   LKP     LAP    LAR    RHR   RHP   RKP      RAP   RAR    RSP    RSR   REY   RER    RWY RH DUR
+# HY  HP    LSP   LSR    LEY    LER   LWY  LH  LHYP   LHR   LHP   LKP     LAP    LAR    RHR   RHP   RKP      RAP   RAR    RSP    RSR   REY   RER    RWY RH DUR
  0   0      90    10     0      0      0   0    0     0     0     0       30     0      0     0     0       30     0      90    -10    0     0     0   0  960
 # swing arms around front and legs around side
  0   0      0     90     0      0      0   0   -70   46    33    30      -30     0    -46    33     30     -30    0      0     -90    0     0      0   0  875

@@ -53,11 +53,17 @@ void GraphCreator::init() {
     else if (command == "TEST") {
       Test();
     }
-    else if (command == "TT") {
-      TT();
-    } 
+    else if (command == "RKICK") {
+      RKick();
+    }
+    else if (command == "LKICK") {
+      LKick();
+    }
     else if (command == "EXIT") {
       break;
+    }
+    else if (command == "MOVE") {
+      Move();
     }
     else {
       SmallLog("UNKNOWN COMMAND", 2);
@@ -68,13 +74,13 @@ void GraphCreator::init() {
 void GraphCreator::Rest() {
   SmallLog("Going to the rest Position", 2);
 
-  graph_.StrongRest();
+  graph_.Rest();
 }
 
 void GraphCreator::Wake() {
   SmallLog("Waking up", 2);
 
-  graph_.StrongWake();
+  graph_.Wake();
 }
 
 void GraphCreator::BehaviorOff() {
@@ -161,7 +167,7 @@ void GraphCreator::Save() {
 }
 
 void GraphCreator::Run() {
-  std::string v_name(SmallLog("ENTER Vertex Name:", 2, 1));
+  std::string v_name(SmallLog("ENTER Vertex Name:", 2, true));
 
 
   if (!graph_.Run(v_name)) {
@@ -171,40 +177,47 @@ void GraphCreator::Run() {
 }
 
 void GraphCreator::Test() {
-  int n, cnt;
+  int n, cnt, acc;
   std::vector <const Edge*> way;
   std::vector <std::string> path;
 
-  std::cout << "> Please enter Len of chain:\n\t- ";
-  std::cin >> n;
+  n = SmallLog<int>("ENTER Len of chain:", 2, true);
 
-  std::cout << "> ENTER vertexes names:\n\t- ";
+  SmallLog("ENTER vertexes names", 2);
+  std::cout << "\t\t-";
+
   for (int i = 0; i < n; ++i) {
     std::string s;
     std::cin >> s;
     path.push_back(s);
   }
-  std::cout << "> ENTER repeat number:\n\t- ";
-  std::cin >> cnt;
+  cnt = SmallLog<int>("ENTER repeat number:", 2, true);
+  acc = SmallLog<float>("ENTER acceleration:", 2, true);
 
-  if (!graph_.RunChain(path, cnt)) {
+  if (!graph_.RunChain(path, cnt, acc)) {
     SmallLog("ERROR Cant run chain", 2);
     return;
   }
 }
 
-void GraphCreator::TT() {
-  int cnt;
-  std::vector <std::string> path({"START", "LUP", "START", "RUP", "START"});
-
-  std::cout << "> ENTER repeat number:\n\t- ";
-  std::cin >> cnt;
-
-  if (!graph_.RunChain(path, cnt)) {
-    SmallLog("ERROR Cant run chain ", 2);
-    return;
-  }
+void GraphCreator::RKick() {
+  graph_.RightKick();
 }
+
+void GraphCreator::LKick() {
+
+  graph_.LeftKick();
+}
+void GraphCreator::Move() {
+  float x, y, theta;
+
+  SmallLog("Its a Move section insert x, y and Theta:", 2);
+  x     = SmallLog<float>("ENTER x in meters:", 2, true);
+  y     = SmallLog<float>("ENTER y in meters:", 2, true);
+  theta = SmallLog<float>("ENTER Theta in Degree:", 2, true);
+  graph_.Move(x, y, theta * TO_RAD);
+}
+
 
 /*------- PRIVAT SPACE ---------*/
 
@@ -229,7 +242,8 @@ void GraphCreator::ClearBuffer() {
   delete vertex_buffer_;
 }
 
-std::string GraphCreator::SmallLog(const std::string text, size_t deep_level, bool is_reply) const {
+template <typename T>
+T GraphCreator::SmallLog(const std::string text, size_t deep_level, bool is_reply) const {
   std::string request = "";
   for (size_t i = 0; i < deep_level; ++i) {
     request += "--";
@@ -237,12 +251,10 @@ std::string GraphCreator::SmallLog(const std::string text, size_t deep_level, bo
 
   std::cout << request + "> " + text << std::endl;
   if (is_reply) {
-    std::string ans = "";
+    T ans;
     std::cout << request + "| ";
     std::cin >> ans;
     return ans;
   }
-  else {
-    return "";
-  }
+  return T();
 }

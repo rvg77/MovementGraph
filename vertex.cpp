@@ -1,5 +1,4 @@
 #pragma once
-#include <assert.h>
 #include "vertex.h"
 
 
@@ -8,9 +7,9 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 	for (int i = 0; i < PARAM_NUM_; ++i) {
 		float val = degree_values_[i];
 		if (is_radian) {
-      val = val * 180 / PI;
+			val = val * TO_DEG;
 		} else {
-      val = val * PI / 180;
+			val = val * TO_RAD;
 		}
 		radian_values_.push_back(val);
 	}
@@ -20,10 +19,10 @@ Vertex::Vertex(std::vector <float> new_param_values_, bool is_radian)
 }
 
 Vertex::Vertex(const Vertex& vertex)
-    : degree_values_(vertex.degree_values_),
-    	radian_values_(vertex.radian_values_),
-      adjacent_edges_(vertex.adjacent_edges_),
-      name_(vertex.name_){}
+		: degree_values_(vertex.degree_values_),
+			radian_values_(vertex.radian_values_),
+			adjacent_edges_(vertex.adjacent_edges_),
+			name_(vertex.name_){}
 
 
 Vertex& Vertex::operator =(const Vertex& vertex) {
@@ -34,11 +33,11 @@ Vertex& Vertex::operator =(const Vertex& vertex) {
 }
 
 void Vertex::PrintState(std::ostream &out) const {
-  out << name_ << " {" << std::endl;
-  for (size_t i = 0; i < PARAM_NUM_; ++i) {
-    out << "    " << PARAM_NAMES[i] << " : " << degree_values_[i] << std::endl;
-  }
-  out << "}" << std::endl;
+	out << name_ << " {" << std::endl;
+	for (size_t i = 0; i < PARAM_NUM_; ++i) {
+		out << "    " << PARAM_NAMES[i] << " : " << degree_values_[i] << std::endl;
+	}
+	out << "}" << std::endl;
 }
 
 void Vertex::SetName(const std::string& name) {
@@ -54,7 +53,7 @@ int Vertex::GetAdjacentCount() const {
 }
 
 void Vertex::AddEdge(const Edge* new_edge) {
-  adjacent_edges_.push_back(new_edge);
+	adjacent_edges_.push_back(new_edge);
 }
 
 float Vertex::Dist(const Vertex& vertex) const {
@@ -86,26 +85,26 @@ void Vertex::Reflect() {
 		if (JOINT_TYPES[i] == RIGHT) {
 			continue;
 		}
-    int k = PAIR_JOINT[i] < 0 ? -1 : 1;
+		int k = PAIR_JOINT[i] < 0 ? -1 : 1;
 		int j = abs(PAIR_JOINT[i]);
-    radian_values_[i] *= k;
-    degree_values_[i] *= k;
+		radian_values_[i] *= k;
+		degree_values_[i] *= k;
 		std::swap(radian_values_[i], radian_values_[j]);
 		std::swap(degree_values_[i], degree_values_[j]);
-    radian_values_[i] *= k;
-    degree_values_[i] *= k;
+		radian_values_[i] *= k;
+		degree_values_[i] *= k;
 	}
 }
 
 void Vertex::CopyFromSide(JOINT_TYPE side_name) {
-  for (int i = 0; i < PARAM_NUM_; ++i) {
-  	if (JOINT_TYPES[i] == side_name) {
-  		int k = PAIR_JOINT[i] < 0 ? -1 : 1;
-  		int j = abs(PAIR_JOINT[i]);
-  		assert(j < PARAM_NUM_);
+	for (int i = 0; i < PARAM_NUM_; ++i) {
+		if (JOINT_TYPES[i] == side_name) {
+			int k = PAIR_JOINT[i] < 0 ? -1 : 1;
+			int j = abs(PAIR_JOINT[i]);
+			assert(j < PARAM_NUM_);
 
-  		radian_values_[j] = k * radian_values_[i];
+			radian_values_[j] = k * radian_values_[i];
 			degree_values_[j] = k * degree_values_[i];
-  	}
-  }
+		}
+	}
 }

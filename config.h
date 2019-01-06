@@ -1,3 +1,4 @@
+
 enum JOINT_TYPE {
   LEFT,
   MID,
@@ -6,9 +7,12 @@ enum JOINT_TYPE {
 
 const std::string VERTEXES_FILE = "test/vertex.txt";
 
-const float PI = 3.14159265;
-
+const float PI     = 3.14159265;
+const float TO_RAD = PI / 180;
+const float TO_DEG = 180 / PI;
+const float EPS    = 1e-5;
 const float DEFAULT_TIME = 1.3;
+const float DEFAULT_ACCELERATION = 1.0;
 const size_t PARAM_NUM_ = 24;
 
 const std::vector <std::string> PARAM_NAMES = {
@@ -99,4 +103,30 @@ const std::vector <JOINT_TYPE> JOINT_TYPES = {
     RIGHT,
     RIGHT,
     RIGHT,
-    RIGHT };
+    RIGHT
+};
+
+
+const std::vector <std::string> MOVE_PARAM_NAMES  = {
+    "MaxStepX",
+    "MaxStepY",
+    "MaxStepTheta",
+    "MaxStepFrequency",
+    "StepHeight",
+    "TorsoWx",
+    "TorsoWy"
+};
+
+const std::vector <float> MOVE_PARAM_DEFAULT = {
+    0.040,  // MaxStepX
+    0.140,  // MaxStepY
+    0.349,  // MaxStepTheta
+    1.0  ,  // MaxStepFrequency
+    0.020,  // StepHeight
+    0.000,  // TorsoWx
+    0.000,  // TorsoWy
+};
+
+const float x_velocity     = 0.08;
+const float y_velocity     = 0.02;
+const float theta_velocity = 15 * TO_RAD;
