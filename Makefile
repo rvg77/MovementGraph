@@ -1,21 +1,28 @@
-CONFIG_NAME = linux-sdk
-GEN_NAME    = generator.py
-IP          = 192.168.1.2
-VERTEXSET   = ./test/vertex.txt
-EDGESET     = ./test/edge.txt
-OUTPUT      = automaticInitGeneration.h
+CONFIG_NAME_FOR_TESTING = linux-sdk
+CONFIG_NAME_FOR_ROBOT   = atom-sdk
+GEN_NAME    			= generator.py
+IP          			= 192.168.1.2
+VERTEXSET   			= ./test/vertex.txt
+EDGESET     			= ./test/edge.txt
+OUTPUT      			= automaticInitGeneration.h
+CMakeListsTest          = CMakeListsTest.txt
+CMakeListsLib           = CMakeListsLib.txt
+CMakeLists				= CMakeLists.txt
 
-all: gen compil run
+all: gen compil_for_testing compil_for_robot run
 
 gen: $(GEN_NAME)
 	python3 $(GEN_NAME) --vertex $(VERTEXSET) --edges $(EDGESET) --out $(OUTPUT)
 
+compil_for_testing: $(CMakeListsTest)
+	cp -f $(CMakeListsTest) $(CMakeLists)
+	qibuild configure -c $(CONFIG_NAME_FOR_TESTING)
+	qibuild make      -c $(CONFIG_NAME_FOR_TESTING)
 
-compil: CMakeLists.txt
-	qibuild configure -c $(CONFIG_NAME)
-	qibuild make      -c $(CONFIG_NAME)
+compil_for_robot: $(CMakeListsLib)
+	cp -f $(CMakeListsLib) $(CMakeLists)
+	qibuild configure -c $(CONFIG_NAME_FOR_ROBOT)
+	qibuild make      -c $(CONFIG_NAME_FOR_ROBOT)
 
 run:
-	./build-$(CONFIG_NAME)/sdk/bin/graphcreator --pip ${IP}
-clear:
-	rm -r build-$(CONFIG_NAME)
+	./build-$(CONFIG_NAME_FOR_TESTING)/sdk/bin/graphcreator --pip ${IP}
