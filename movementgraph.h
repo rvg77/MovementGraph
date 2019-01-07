@@ -10,6 +10,12 @@ class MovementGraph : public AL::ALModule {
 
   virtual void init();
 
+  void Move(float x, float y, float theta);
+
+  void RightKick();
+
+  void LeftKick();
+
  private:
   KernelGraph graph_;
 };
