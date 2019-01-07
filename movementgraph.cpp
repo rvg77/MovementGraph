@@ -29,3 +29,16 @@ MovementGraph::~MovementGraph() {}
 
 void MovementGraph::init() {
 }
+
+
+void MovementGraph::Move(float x, float y, float theta) {
+  graph_.Move(x, y, theta);
+}
+
+void MovementGraph::RightKick() {
+  graph_.RigRightKick();
+}
+
+void MovementGraph::LeftKick() {
+  graph_.LeftKick();
+}
