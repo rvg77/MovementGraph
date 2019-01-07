@@ -1,4 +1,3 @@
-
 S kick::STAND 1
 
 kick::STAND kick::RL_M 1
