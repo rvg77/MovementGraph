@@ -6,9 +6,8 @@ using namespace AL;
 
 
 MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::string& name):
-    life_proxy(getParentBroker()),
     ALModule(broker, name),
-    graph(getParentBroker()) {
+    graph_(broker) {
 
   setModuleDescription("Module for robot movements.");
 
@@ -36,7 +35,7 @@ void MovementGraph::Move(float x, float y, float theta) {
 }
 
 void MovementGraph::RightKick() {
-  graph_.RigRightKick();
+  graph_.RightKick();
 }
 
 void MovementGraph::LeftKick() {
