@@ -65,9 +65,13 @@ void GraphCreator::init() {
     else if (command == "MOVE") {
       Move();
     }
+    else if (command == "FUN") {
+      Fun();
+    }
     else {
       SmallLog("UNKNOWN COMMAND", 2);
     }
+
   }
 }
 
@@ -218,6 +222,9 @@ void GraphCreator::Move() {
   graph_.Move(x, y, theta * TO_RAD);
 }
 
+void GraphCreator::Fun() {
+  graph_.Fun();
+}
 
 /*------- PRIVAT SPACE ---------*/
 

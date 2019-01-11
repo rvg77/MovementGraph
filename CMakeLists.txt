@@ -25,21 +25,10 @@ set(_srcs
         main.cpp
         )
 
-if(MOVEMENTGRAPH_IS_REMOTE)
-    # Add a compile flag because code changes a little bit
-    # when we are compiling an executable
-    # This will let you use #ifdef HELLOWORLD_IS_REMOTE
-    # in the C++ code
-    add_definitions( " -DMOVEMENTGRAPH_IS_REMOTE ")
-
-    # Create an executable
-    qi_create_bin(movementgraph ${_srcs})
-else()
-    # Create a plugin, that is a shared library, and make
-    # sure it is built in lib/naoqi, so that the naoqi executable
-    # can find it later
-    qi_create_lib(movementgraph SHARED ${_srcs} SUBFOLDER naoqi)
-endif()
+# Create a plugin, that is a shared library, and make
+# sure it is built in lib/naoqi, so that the naoqi executable
+# can find it later
+qi_create_lib(movementgraph SHARED ${_srcs} SUBFOLDER naoqi)
 
 # Tell CMake that sayhelloworld depends on ALCOMMON and
 # ALPROXIES.

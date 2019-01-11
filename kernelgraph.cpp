@@ -798,6 +798,13 @@ void KernelGraph::LeftKick() {
   }
 
 }
+
+void KernelGraph::Fun() {
+  boost::shared_ptr<AL::ALProxy> testProxy
+      = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
+}
+
+
 /*------- PRIVAT SPACE ---------*/
 
 

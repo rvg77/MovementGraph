@@ -37,8 +37,9 @@ class GraphCreator : public AL::ALModule {
 
   void Move();
 
- private:
+  void Fun();
 
+ private:
   bool CheckBuffer() const;
 
   bool IsBufferEmpty() const;
