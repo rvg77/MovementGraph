@@ -854,7 +854,7 @@ void KernelGraph::Rotate(float theta) {
 
   theta = GetRealAngle(theta);
   float x_speed, y_speed, t_speed, time_rotate;
-  time_rotate = fabs(theta / theta_velocity);
+  time_rotate = fabs(theta / THETA_VELOCITY);
   x_speed     = 0;
   y_speed     = 0;
   t_speed     = theta / time_rotate;
@@ -877,7 +877,7 @@ void KernelGraph::GoForward(float len) {
 
   float x_speed, y_speed, t_speed, time_walk;
   time_walk = len / x_velocity;
-  x_speed   = x_velocity;
+  x_speed   = X_VELOCITY;
   y_speed   = 0;
   t_speed   = 0;
 
