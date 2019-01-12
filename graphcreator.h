@@ -37,6 +37,8 @@ class GraphCreator : public AL::ALModule {
 
   void Move();
 
+  void GetUpFront();
+
   void Fun();
 
  private:

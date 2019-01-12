@@ -44,6 +44,8 @@ class KernelGraph : public PrimalGraph {
 
   void LeftKick();
 
+  void GetUpFront();
+
   void Fun();
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
