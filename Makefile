@@ -24,5 +24,9 @@ compil_for_robot: $(CMakeListsLib)
 	qibuild configure -c $(CONFIG_NAME_FOR_ROBOT)
 	qibuild make      -c $(CONFIG_NAME_FOR_ROBOT)
 
+make_test: gen compil_for_testing run
+
+make_lib: gen compil_for_testing
+
 run:
 	./build-$(CONFIG_NAME_FOR_TESTING)/sdk/bin/graphcreator --pip ${IP}
