@@ -65,6 +65,9 @@ void GraphCreator::init() {
     else if (command == "MOVE") {
       Move();
     }
+    else if (command == "GUF") {
+      GetUpFront();
+    }
     else if (command == "FUN") {
       Fun();
     }
@@ -212,6 +215,7 @@ void GraphCreator::LKick() {
 
   graph_.LeftKick();
 }
+
 void GraphCreator::Move() {
   float x, y, theta;
 
@@ -220,6 +224,12 @@ void GraphCreator::Move() {
   y     = SmallLog<float>("ENTER y in meters:", 2, true);
   theta = SmallLog<float>("ENTER Theta in Degree:", 2, true);
   graph_.Move(x, y, theta * TO_RAD);
+}
+
+void GraphCreator::GetUpFront() {
+  SmallLog("Getting up....", 2);
+
+  graph_.GetUpFront();
 }
 
 void GraphCreator::Fun() {

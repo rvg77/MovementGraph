@@ -799,6 +799,12 @@ void KernelGraph::LeftKick() {
 
 }
 
+void KernelGraph::GetUpFront() {
+  std::vector <std::string> names({"GUF0", "GUF15"});
+  RunChain(names, 1);
+  posture_.goToPosture("StandInit", 0.5);
+}
+
 void KernelGraph::Fun() {
   boost::shared_ptr<AL::ALProxy> testProxy
       = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
