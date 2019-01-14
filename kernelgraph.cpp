@@ -78,12 +78,15 @@ void KernelGraph::StrongWake() const {
 }
 
 void KernelGraph::BehaviorOff() const {
+#ifdef MOVEMENTGRAPH_IS_REMOTE
   life_proxy.setState("disabled");
+#endif
 }
 
 void KernelGraph::Move(float x, float y, float theta) {
   motion_.wakeUp();
 
+  std::swap(x, y);
 
   float first_rotate = atan2(y, x) - PI / 2;
   float len = sqrt(x * x + y * y);
@@ -875,14 +878,7 @@ void KernelGraph::GoForward(float len) {
 
   posture_.goToPosture("StandInit", 0.5);
 
-  float x_speed, y_speed, t_speed, time_walk;
-  time_walk = len / x_velocity;
-  x_speed   = X_VELOCITY;
-  y_speed   = 0;
-  t_speed   = 0;
-
   MoveParams params;
-
   params.SetParam("MaxStepX", 0.06);
   params.SetParam("StepHeight", 0.027);
   params.SetParam("TorsoWy", 0.01);
@@ -894,10 +890,17 @@ void KernelGraph::GoForward(float len) {
 
   */
 
+  float counting_len = len;
   motion_.setMoveArmsEnabled(true, true);
-  motion_.move(x_speed, y_speed, t_speed, params.GetParams());
-  sleep(time_walk);
-  motion_.stopMove();
+  while (counting_len > EPS) {
+    float curr_len = std::min(counting_len, STEP_CHAIN);
+    float time_walk = curr_len / X_VELOCITY;
+
+    motion_.move(X_VELOCITY, 0, 0, params.GetParams());
+    sleep(time_walk);
+    motion_.stopMove();
+    counting_len -= curr_len;
+  }
   motion_.setMoveArmsEnabled(false, false);
 }
 

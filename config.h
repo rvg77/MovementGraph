@@ -127,6 +127,7 @@ const std::vector <float> MOVE_PARAM_DEFAULT = {
     0.000,  // TorsoWy
 };
 
-const float X_VELOCITY     = 0.08;
+const float X_VELOCITY     = 0.1;
 const float Y_VELOCITY     = 0.02;
 const float THETA_VELOCITY = 15 * TO_RAD;
+const float STEP_CHAIN     = 0.5;            // Allow to 1 meter
