@@ -3,7 +3,9 @@
 KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
     broker_(broker),
     motion_(broker),
-    life_proxy(broker),
+#if MOVEMENTGRAPH_IS_REMOTE
+    life_proxy_(broker),
+#endif
     posture_(broker) {}
 
 Vertex KernelGraph::GetCurrentState() const {
@@ -79,16 +81,14 @@ void KernelGraph::StrongWake() const {
 
 void KernelGraph::BehaviorOff() const {
 #ifdef MOVEMENTGRAPH_IS_REMOTE
-  life_proxy.setState("disabled");
+  life_proxy_.setState("disabled");
 #endif
 }
 
 void KernelGraph::Move(float x, float y, float theta) {
   motion_.wakeUp();
 
-  std::swap(x, y);
-
-  float first_rotate = atan2(y, x) - PI / 2;
+  float first_rotate = atan2(x, y) - PI / 2;
   float len = sqrt(x * x + y * y);
   float second_rotate = theta - first_rotate;
 
@@ -813,6 +813,31 @@ void KernelGraph::Fun() {
       = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
 }
 
+float KernelGraph::GetHeadVerticalAngle() {
+  Vertex curr = GetCurrentState();
+  return -curr.GetDegreesValues()[1];
+}
+
+float KernelGraph::GetHeadHorizontalAngle() {
+  Vertex curr = GetCurrentState();
+  return curr.GetDegreesValues()[0];
+}
+
+void KernelGraph::SetHeadVerticalAngle(float angle) {
+  assert(angle <= 38.5);
+  assert(angle >= -29.5);
+
+  float fractionMaxSpeed  = 0.3;
+  motion_.setAngles(PARAM_NAMES[1], -angle * TO_RAD, fractionMaxSpeed);
+}
+
+void KernelGraph::SetHeadHorizontalAngle(float angle) {
+  assert(angle <= 119.5);
+  assert(angle >= -119.5);
+
+  float fractionMaxSpeed  = 0.3;
+  motion_.setAngles(PARAM_NAMES[0], angle * TO_RAD, fractionMaxSpeed);
+}
 
 /*------- PRIVAT SPACE ---------*/
 

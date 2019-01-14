@@ -65,6 +65,12 @@ void GraphCreator::init() {
     else if (command == "MOVE") {
       Move();
     }
+    else if (command == "HVA") {
+      SetHeadVerticalAngle();
+    }
+    else if (command == "HHA") {
+      SetHeadHorizontalAngle();
+    }
     else if (command == "GUF") {
       GetUpFront();
     }
@@ -230,6 +236,16 @@ void GraphCreator::GetUpFront() {
   SmallLog("Getting up....", 2);
 
   graph_.GetUpFront();
+}
+
+void GraphCreator::SetHeadVerticalAngle() {
+  float angle = SmallLog<float>("Enter angle from down(-29.5) to up(38.5)", 2, true);
+  graph_.SetHeadVerticalAngle(angle);
+}
+
+void GraphCreator::SetHeadHorizontalAngle() {
+  float angle = SmallLog<float>("Enter angle from right(-119.5) to left(119.5)", 2, true);
+  graph_.SetHeadHorizontalAngle(angle);
 }
 
 void GraphCreator::Fun() {

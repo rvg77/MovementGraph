@@ -49,6 +49,15 @@ class KernelGraph : public PrimalGraph {
   void GetUpFront();
 
   void Fun();
+
+  float GetHeadVerticalAngle();
+
+  float GetHeadHorizontalAngle();
+
+  void SetHeadVerticalAngle(float angle);
+
+  void SetHeadHorizontalAngle(float angle);
+
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
 
@@ -61,6 +70,8 @@ class KernelGraph : public PrimalGraph {
  private:
   boost::shared_ptr<AL::ALBroker> broker_;
   mutable AL::ALMotionProxy motion_;
-  mutable AL::ALAutonomousLifeProxy life_proxy;
+#ifdef MOVEMENTGRAPH_IS_REMOTE
+  mutable AL::ALAutonomousLifeProxy life_proxy_;
+#endif
   mutable AL::ALRobotPostureProxy posture_;
 };
