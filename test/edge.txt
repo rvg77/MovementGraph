@@ -1,13 +1,12 @@
-GC0 GC1 1
-GC1 GC2 1
-GC2 GC3 1
+S kick::STAND 1
 
-GU0 GU1 1
-GU1 GU2 1
-GU2 GU3 1
-GU3 GU4 1
-GU4 GU5 1
-GU5 GU6 1
-GU6 GU7 1
-GU7 GU8 1
-GU8 GU9 1
+kick::STAND kick::RL_M 1
+kick::RL_M kick::RADY 0.5
+kick::RADY kick::STADY 0.5
+kick::STADY kick::GOAAAL 0.5
+kick::GOAAAL kick::RETURN 0.5
+kick::RETURN kick::FINISH 0.5
+
+kick::GOAAAL kick::FINISH 0.5
+
+kick::FINISH F 1

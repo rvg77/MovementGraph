@@ -26,7 +26,7 @@ compil_for_robot: $(CMakeListsLib)
 
 make_test: gen compil_for_testing run
 
-make_lib: gen compil_for_robot
+make_lib: gen compil_for_testing
 
 run:
 	./build-$(CONFIG_NAME_FOR_TESTING)/sdk/bin/graphcreator --pip ${IP}
