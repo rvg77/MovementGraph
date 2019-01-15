@@ -27,6 +27,10 @@ class MovementGraph : public AL::ALModule {
   void FindBall(int level);
 
   void ToInit(float time);
+  
+  void GetUpFront();
+
+  void GetUpBack();
  private:
   KernelGraph graph_;
 };
