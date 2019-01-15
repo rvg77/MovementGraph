@@ -802,17 +802,6 @@ void KernelGraph::LeftKick() {
 
 }
 
-void KernelGraph::GetUpFront() {
-  std::vector <std::string> names({"GUF0", "GUF15"});
-  RunChain(names, 1);
-  //posture_.goToPosture("StandInit", 0.5);
-}
-
-void KernelGraph::GetUpBack() {
-  std::vector <std::string> names({"GUB0", "GUB14"});
-  RunChain(names, 1);
-}
-
 void KernelGraph::Fun() {
   boost::shared_ptr<AL::ALProxy> testProxy
       = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
@@ -851,6 +840,17 @@ void KernelGraph::ToInit(float time = 1) {
 void KernelGraph::FindBall(int level = 4) {
   assert(level <= 7);
   std::vector <std::string> names({"INIT", "FB" + std::to_string(level)});
+  RunChain(names, 1);
+}
+
+void KernelGraph::GetUpFront() {
+  std::vector <std::string> names({"GUF0", "GUF15"});
+  RunChain(names, 1);
+  //posture_.goToPosture("StandInit", 0.5);
+}
+
+void KernelGraph::GetUpBack() {
+  std::vector <std::string> names({"GUB0", "GUB14"});
   RunChain(names, 1);
 }
 
