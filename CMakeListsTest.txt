@@ -22,6 +22,7 @@ set(_srcs
         primalgraph.cpp
         kernelgraph.cpp
         graphcreator.cpp
+        movementgraph.cpp
         main.cpp
         )
 
