@@ -88,6 +88,7 @@ void KernelGraph::BehaviorOff() const {
 void KernelGraph::Move(float x, float y, float theta) {
   motion_.wakeUp();
 
+  theta = theta * TO_RAD;
   float first_rotate = atan2(x, y) - PI / 2;
   float len = sqrt(x * x + y * y);
   float second_rotate = theta - first_rotate;
@@ -808,11 +809,6 @@ void KernelGraph::GetUpFront() {
   posture_.goToPosture("StandInit", 0.5);
 }
 
-void KernelGraph::Fun() {
-  boost::shared_ptr<AL::ALProxy> testProxy
-      = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
-}
-
 float KernelGraph::GetHeadVerticalAngle() {
   Vertex curr = GetCurrentState();
   return -curr.GetDegreesValues()[1];
@@ -839,11 +835,11 @@ void KernelGraph::SetHeadHorizontalAngle(float angle) {
   motion_.setAngles(PARAM_NAMES[0], angle * TO_RAD, fractionMaxSpeed);
 }
 
-void KernelGraph::ToInit(float time = 1) {
-  Run("INIT", time);
+void KernelGraph::ToInit() {
+  posture_.goToPosture("StandInit", 0.5);
 }
 
-void KernelGraph::FindBall(int level = 4) {
+void KernelGraph::LookDown(int level) {
   assert(level <= 7);
   std::vector <std::string> names({"INIT", "FB" + std::to_string(level)});
   RunChain(names, 1);
@@ -893,9 +889,6 @@ void KernelGraph::Rotate(float theta) {
   theta = GetRealAngle(theta);
   float x_speed, y_speed, t_speed, time_rotate;
   time_rotate = fabs(theta / THETA_VELOCITY);
-  x_speed     = 0;
-  y_speed     = 0;
-  t_speed     = theta / time_rotate;
 
   MoveParams params;
   params.SetParam("MaxStepFrequency", 1.0);
@@ -903,7 +896,7 @@ void KernelGraph::Rotate(float theta) {
   params.SetParam("MaxStepY", 0.10);
   params.SetParam("StepHeight", 0.02);
 
-  motion_.move(x_speed, y_speed, t_speed, params.GetParams());
+  motion_.move(0, 0, theta / time_rotate, params.GetParams());
   sleep(time_rotate);
   motion_.stopMove();
 }

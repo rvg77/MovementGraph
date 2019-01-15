@@ -42,9 +42,9 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   functionName("ToInit", getName(), "go to init position");
   BIND_METHOD(MovementGraph::ToInit);
 
-  functionName("FindBall", getName(), "position to looking for the ball");
-  addParam("level", "degree tilt");
-  BIND_METHOD(MovementGraph::SetHeadHorizontalAngle);
+  functionName("LookDown", getName(), "position to looking for the ball");
+  addParam("level", "degree tilt from 0 to 7");
+  BIND_METHOD(MovementGraph::LookDown);
 
 }
 
@@ -86,6 +86,6 @@ void MovementGraph::ToInit() {
   graph_.ToInit();
 }
 
-void MovementGraph::FindBall(int level = 4) {
-  graph_.FindBall(level);
+void MovementGraph::LookDown(int level) {
+  graph_.LookDown(level);
 }
