@@ -24,7 +24,9 @@ class MovementGraph : public AL::ALModule {
 
   void SetHeadHorizontalAngle(float angle);
 
-  void FindBall(int level);
+  void LookDown(int level);
+
+  void ToInit();
 
   void ToInit(float time);
   
