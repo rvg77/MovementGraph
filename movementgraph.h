@@ -16,13 +16,6 @@ class MovementGraph : public AL::ALModule, public KernelGraph {
 
   void KickLeft();
 
-  float GetHeadVerticalAngle();
-
-  float GetHeadHorizontalAngle();
-
-  void SetHeadVerticalAngle(float angle);
-
-  void SetHeadHorizontalAngle(float angle);
  private:
   // KernelGraph graph_;
 };

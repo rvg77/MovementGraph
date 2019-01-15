@@ -5,9 +5,7 @@
 #include <alcommon/albroker.h>
 #include <alproxies/almotionproxy.h>
 #include <alproxies/albasicawarenessproxy.h>
-#ifdef MOVEMENTGRAPH_IS_REMOTE
-# include <alproxies/alautonomouslifeproxy.h>
-#endif
+// #include <alproxies/alautonomouslifeproxy.h>
 #include <alproxies/alrobotpostureproxy.h>
 #include "primalgraph.h"
 
@@ -46,21 +44,7 @@ class KernelGraph : public PrimalGraph {
 
   void LeftKick();
 
-<<<<<<< HEAD
   // void Fun();
-=======
-  void GetUpFront();
-
-  void Fun();
-
-  float GetHeadVerticalAngle();
-
-  float GetHeadHorizontalAngle();
-
-  void SetHeadVerticalAngle(float angle);
-
-  void SetHeadHorizontalAngle(float angle);
->>>>>>> 428d483890e0ebac8279d2c6ce54331b1739906e
 
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
@@ -73,12 +57,6 @@ class KernelGraph : public PrimalGraph {
 
  private:
   mutable AL::ALMotionProxy motion_;
-<<<<<<< HEAD
   // mutable AL::ALAutonomousLifeProxy life_proxy;
-=======
-#ifdef MOVEMENTGRAPH_IS_REMOTE
-  mutable AL::ALAutonomousLifeProxy life_proxy_;
-#endif
->>>>>>> 428d483890e0ebac8279d2c6ce54331b1739906e
   mutable AL::ALRobotPostureProxy posture_;
 };
