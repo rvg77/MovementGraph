@@ -38,6 +38,14 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   functionName("SetHeadHorizontalAngle", getName(), "Set head angle due horizontal axis");
   addParam("angle", "angle in degree");
   BIND_METHOD(MovementGraph::SetHeadHorizontalAngle);
+
+  functionName("ToInit", getName(), "go to init position");
+  BIND_METHOD(MovementGraph::ToInit);
+
+  functionName("FindBall", getName(), "position to looking for the ball");
+  addParam("level", "degree tilt");
+  BIND_METHOD(MovementGraph::SetHeadHorizontalAngle);
+
 }
 
 MovementGraph::~MovementGraph() {}
@@ -72,4 +80,12 @@ void MovementGraph::SetHeadVerticalAngle(float angle) {
 
 void MovementGraph::SetHeadHorizontalAngle(float angle) {
   graph_.SetHeadHorizontalAngle(angle);
+}
+
+void MovementGraph::ToInit() {
+  graph_.ToInit();
+}
+
+void MovementGraph::FindBall(int level = 4) {
+  graph_.FindBall(level);
 }

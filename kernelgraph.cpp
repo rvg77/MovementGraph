@@ -839,6 +839,16 @@ void KernelGraph::SetHeadHorizontalAngle(float angle) {
   motion_.setAngles(PARAM_NAMES[0], angle * TO_RAD, fractionMaxSpeed);
 }
 
+void KernelGraph::ToInit(float time = 1) {
+  Run("INIT", time);
+}
+
+void KernelGraph::FindBall(int level = 4) {
+  assert(level <= 7);
+  std::vector <std::string> names({"INIT", "FB" + std::to_string(level)});
+  RunChain(names, 1);
+}
+
 /*------- PRIVAT SPACE ---------*/
 
 
