@@ -1,7 +1,6 @@
 #include "kernelgraph.h"
 
 KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
-    broker_(broker),
     motion_(broker),
 #if MOVEMENTGRAPH_IS_REMOTE
     life_proxy_(broker),
@@ -809,9 +808,9 @@ void KernelGraph::GetUpFront() {
 }
 
 void KernelGraph::Fun() {
-  boost::shared_ptr<AL::ALProxy> testProxy
-      = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
+  AL::ALProxy proxy(broker_, "MovementGraphma");
 }
+*/
 
 float KernelGraph::GetHeadVerticalAngle() {
   Vertex curr = GetCurrentState();

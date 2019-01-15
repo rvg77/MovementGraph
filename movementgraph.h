@@ -3,18 +3,18 @@
 #include "kernelgraph.h"
 
 
-class MovementGraph : public AL::ALModule {
+class MovementGraph : public AL::ALModule, public KernelGraph {
  public:
   MovementGraph(boost::shared_ptr<AL::ALBroker> pBroker, const std::string& pName);
-  ~MovementGraph();
+  virtual ~MovementGraph();
 
   virtual void init();
 
-  void Move(float x, float y, float theta);
+  void MoveTo(float x, float y, float theta);
 
-  void RightKick();
+  void KickRight();
 
-  void LeftKick();
+  void KickLeft();
 
   float GetHeadVerticalAngle();
 
@@ -24,5 +24,5 @@ class MovementGraph : public AL::ALModule {
 
   void SetHeadHorizontalAngle(float angle);
  private:
-  KernelGraph graph_;
+  // KernelGraph graph_;
 };

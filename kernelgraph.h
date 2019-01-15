@@ -68,7 +68,6 @@ class KernelGraph : public PrimalGraph {
   float GetRealAngle(float theta) const;
 
  private:
-  boost::shared_ptr<AL::ALBroker> broker_;
   mutable AL::ALMotionProxy motion_;
 #ifdef MOVEMENTGRAPH_IS_REMOTE
   mutable AL::ALAutonomousLifeProxy life_proxy_;
