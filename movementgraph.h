@@ -3,19 +3,19 @@
 #include "kernelgraph.h"
 
 
-class MovementGraph : public AL::ALModule, public KernelGraph {
+class MovementGraph : public AL::ALModule {
  public:
   MovementGraph(boost::shared_ptr<AL::ALBroker> pBroker, const std::string& pName);
-  virtual ~MovementGraph();
+  ~MovementGraph();
 
   virtual void init();
 
-  void MoveTo(float x, float y, float theta);
+  void Move(float x, float y, float theta);
 
-  void KickRight();
+  void RightKick();
 
-  void KickLeft();
+  void LeftKick();
 
  private:
-  // KernelGraph graph_;
+  KernelGraph graph_;
 };

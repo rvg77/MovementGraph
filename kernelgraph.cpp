@@ -1,8 +1,9 @@
 #include "kernelgraph.h"
 
 KernelGraph::KernelGraph(boost::shared_ptr<AL::ALBroker> broker) :
+    broker_(broker),
     motion_(broker),
-    // life_proxy(broker),
+    life_proxy(broker),
     posture_(broker) {}
 
 Vertex KernelGraph::GetCurrentState() const {
@@ -807,9 +808,9 @@ void KernelGraph::GetUpFront() {
 }
 
 void KernelGraph::Fun() {
-  AL::ALProxy proxy(broker_, "MovementGraphma");
+  boost::shared_ptr<AL::ALProxy> testProxy
+      = boost::shared_ptr<AL::ALProxy>(new AL::ALProxy(broker_, "MovementGraph"));
 }
-*/
 
 
 /*------- PRIVAT SPACE ---------*/
