@@ -23,6 +23,10 @@ class MovementGraph : public AL::ALModule {
   void SetHeadVerticalAngle(float angle);
 
   void SetHeadHorizontalAngle(float angle);
+
+  void FindBall(int level);
+
+  void ToInit(float time);
  private:
   KernelGraph graph_;
 };

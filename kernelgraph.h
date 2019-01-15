@@ -58,6 +58,10 @@ class KernelGraph : public PrimalGraph {
 
   void SetHeadHorizontalAngle(float angle);
 
+  void ToInit(float time);
+
+  void FindBall(int level);
+
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
 
