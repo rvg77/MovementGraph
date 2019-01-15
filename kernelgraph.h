@@ -48,6 +48,8 @@ class KernelGraph : public PrimalGraph {
 
   void GetUpFront();
 
+  void GetUpBack();
+
   void Fun();
 
   float GetHeadVerticalAngle();

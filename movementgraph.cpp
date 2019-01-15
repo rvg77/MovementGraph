@@ -46,6 +46,14 @@ MovementGraph::MovementGraph(boost::shared_ptr<ALBroker> broker, const std::stri
   addParam("level", "degree From 0 to 7");
   BIND_METHOD(MovementGraph::LookDown);
 
+  functionName("GetUpFront", getName(), "get up from stomach");
+  addParam("level", "degree tilt");
+  BIND_METHOD(MovementGraph::GetUpFront);
+
+  functionName("GetUpBack", getName(), "get up from back");
+  addParam("level", "degree tilt");
+  BIND_METHOD(MovementGraph::GetUpBack);
+
 }
 
 MovementGraph::~MovementGraph() {}
@@ -84,6 +92,14 @@ void MovementGraph::SetHeadHorizontalAngle(float angle) {
 
 void MovementGraph::ToInit() {
   graph_.ToInit();
+}
+
+void MovementGraph::GetUpFront() {
+  graph_.GetUpFront();
+}
+
+void MovementGraph::GetUpBack() {
+  graph_.GetUpBack();
 }
 
 void MovementGraph::LookDown(int level) {

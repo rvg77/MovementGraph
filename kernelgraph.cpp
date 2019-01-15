@@ -805,7 +805,12 @@ void KernelGraph::LeftKick() {
 void KernelGraph::GetUpFront() {
   std::vector <std::string> names({"GUF0", "GUF15"});
   RunChain(names, 1);
-  posture_.goToPosture("StandInit", 0.5);
+  //posture_.goToPosture("StandInit", 0.5);
+}
+
+void KernelGraph::GetUpBack() {
+  std::vector <std::string> names({"GUB0", "GUB14"});
+  RunChain(names, 1);
 }
 
 void KernelGraph::Fun() {

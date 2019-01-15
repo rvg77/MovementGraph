@@ -28,6 +28,11 @@ class MovementGraph : public AL::ALModule {
 
   void ToInit();
 
+  void ToInit(float time);
+  
+  void GetUpFront();
+
+  void GetUpBack();
  private:
   KernelGraph graph_;
 };
