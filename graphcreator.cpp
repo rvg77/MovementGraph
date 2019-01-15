@@ -71,11 +71,14 @@ void GraphCreator::init() {
     else if (command == "HHA") {
       SetHeadHorizontalAngle();
     }
+    else if (command == "FUN") {
+      Fun();
+    }
     else if (command == "GUF") {
       GetUpFront();
     }
-    else if (command == "FUN") {
-      Fun();
+    else if (command == "GUB") {
+      GetUpBack();
     }
     else {
       SmallLog("UNKNOWN COMMAND", 2);
@@ -232,12 +235,6 @@ void GraphCreator::Move() {
   graph_.Move(x, y, theta * TO_RAD);
 }
 
-void GraphCreator::GetUpFront() {
-  SmallLog("Getting up....", 2);
-
-  graph_.GetUpFront();
-}
-
 void GraphCreator::SetHeadVerticalAngle() {
   float angle = SmallLog<float>("Enter angle from down(-29.5) to up(38.5)", 2, true);
   graph_.SetHeadVerticalAngle(angle);
@@ -250,6 +247,14 @@ void GraphCreator::SetHeadHorizontalAngle() {
 
 void GraphCreator::Fun() {
   graph_.Fun();
+}
+
+void GraphCreator::GetUpFront() {
+  graph_.GetUpFront();
+}
+
+void GraphCreator::GetUpBack() {
+  graph_.GetUpBack();
 }
 
 /*------- PRIVAT SPACE ---------*/

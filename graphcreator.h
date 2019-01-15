@@ -37,13 +37,15 @@ class GraphCreator : public AL::ALModule {
 
   void Move();
 
-  void GetUpFront();
-
   void SetHeadVerticalAngle();
 
   void SetHeadHorizontalAngle();
 
   void Fun();
+
+  void GetUpFront();
+
+  void GetUpBack();
 
  private:
   bool CheckBuffer() const;
