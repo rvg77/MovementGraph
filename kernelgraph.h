@@ -5,7 +5,7 @@
 #include <alcommon/albroker.h>
 #include <alproxies/almotionproxy.h>
 #include <alproxies/albasicawarenessproxy.h>
-#include <alproxies/alautonomouslifeproxy.h>
+// #include <alproxies/alautonomouslifeproxy.h>
 #include <alproxies/alrobotpostureproxy.h>
 #include "primalgraph.h"
 
@@ -44,7 +44,8 @@ class KernelGraph : public PrimalGraph {
 
   void LeftKick();
 
-  void Fun();
+  // void Fun();
+
  private:
   void RunWay(std::vector <const Edge*> edges, float acceleration);
 
@@ -55,8 +56,7 @@ class KernelGraph : public PrimalGraph {
   float GetRealAngle(float theta) const;
 
  private:
-  boost::shared_ptr<AL::ALBroker> broker_;
   mutable AL::ALMotionProxy motion_;
-  mutable AL::ALAutonomousLifeProxy life_proxy;
+  // mutable AL::ALAutonomousLifeProxy life_proxy;
   mutable AL::ALRobotPostureProxy posture_;
 };
