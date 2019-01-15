@@ -5,9 +5,7 @@
 #include <alcommon/albroker.h>
 #include <alproxies/almotionproxy.h>
 #include <alproxies/albasicawarenessproxy.h>
-#ifdef MOVEMENTGRAPH_IS_REMOTE
-# include <alproxies/alautonomouslifeproxy.h>
-#endif
+// #include <alproxies/alautonomouslifeproxy.h>
 #include <alproxies/alrobotpostureproxy.h>
 #include "primalgraph.h"
 
