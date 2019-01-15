@@ -102,6 +102,8 @@ void KernelGraph::Move(float x, float y, float theta) {
   posture_.goToPosture("StandInit", 0.5);
 }
 
+// copy from https://github.com/NaoBorregos/RoboCup2018/blob/master/rutinas_de_movimiento/patada/main.cpp
+
 void KernelGraph::RightKick() {
   std::vector<std::string> names;
   AL::ALValue times, keys;
@@ -801,6 +803,9 @@ void KernelGraph::LeftKick() {
   }
 
 }
+
+// end copy
+
 
 void KernelGraph::Fun() {
   boost::shared_ptr<AL::ALProxy> testProxy
