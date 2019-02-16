@@ -37,6 +37,8 @@ class GraphCreator : public AL::ALModule {
 
   void Move();
 
+  void MoveFast();
+
   void SetHeadVerticalAngle();
 
   void SetHeadHorizontalAngle();
@@ -46,6 +48,8 @@ class GraphCreator : public AL::ALModule {
   void GetUpFront();
 
   void GetUpBack();
+
+  void ToPoint();
 
  private:
   bool CheckBuffer() const;

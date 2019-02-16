@@ -42,6 +42,8 @@ class KernelGraph : public PrimalGraph {
 
   void Move(float x, float y, float theta);
 
+  void MoveFast(float x, float y, float theta);
+
   void RightKick();
 
   void LeftKick();
@@ -64,12 +66,19 @@ class KernelGraph : public PrimalGraph {
 
   void LookDown(int level);
 
+  // move position robot to finish via graph
+  bool ToPoint(const std::string& finish_name);
  private:
+
   void RunWay(std::vector <const Edge*> edges, float acceleration);
+  
+  void RunWayDimka(std::vector <const Edge*> edges, float acceleration);
 
   void Rotate(float theta);
 
   void GoForward(float len);
+
+  void GoForwardFast(float len);
 
   float GetRealAngle(float theta) const;
 

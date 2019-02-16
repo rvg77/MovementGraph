@@ -27,8 +27,6 @@ class MovementGraph : public AL::ALModule {
   void LookDown(int level);
 
   void ToInit();
-
-  void ToInit(float time);
   
   void GetUpFront();
 
