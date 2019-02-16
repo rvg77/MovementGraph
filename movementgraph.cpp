@@ -66,6 +66,14 @@ void MovementGraph::Move(float x, float y, float theta) {
   graph_.Move(x, y, theta);
 }
 
+void MovementGraph::SetTheta(float theta, float len) {
+  graph_.SetTheta(theta, len);
+}
+
+void MovementGraph::StopMove() {
+  graph_.StopMove();
+}
+
 void MovementGraph::RightKick() {
   graph_.RightKick();
 }

@@ -12,6 +12,10 @@ class MovementGraph : public AL::ALModule {
 
   void Move(float x, float y, float theta);
 
+  void SetTheta(float theta, float len);
+
+  void StopMove();
+
   void RightKick();
 
   void LeftKick();

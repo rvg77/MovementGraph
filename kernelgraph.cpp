@@ -121,6 +121,21 @@ void KernelGraph::MoveFast(float x, float y, float theta) {
   //posture_.goToPosture("StandInit", 0.5);
 }
 
+
+void KernelGraph::SetTheta(float theta, float len) const {
+  StopMove();
+
+  Rotate(theta);
+
+  GoForwardFast(len);
+}
+
+void KernelGraph::StopMove() const {
+  motion_.stopMove();
+  motion_.setMoveArmsEnabled(false, false);
+}
+
+
 void KernelGraph::RightKick() {
 
 }
@@ -250,7 +265,7 @@ void KernelGraph::RunWay(std::vector <const Edge*> edges, float acceleration) {
   motion_.angleInterpolationBezier(PARAM_NAMES, timeLists, angleLists);
 }
 
-void KernelGraph::Rotate(float theta) {
+void KernelGraph::Rotate(float theta) const {
   assert(fabs(theta) <= PI);
 
   posture_.goToPosture("StandInit", 0.5);
@@ -273,7 +288,7 @@ void KernelGraph::Rotate(float theta) {
   motion_.stopMove();
 }
 
-void KernelGraph::GoForward(float len) {
+void KernelGraph::GoForward(float len) const {
   assert(len >= 0);
 
   posture_.goToPosture("StandInit", 0.5);
@@ -304,7 +319,7 @@ void KernelGraph::GoForward(float len) {
   motion_.setMoveArmsEnabled(false, false);
 }
 
-void KernelGraph::GoForwardFast(float len) {
+void KernelGraph::GoForwardFast(float len) const {
   assert(len >= 0);
   
   
@@ -336,12 +351,6 @@ void KernelGraph::GoForwardFast(float len) {
   float time_walk = len / X_VELOCITY_;
 
   motion_.move(X_VELOCITY, 0, 0, params.GetParams());
-  
-  sleep(time_walk);
-  
-  motion_.stopMove();
-
-  motion_.setMoveArmsEnabled(false, false);
 }
 
 float KernelGraph::GetRealAngle(float theta) const {
