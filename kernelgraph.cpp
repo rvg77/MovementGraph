@@ -113,7 +113,7 @@ void KernelGraph::MoveFast(float x, float y, float theta) {
     Rotate(first_rotate);
   }
   if (len > EPS) {
-    GoForwardFast(len);
+    GoForvardFast(len);
   } 
   if (second_rotate > EPS) {
     Rotate(second_rotate);
@@ -127,12 +127,16 @@ void KernelGraph::SetTheta(float theta, float len) const {
 
   Rotate(theta);
 
-  GoForwardFast(len);
+  GoForvardFast(len);
 }
 
 void KernelGraph::StopMove() const {
   motion_.stopMove();
   motion_.setMoveArmsEnabled(false, false);
+}
+
+void KernelGraph::StartMove() const {
+  posture_.goToPosture("StandInit", 0.5);
 }
 
 
@@ -319,12 +323,9 @@ void KernelGraph::GoForward(float len) const {
   motion_.setMoveArmsEnabled(false, false);
 }
 
-void KernelGraph::GoForwardFast(float len) const {
+void KernelGraph::GoForvardFast(float len) const {
   assert(len >= 0);
   
-  
-  posture_.goToPosture("StandInit", 0.5);
-
   MoveParams params;
   params.SetParam("MaxStepX", 0.06);
   params.SetParam("StepHeight", 0.027);
@@ -350,8 +351,39 @@ void KernelGraph::GoForwardFast(float len) const {
   float X_VELOCITY_ = 0.1;
   float time_walk = len / X_VELOCITY_;
 
-  motion_.move(X_VELOCITY, 0, 0, params.GetParams());
-}
+  motion_.move(X_VELOCITY_, 0, 0, params.GetParams());
+ }
+
+void KernelGraph::GoBackFast(float len) const {
+  assert(len >= 0);
+  
+  MoveParams params;
+  params.SetParam("MaxStepX", 0.06);
+  params.SetParam("StepHeight", 0.027);
+  params.SetParam("TorsoWy", 0.01);
+
+/*
+  posture_.goToPosture("StandInit", 0.5);
+
+  MoveParams params;
+  params.SetParam("MaxStepX", 0.08);
+  params.SetParam("StepHeight", 0.035);
+  params.SetParam("TorsoWy", 0.0122);
+*/
+
+  /*
+  params.SetParam("MaxStepFrequency", 0.0);
+
+  params.SetParam("TorsoWy", 0.12);
+  */
+
+  motion_.setMoveArmsEnabled(true, true);
+
+  float X_VELOCITY_ = 0.1;
+  float time_walk = len / X_VELOCITY_;
+
+  motion_.move(-X_VELOCITY_, 0, 0, params.GetParams());
+ }
 
 float KernelGraph::GetRealAngle(float theta) const {
   float sign = (theta < 0) ? -1 : 1;

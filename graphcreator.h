@@ -39,6 +39,16 @@ class GraphCreator : public AL::ALModule {
 
   void MoveFast();
 
+  void GoForvard();
+  
+  void GoBack();
+
+  void Rotate();
+
+  void StartMove();
+
+  void StopMove();
+
   void SetHeadVerticalAngle();
 
   void SetHeadHorizontalAngle();

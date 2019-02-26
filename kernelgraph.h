@@ -44,7 +44,15 @@ class KernelGraph : public PrimalGraph {
 
   void MoveFast(float x, float y, float theta);
 
+  void GoForvardFast(float len) const;
+
+  void GoBackFast(float len) const;
+
   void StopMove() const;
+
+  void StartMove() const;
+
+  void Rotate(float theta) const;
 
   void SetTheta(float theta, float len) const;
 
@@ -78,11 +86,7 @@ class KernelGraph : public PrimalGraph {
   
   void RunWayDimka(std::vector <const Edge*> edges, float acceleration);
 
-  void Rotate(float theta) const;
-
   void GoForward(float len) const;
-
-  void GoForwardFast(float len) const;
 
   float GetRealAngle(float theta) const;
 

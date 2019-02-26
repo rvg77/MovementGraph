@@ -70,6 +70,21 @@ void GraphCreator::init() {
     else if (command == "MOVE_FAST") {
       MoveFast();
     }
+    else if (command == "GO_FORVARD") {
+      GoForvard();
+    }
+    else if (command == "GO_BACK") {
+      GoBack();
+    }
+    else if (command == "START_MOVE") {
+      StartMove();
+    }
+    else if (command == "STOP_MOVE") {
+      StopMove();
+    }
+    else if (command == "ROTATE") {
+      Rotate();
+    }
     else if (command == "HVA") {
       SetHeadVerticalAngle();
     }
@@ -261,6 +276,40 @@ void GraphCreator::MoveFast() {
   y     = SmallLog<float>("ENTER y in meters:", 2, true);
   theta = SmallLog<float>("ENTER Theta in Degree:", 2, true);
   graph_.MoveFast(x, y, theta * TO_RAD);
+}
+
+void GraphCreator::GoForvard() {
+  float len;
+
+  SmallLog("Its a Go_Forvard section insert len:", 2);
+  len = SmallLog<float>("ENTER len in meters:", 2, true);
+  graph_.GoForvardFast(len);
+}
+
+void GraphCreator::GoBack() {
+  float len;
+
+  SmallLog("Its a Go_Back section insert len:", 2);
+  len = SmallLog<float>("ENTER len in meters:", 2, true);
+  graph_.GoBackFast(len);
+}
+
+void GraphCreator::Rotate() {
+  float theta;
+
+  SmallLog("Its a Rotate section insert len:", 2);
+  theta = SmallLog<float>("ENTER theta in meters:", 2, true);
+  graph_.Rotate(theta);
+}
+
+void GraphCreator::StartMove() {
+  SmallLog("Its START MOVE:", 2);
+  graph_.StartMove();
+}
+
+void GraphCreator::StopMove() {
+  SmallLog("Its STOP MOVE:", 2);
+  graph_.StopMove();
 }
 
 void GraphCreator::SetHeadVerticalAngle() {
