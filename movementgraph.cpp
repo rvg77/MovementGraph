@@ -89,7 +89,7 @@ void MovementGraph::GoForvard(float len) {
 }
 
 void MovementGraph::GoBack(float len) {
-  graph_.GoForvardFast(len);
+  graph_.GoBackFast(len);
 }
 
 void MovementGraph::Rotate(float theta) {
